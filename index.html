@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Marketing AI Dashboard</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div id="app" class="d-flex">
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-hospital-alt text-primary me-2"></i>
+                    <span class="logo-text fw-bold">MedMarketing AI</span>
+                </div>
+                <button id="sidebarCollapseBtn" class="btn btn-link text-white p-0 ms-auto">
+                    <i class="fas fa-angle-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav mt-4">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="dashboard" title="Dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="onboarding" title="Onboarding">
+                            <i class="fas fa-play-circle"></i>
+                            <span class="nav-text">Onboarding</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="competitor-analysis" title="Competitor Analysis">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="nav-text">Competitor Analysis</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="campaigns" title="Campaigns">
+                            <i class="fas fa-bullhorn"></i>
+                            <span class="nav-text">Campaigns</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="assets" title="Assets">
+                            <i class="fas fa-images"></i>
+                            <span class="nav-text">Assets</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="approvals" title="Approvals">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="nav-text">Approvals</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="leads" title="Leads">
+                            <i class="fas fa-users"></i>
+                            <span class="nav-text">Leads</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="reports" title="Reports">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="settings" title="Settings">
+                            <i class="fas fa-cog"></i>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1">
+            
+            <!-- Top Header -->
+            <header class="top-header d-flex justify-content-between align-items-center p-3 bg-white shadow-sm">
+                <div class="d-flex align-items-center">
+                    <button id="sidebar-toggle" class="btn btn-outline-secondary me-3 d-lg-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <!-- Date Range Selector -->
+                    <div class="date-range-selector d-flex align-items-center me-4">
+                        <label class="me-2 text-muted">Date Range:</label>
+                        <input type="date" id="startDate" class="form-control form-control-sm me-2" value="2024-01-01">
+                        <span class="text-muted">to</span>
+                        <input type="date" id="endDate" class="form-control form-control-sm ms-2" value="2024-12-31">
+                    </div>
+                    
+                    <!-- Location Dropdown -->
+                    <div class="location-selector me-4">
+                        <select class="form-select form-select-sm">
+                            <option selected>Kukatpally</option>
+                            <option>Hyderabad Central</option>
+                            <option>Banjara Hills</option>
+                            <option>Gachibowli</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <button id="newCampaignBtn" class="btn btn-success btn-sm me-2">
+                        <i class="fas fa-plus me-1"></i>
+                        New Campaign
+                    </button>
+                    
+                    <button id="viewAlertsBtn" class="btn btn-outline-secondary btn-sm me-3">
+                        <i class="fas fa-bell me-1"></i>
+                        View Alerts
+                    </button>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle profile-btn" type="button" data-bs-toggle="dropdown">
+                            <span class="profile-initials">AM</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <main class="content-area p-4">
+                
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section active">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="mb-0">Marketing Dashboard</h2>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards Grid - Following exact specification -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="kpi-card clickable-card" data-kpi="campaigns">
+                                <div class="kpi-icon bg-primary">
+                                    <i class="fas fa-bullhorn"></i>
+                                </div>
+                                <div class="kpi-content">
+                                    <h3 class="kpi-number">12</h3>
+                                    <p class="kpi-label">Campaigns Live</p>
+                                    <span class="kpi-change positive">+2 this week</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="kpi-card clickable-card" data-kpi="leads">
+                                <div class="kpi-icon bg-success">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="kpi-content">
+                                    <h3 class="kpi-number">1,247</h3>
+                                    <p class="kpi-label">Total Leads</p>
+                                    <span class="kpi-change positive">+15.2%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="kpi-card clickable-card" data-kpi="cpl">
+                                <div class="kpi-icon bg-info">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                                <div class="kpi-content">
+                                    <h3 class="kpi-number">₹425</h3>
+                                    <p class="kpi-label">Avg CPL</p>
+                                    <span class="kpi-change negative">-8.3%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="kpi-card clickable-card" data-kpi="budget">
+                                <div class="kpi-icon bg-warning">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="kpi-content">
+                                    <h3 class="kpi-number">68%</h3>
+                                    <p class="kpi-label">Budget Used</p>
+                                    <span class="kpi-change">₹3.4L / ₹5L</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trend Charts Panel with Timeframe Selector -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="chart-card">
+                                <div class="chart-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Leads & CPL Trends</h5>
+                                    <div class="timeframe-selector">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <input type="radio" class="btn-check" name="timeframe" id="7days" checked>
+                                            <label class="btn btn-outline-primary" for="7days">7D</label>
+                                            
+                                            <input type="radio" class="btn-check" name="timeframe" id="30days">
+                                            <label class="btn btn-outline-primary" for="30days">30D</label>
+                                            
+                                            <input type="radio" class="btn-check" name="timeframe" id="90days">
+                                            <label class="btn btn-outline-primary" for="90days">90D</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="trendsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Heatmap and Alerts Row -->
+                    <div class="row">
+                        <div class="col-lg-8 mb-4">
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h5>Service Line Performance Heatmap</h5>
+                                </div>
+                                <div class="service-heatmap p-3">
+                                    <div class="heatmap-grid">
+                                        <div class="service-tile high-performance" data-service="cardiology">
+                                            <div class="service-name">Cardiology</div>
+                                            <div class="service-leads">456 leads</div>
+                                            <div class="service-cpl">₹380 CPL</div>
+                                        </div>
+                                        <div class="service-tile medium-performance" data-service="orthopedics">
+                                            <div class="service-name">Orthopedics</div>
+                                            <div class="service-leads">234 leads</div>
+                                            <div class="service-cpl">₹425 CPL</div>
+                                        </div>
+                                        <div class="service-tile high-performance" data-service="pediatrics">
+                                            <div class="service-name">Pediatrics</div>
+                                            <div class="service-leads">312 leads</div>
+                                            <div class="service-cpl">₹350 CPL</div>
+                                        </div>
+                                        <div class="service-tile low-performance" data-service="oncology">
+                                            <div class="service-name">Oncology</div>
+                                            <div class="service-leads">89 leads</div>
+                                            <div class="service-cpl">₹680 CPL</div>
+                                        </div>
+                                        <div class="service-tile medium-performance" data-service="neurology">
+                                            <div class="service-name">Neurology</div>
+                                            <div class="service-leads">156 leads</div>
+                                            <div class="service-cpl">₹520 CPL</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="alerts-todos-panel">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="mb-0">Alerts & To-Dos</h5>
+                                    <span class="badge bg-danger">3</span>
+                                </div>
+                                
+                                <div class="alert-item urgent">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-exclamation-triangle text-danger"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <strong>Budget Alert</strong>
+                                        <p class="mb-1">Oncology campaign exceeding daily budget by 25%</p>
+                                        <small class="text-muted">30 minutes ago</small>
+                                        <div class="alert-actions mt-2">
+                                            <button class="btn btn-sm btn-outline-primary">Adjust Budget</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert-item normal">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-info-circle text-info"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <strong>Performance Update</strong>
+                                        <p class="mb-1">Cardiology CPL improved by 12% this week</p>
+                                        <small class="text-muted">2 hours ago</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert-item todo">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-tasks text-warning"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <strong>Action Required</strong>
+                                        <p class="mb-1">Review and approve 2 pending campaign assets</p>
+                                        <small class="text-muted">4 hours ago</small>
+                                        <div class="alert-actions mt-2">
+                                            <button class="btn btn-sm btn-outline-primary">Review Assets</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Onboarding Section -->
+                <section id="onboarding-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Hospital Onboarding</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Setup Your Hospital Profile</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="onboardingForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Hospital Name</label>
+                                            <input type="text" class="form-control" placeholder="Enter hospital name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Website</label>
+                                            <input type="url" class="form-control" placeholder="https://yourhospital.com">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Logo Upload</label>
+                                            <input type="file" class="form-control" accept="image/*">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <textarea class="form-control" rows="3" placeholder="Enter complete address"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Primary Language</label>
+                                                <select class="form-select">
+                                                    <option>English</option>
+                                                    <option>Hindi</option>
+                                                    <option>Telugu</option>
+                                                    <option>Tamil</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Timezone</label>
+                                                <select class="form-select">
+                                                    <option>IST (GMT+5:30)</option>
+                                                    <option>PST (GMT-8)</option>
+                                                    <option>EST (GMT-5)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Primary Services</label>
+                                            <div class="services-selection">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="cardiology">
+                                                    <label class="form-check-label" for="cardiology">Cardiology</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="orthopedics">
+                                                    <label class="form-check-label" for="orthopedics">Orthopedics</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="pediatrics">
+                                                    <label class="form-check-label" for="pediatrics">Pediatrics</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="oncology">
+                                                    <label class="form-check-label" for="oncology">Oncology</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save & Continue</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6>Location Map</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="map-placeholder">
+                                        <i class="fas fa-map-marked-alt fa-3x text-muted mb-2"></i>
+                                        <p class="text-muted">Interactive map will appear here</p>
+                                        <button class="btn btn-outline-primary btn-sm">Test Location</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Competitor Analysis Section -->
+                <section id="competitor-analysis-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Competitor Analysis</h2>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Radius</span>
+                                <input type="range" class="form-control" min="5" max="50" value="20" id="radiusSlider">
+                                <span class="input-group-text"><span id="radiusValue">20</span> km</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-select">
+                                <option>All Services</option>
+                                <option>Cardiology</option>
+                                <option>Orthopedics</option>
+                                <option>Pediatrics</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Competitor Map</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="competitor-map-placeholder">
+                                        <i class="fas fa-map fa-4x text-muted mb-3"></i>
+                                        <p class="text-muted">Interactive competitor map will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Top Competitors</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="competitor-item">
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Apollo Hospital</strong>
+                                            <span class="badge bg-danger">High</span>
+                                        </div>
+                                        <small class="text-muted">2.5 km • Multi-specialty</small>
+                                    </div>
+                                    <div class="competitor-item">
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Care Hospital</strong>
+                                            <span class="badge bg-warning">Medium</span>
+                                        </div>
+                                        <small class="text-muted">4.1 km • Cardiology Focus</small>
+                                    </div>
+                                    <div class="competitor-item">
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Continental Hospital</strong>
+                                            <span class="badge bg-success">Low</span>
+                                        </div>
+                                        <small class="text-muted">6.8 km • Specialty Care</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Campaigns Section -->
+                <section id="campaigns-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h2>Campaigns</h2>
+                                <button class="btn btn-primary" id="createCampaignBtn">
+                                    <i class="fas fa-plus me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Campaign Filters -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Paused</option>
+                                <option>Completed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option>All Services</option>
+                                <option>Cardiology</option>
+                                <option>Orthopedics</option>
+                                <option>Pediatrics</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search campaigns...">
+                                <button class="btn btn-outline-secondary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campaigns Table -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" class="form-check-input"></th>
+                                            <th>Campaign Name</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Budget</th>
+                                            <th>Leads</th>
+                                            <th>CPL</th>
+                                            <th>ROI</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="campaigns-table-body">
+                                        <!-- Dynamic content populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assets Section -->
+                <section id="assets-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Marketing Assets</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Asset Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="assetTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#email-assets">Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#sms-assets">SMS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#image-assets">Images</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#video-assets">Videos</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="email-assets">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6>Email Templates</h6>
+                                        <button class="btn btn-primary btn-sm" onclick="createNewAsset('email')">
+                                            <i class="fas fa-plus me-1"></i>
+                                            Create New
+                                        </button>
+                                    </div>
+                                    <div class="assets-grid">
+                                        <div class="asset-card">
+                                            <div class="asset-preview">
+                                                <i class="fas fa-envelope fa-2x text-primary"></i>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Cardiology Consultation Email</h6>
+                                                <p class="text-muted">Subject: Schedule Your Heart Health Checkup</p>
+                                                <small class="text-muted">Created: 2 days ago • Status: Approved</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editTemplateAsset('email', 'cardiology-email')">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="cloneAsset('email', 'cardiology-email')">Clone</button>
+                                                    <button class="btn btn-sm btn-outline-success" onclick="useAsset('email', 'cardiology-email')">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card">
+                                            <div class="asset-preview">
+                                                <i class="fas fa-envelope fa-2x text-info"></i>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Follow-up Appointment</h6>
+                                                <p class="text-muted">Subject: Time for your follow-up checkup</p>
+                                                <small class="text-muted">Created: 1 week ago • Status: Draft</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editTemplateAsset('email', 'followup-email')">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="cloneAsset('email', 'followup-email')">Clone</button>
+                                                    <button class="btn btn-sm btn-outline-warning" onclick="reviewAsset('email', 'followup-email')">Review</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card">
+                                            <div class="asset-preview">
+                                                <i class="fas fa-envelope fa-2x text-success"></i>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Preventive Care Campaign</h6>
+                                                <p class="text-muted">Subject: Annual Health Screening - Book Now</p>
+                                                <small class="text-muted">Created: 3 days ago • Status: Approved</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editTemplateAsset('email', 'preventive-email')">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="cloneAsset('email', 'preventive-email')">Clone</button>
+                                                    <button class="btn btn-sm btn-outline-success" onclick="useAsset('email', 'preventive-email')">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>Asset Preview</h6>
+                                        </div>
+                                        <div class="card-body" id="assetPreviewContent">
+                                            <p class="text-muted">Select an asset to preview its content</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card mt-3">
+                                        <div class="card-header">
+                                            <h6>Asset Statistics</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="stat-item d-flex justify-content-between">
+                                                <span>Total Email Assets:</span>
+                                                <strong>12</strong>
+                                            </div>
+                                            <div class="stat-item d-flex justify-content-between">
+                                                <span>Approved:</span>
+                                                <strong>8</strong>
+                                            </div>
+                                            <div class="stat-item d-flex justify-content-between">
+                                                <span>In Review:</span>
+                                                <strong>3</strong>
+                                            </div>
+                                            <div class="stat-item d-flex justify-content-between">
+                                                <span>Draft:</span>
+                                                <strong>1</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="sms-assets">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6>SMS Templates</h6>
+                                        <button class="btn btn-primary btn-sm" onclick="createNewAsset('sms')">
+                                            <i class="fas fa-plus me-1"></i>
+                                            Create New
+                                        </button>
+                                    </div>
+                                    <div class="assets-grid">
+                                        <div class="asset-card">
+                                            <div class="asset-preview">
+                                                <i class="fas fa-sms fa-2x text-success"></i>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Appointment Reminder</h6>
+                                                <p class="text-muted">Your cardiology appointment is tomorrow at 2 PM...</p>
+                                                <small class="text-muted">Created: 1 day ago • Status: Active</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editTemplateAsset('sms', 'appointment-reminder')">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="cloneAsset('sms', 'appointment-reminder')">Clone</button>
+                                                    <button class="btn btn-sm btn-outline-success" onclick="useAsset('sms', 'appointment-reminder')">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card">
+                                            <div class="asset-preview">
+                                                <i class="fas fa-sms fa-2x text-warning"></i>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Health Checkup Offer</h6>
+                                                <p class="text-muted">Limited time: 20% off on comprehensive health...</p>
+                                                <small class="text-muted">Created: 4 days ago • Status: Scheduled</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editTemplateAsset('sms', 'health-checkup-sms')">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary" onclick="cloneAsset('sms', 'health-checkup-sms')">Clone</button>
+                                                    <button class="btn btn-sm btn-outline-info" onclick="useAsset('sms', 'health-checkup-sms')">Schedule</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>SMS Preview</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="sms-preview">
+                                                <div class="sms-bubble">
+                                                    Your cardiology appointment is tomorrow at 2 PM. Please arrive 15 minutes early. For any changes, call 040-12345678.
+                                                </div>
+                                                <small class="text-muted">160 characters • 1 SMS</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="image-assets">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6>Image Assets</h6>
+                                        <button class="btn btn-primary btn-sm" onclick="createNewAsset('image')">
+                                            <i class="fas fa-plus me-1"></i>
+                                            Upload New
+                                        </button>
+                                    </div>
+                                    <div class="assets-grid">
+                                        <div class="asset-card">
+                                            <div class="asset-preview bg-light">
+                                                <i class="fas fa-image fa-2x text-primary"></i>
+                                                <small class="d-block mt-2">doctor-consultation.jpg</small>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Doctor Consultation</h6>
+                                                <p class="text-muted">1920x1080 • 234 KB</p>
+                                                <small class="text-muted">Uploaded: 2 days ago • Used in 3 campaigns</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Download</button>
+                                                    <button class="btn btn-sm btn-outline-success">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card">
+                                            <div class="asset-preview bg-light">
+                                                <i class="fas fa-image fa-2x text-info"></i>
+                                                <small class="d-block mt-2">hospital-exterior.jpg</small>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Hospital Building</h6>
+                                                <p class="text-muted">1920x1080 • 456 KB</p>
+                                                <small class="text-muted">Uploaded: 1 week ago • Used in 1 campaign</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Download</button>
+                                                    <button class="btn btn-sm btn-outline-success">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>Image Preview</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div class="image-placeholder">
+                                                <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                                <p class="text-muted">Select an image to preview</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="video-assets">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6>Video Assets</h6>
+                                        <button class="btn btn-primary btn-sm" onclick="createNewAsset('video')">
+                                            <i class="fas fa-plus me-1"></i>
+                                            Upload New
+                                        </button>
+                                    </div>
+                                    <div class="assets-grid">
+                                        <div class="asset-card">
+                                            <div class="asset-preview bg-dark text-white">
+                                                <i class="fas fa-play-circle fa-2x"></i>
+                                                <small class="d-block mt-2">hospital-tour.mp4</small>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Hospital Virtual Tour</h6>
+                                                <p class="text-muted">1920x1080 • 2:30 duration • 45 MB</p>
+                                                <small class="text-muted">Uploaded: 3 days ago • Used in 2 campaigns</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Download</button>
+                                                    <button class="btn btn-sm btn-outline-success">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="asset-card">
+                                            <div class="asset-preview bg-dark text-white">
+                                                <i class="fas fa-play-circle fa-2x"></i>
+                                                <small class="d-block mt-2">doctor-testimonial.mp4</small>
+                                            </div>
+                                            <div class="asset-info">
+                                                <h6>Doctor Testimonial</h6>
+                                                <p class="text-muted">1920x1080 • 1:15 duration • 28 MB</p>
+                                                <small class="text-muted">Uploaded: 1 week ago • Not used yet</small>
+                                                <div class="asset-actions mt-2">
+                                                    <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Download</button>
+                                                    <button class="btn btn-sm btn-outline-success">Use</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>Video Preview</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div class="video-placeholder">
+                                                <i class="fas fa-video fa-3x text-muted mb-2"></i>
+                                                <p class="text-muted">Select a video to preview</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Approvals Section -->
+                <section id="approvals-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Campaign Approvals</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Pending Approvals</h5>
+                                </div>
+                                <div class="card-body" id="pending-approvals-container">
+                                    <!-- Dynamic content will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Approval History</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="approval-history-item">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            <div>
+                                                <h6 class="mb-1">Cardiology Q4 Campaign</h6>
+                                                <small class="text-muted">Approved by Dr. Smith • 1 day ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="approval-history-item">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-times-circle text-danger me-2"></i>
+                                            <div>
+                                                <h6 class="mb-1">Social Media Assets</h6>
+                                                <small class="text-muted">Rejected by Marketing Head • 2 days ago</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Leads Section -->
+                <section id="leads-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Lead Management</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Lead Stats -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3>1,247</h3>
+                                <p>Total Leads</p>
+                                <span class="stat-change positive">+15%</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3>234</h3>
+                                <p>Hot Leads</p>
+                                <span class="stat-change positive">+8%</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3>₹425</h3>
+                                <p>Avg CPL</p>
+                                <span class="stat-change negative">-12%</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <h3>24%</h3>
+                                <p>Conversion Rate</p>
+                                <span class="stat-change positive">+3%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leads Table -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Contact</th>
+                                            <th>Service Interest</th>
+                                            <th>Source</th>
+                                            <th>Score</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Rajesh Kumar</td>
+                                            <td>+91 98765 43210</td>
+                                            <td>Cardiology</td>
+                                            <td>Google Ads</td>
+                                            <td><span class="badge bg-danger">95</span></td>
+                                            <td><span class="badge bg-warning">New</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" onclick="contactLead(1)">Contact</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Priya Sharma</td>
+                                            <td>+91 87654 32109</td>
+                                            <td>Pediatrics</td>
+                                            <td>Facebook</td>
+                                            <td><span class="badge bg-success">87</span></td>
+                                            <td><span class="badge bg-info">Contacted</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-success" onclick="contactLead(2)">Follow-up</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amit Patel</td>
+                                            <td>+91 76543 21098</td>
+                                            <td>Orthopedics</td>
+                                            <td>Website</td>
+                                            <td><span class="badge bg-danger">92</span></td>
+                                            <td><span class="badge bg-success">Qualified</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" onclick="contactLead(3)">Contact</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sunita Reddy</td>
+                                            <td>+91 65432 10987</td>
+                                            <td>Gynecology</td>
+                                            <td>WhatsApp</td>
+                                            <td><span class="badge bg-warning">78</span></td>
+                                            <td><span class="badge bg-warning">Follow-up</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-info" onclick="contactLead(4)">Contact</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Performance Reports</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>Campaign ROI Analysis</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="roiChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Generate Report</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">Report Type</label>
+                                            <select class="form-select">
+                                                <option>Campaign Performance</option>
+                                                <option>Lead Analysis</option>
+                                                <option>ROI Summary</option>
+                                                <option>Channel Comparison</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Date Range</label>
+                                            <select class="form-select">
+                                                <option>Last 7 days</option>
+                                                <option>Last 30 days</option>
+                                                <option>Last 90 days</option>
+                                                <option>Custom Range</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Generate Report</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings-section" class="content-section">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="mb-4">Settings</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="list-group settings-nav">
+                                <a href="#" class="list-group-item list-group-item-action active" data-settings-tab="profile">
+                                    <i class="fas fa-hospital me-2"></i>Hospital Profile
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" data-settings-tab="integrations">
+                                    <i class="fas fa-plug me-2"></i>Integrations
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" data-settings-tab="users">
+                                    <i class="fas fa-users me-2"></i>Users & Roles
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action" data-settings-tab="compliance">
+                                    <i class="fas fa-shield-alt me-2"></i>Compliance
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div id="settings-profile" class="settings-content active">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Hospital Profile Settings</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Hospital Name</label>
+                                                    <input type="text" class="form-control" value="Apollo Hospital Kukatpally">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Website</label>
+                                                    <input type="url" class="form-control" value="https://apollohospitals.com">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Catchment Radius (km)</label>
+                                                <input type="range" class="form-range" min="5" max="50" value="20">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="settings-integrations" class="settings-content">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Channel Integrations</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="integration-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fab fa-google text-primary me-2"></i>
+                                                    <strong>Google Ads</strong>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" checked>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="integration-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fab fa-facebook text-primary me-2"></i>
+                                                    <strong>Meta Ads</strong>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" checked>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="integration-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fab fa-whatsapp text-success me-2"></i>
+                                                    <strong>WhatsApp Business</strong>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Users & Roles Section -->
+                            <div id="settings-users" class="settings-content">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5>Users & Roles Management</h5>
+                                        <button class="btn btn-primary btn-sm" onclick="addUser()">
+                                            <i class="fas fa-plus me-1"></i>Add User
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>User</th>
+                                                        <th>Role</th>
+                                                        <th>Department</th>
+                                                        <th>Last Login</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                                    <i class="fas fa-user"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold">Dr. Rajesh Kumar</div>
+                                                                    <small class="text-muted">rajesh.kumar@apollo.com</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><span class="badge bg-danger">Administrator</span></td>
+                                                        <td>IT Department</td>
+                                                        <td>2 hours ago</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(1)">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-danger" onclick="toggleUser(1)">
+                                                                <i class="fas fa-ban"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                                    <i class="fas fa-user"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold">Sarah Johnson</div>
+                                                                    <small class="text-muted">sarah.johnson@apollo.com</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><span class="badge bg-primary">Marketing Manager</span></td>
+                                                        <td>Marketing</td>
+                                                        <td>1 day ago</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(2)">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-danger" onclick="toggleUser(2)">
+                                                                <i class="fas fa-ban"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                                    <i class="fas fa-user"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold">Michael Chen</div>
+                                                                    <small class="text-muted">michael.chen@apollo.com</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><span class="badge bg-warning">Campaign Executive</span></td>
+                                                        <td>Marketing</td>
+                                                        <td>3 hours ago</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(3)">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-danger" onclick="toggleUser(3)">
+                                                                <i class="fas fa-ban"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-sm bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                                                    <i class="fas fa-user"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold">Dr. Priya Sharma</div>
+                                                                    <small class="text-muted">priya.sharma@apollo.com</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><span class="badge bg-info">Content Reviewer</span></td>
+                                                        <td>Medical Affairs</td>
+                                                        <td>5 hours ago</td>
+                                                        <td><span class="badge bg-warning">Inactive</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUser(4)">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-success" onclick="toggleUser(4)">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Role Permissions -->
+                                <div class="card mt-4">
+                                    <div class="card-header">
+                                        <h5>Role Permissions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6>Administrator</h6>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Full system access</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>User management</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Campaign approval</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Settings management</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Data export</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Marketing Manager</h6>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Campaign creation</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Asset management</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Lead management</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Reports viewing</li>
+                                                    <li><i class="fas fa-times text-danger me-2"></i>User management</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <h6>Campaign Executive</h6>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Campaign execution</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Asset creation</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Lead tracking</li>
+                                                    <li><i class="fas fa-times text-danger me-2"></i>Campaign approval</li>
+                                                    <li><i class="fas fa-times text-danger me-2"></i>Budget management</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Content Reviewer</h6>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Content review</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Asset approval</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Compliance check</li>
+                                                    <li><i class="fas fa-times text-danger me-2"></i>Campaign creation</li>
+                                                    <li><i class="fas fa-times text-danger me-2"></i>Lead management</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Compliance Section -->
+                            <div id="settings-compliance" class="settings-content">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Healthcare Compliance & Regulations</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="compliance-section mb-4">
+                                            <h6><i class="fas fa-shield-alt text-primary me-2"></i>HIPAA Compliance</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>Data Encryption</span>
+                                                            <span class="badge bg-success">Enabled</span>
+                                                        </div>
+                                                        <small class="text-muted">All patient data encrypted at rest and in transit</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>Access Logging</span>
+                                                            <span class="badge bg-success">Active</span>
+                                                        </div>
+                                                        <small class="text-muted">All data access events logged and monitored</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="compliance-section mb-4">
+                                            <h6><i class="fas fa-balance-scale text-info me-2"></i>Advertising Guidelines</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>Medical Claims Review</span>
+                                                            <span class="badge bg-warning">Required</span>
+                                                        </div>
+                                                        <small class="text-muted">All medical claims must be reviewed by licensed physician</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>FDA Guidelines</span>
+                                                            <span class="badge bg-success">Compliant</span>
+                                                        </div>
+                                                        <small class="text-muted">Content follows FDA advertising guidelines</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="compliance-section mb-4">
+                                            <h6><i class="fas fa-user-shield text-success me-2"></i>Data Privacy</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>Patient Consent</span>
+                                                            <span class="badge bg-success">Verified</span>
+                                                        </div>
+                                                        <small class="text-muted">Patient consent obtained for marketing communications</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="compliance-item">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span>Data Retention</span>
+                                                            <span class="badge bg-info">7 Years</span>
+                                                        </div>
+                                                        <small class="text-muted">Marketing data retained as per regulations</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="compliance-section">
+                                            <h6><i class="fas fa-file-alt text-warning me-2"></i>Audit Trail</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Action</th>
+                                                            <th>User</th>
+                                                            <th>Details</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Oct 10, 2025 14:30</td>
+                                                            <td>Campaign Approved</td>
+                                                            <td>Dr. Rajesh Kumar</td>
+                                                            <td>Cardiology Awareness Q4 - Compliance verified</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Oct 10, 2025 12:15</td>
+                                                            <td>Asset Reviewed</td>
+                                                            <td>Dr. Priya Sharma</td>
+                                                            <td>Email template - Medical claims approved</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Oct 9, 2025 16:45</td>
+                                                            <td>Data Export</td>
+                                                            <td>Sarah Johnson</td>
+                                                            <td>Lead report exported with anonymization</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Oct 9, 2025 11:20</td>
+                                                            <td>User Access</td>
+                                                            <td>Michael Chen</td>
+                                                            <td>Campaign dashboard accessed - IP: 192.168.1.45</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Campaign Creator Modal -->
+    <div class="modal fade" id="campaignModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Campaign</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Campaign Wizard Steps -->
+                    <div class="campaign-wizard">
+                        <div class="wizard-steps mb-4">
+                            <div class="step active" data-step="1">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Goals</span>
+                            </div>
+                            <div class="step" data-step="2">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Segments</span>
+                            </div>
+                            <div class="step" data-step="3">
+                                <span class="step-number">3</span>
+                                <span class="step-label">Assets</span>
+                            </div>
+                            <div class="step" data-step="4">
+                                <span class="step-number">4</span>
+                                <span class="step-label">Channels</span>
+                            </div>
+                            <div class="step" data-step="5">
+                                <span class="step-number">5</span>
+                                <span class="step-label">Review</span>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Goals -->
+                        <div class="wizard-content" id="step-1">
+                            <h6>Campaign Objective</h6>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="e.g., Increase cardiology consult requests by 20%">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Campaign Type</label>
+                                    <select class="form-select">
+                                        <option>Awareness</option>
+                                        <option>Engagement</option>
+                                        <option>Conversion</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Service Line</label>
+                                    <select class="form-select">
+                                        <option>Cardiology</option>
+                                        <option>Orthopedics</option>
+                                        <option>Pediatrics</option>
+                                        <option>Oncology</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Budget (₹)</label>
+                                    <input type="number" class="form-control" placeholder="50000">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Duration (days)</label>
+                                    <input type="number" class="form-control" placeholder="30">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Segments -->
+                        <div class="wizard-content d-none" id="step-2">
+                            <h6>Target Audience Segments</h6>
+                            <div class="segment-builder">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Age Range</label>
+                                        <div class="d-flex">
+                                            <input type="number" class="form-control me-2" placeholder="25" min="0" max="100" id="ageMin">
+                                            <span class="align-self-center">to</span>
+                                            <input type="number" class="form-control ms-2" placeholder="65" min="0" max="100" id="ageMax">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select" id="genderSelect">
+                                            <option>All</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Location Radius: <span id="radiusDisplay">15</span> km</label>
+                                    <input type="range" class="form-range" min="5" max="50" value="15" id="locationRadius">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Patient Type</label>
+                                    <div class="btn-group w-100" role="group">
+                                        <input type="radio" class="btn-check" name="patientType" id="newPatients" checked>
+                                        <label class="btn btn-outline-primary" for="newPatients">New Patients</label>
+                                        
+                                        <input type="radio" class="btn-check" name="patientType" id="existingPatients">
+                                        <label class="btn btn-outline-primary" for="existingPatients">Existing Patients</label>
+                                        
+                                        <input type="radio" class="btn-check" name="patientType" id="bothPatients">
+                                        <label class="btn btn-outline-primary" for="bothPatients">Both</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">CRM Segments</label>
+                                    <div class="segment-tags">
+                                        <span class="badge bg-primary me-2 mb-2 segment-tag" data-segment="high-value">High-Value Patients <i class="fas fa-times ms-1"></i></span>
+                                        <span class="badge bg-info me-2 mb-2 segment-tag" data-segment="cardiac-history">Cardiac History <i class="fas fa-times ms-1"></i></span>
+                                        <button class="btn btn-sm btn-outline-secondary" id="addSegmentBtn">+ Add Segment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Assets -->
+                        <div class="wizard-content d-none" id="step-3">
+                            <h6>Campaign Assets</h6>
+                            <div class="assets-selection">
+                                <div class="row mb-4">
+                                    <div class="col-md-8">
+                                        <button class="btn btn-success mb-3" id="generateAssetsBtn">
+                                            <i class="fas fa-magic me-1"></i>
+                                            AI Generate Assets
+                                        </button>
+                                        <p class="text-muted">Generate creative assets automatically based on your campaign goals</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="generated-count">
+                                            <span class="badge bg-primary">0 Assets Generated</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="asset-types">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="asset-type-card">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6><i class="fas fa-envelope me-2"></i>Email Templates</h6>
+                                                        <small class="text-muted">Subject lines, body copy, CTAs</small>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="emailAssets" checked>
+                                                    </div>
+                                                </div>
+                                                <div class="generated-assets mt-2" id="emailAssetsList"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="asset-type-card">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6><i class="fas fa-sms me-2"></i>SMS Messages</h6>
+                                                        <small class="text-muted">Short form marketing messages</small>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="smsAssets" checked>
+                                                    </div>
+                                                </div>
+                                                <div class="generated-assets mt-2" id="smsAssetsList"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="asset-type-card">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6><i class="fab fa-whatsapp me-2"></i>WhatsApp Messages</h6>
+                                                        <small class="text-muted">Business API templates</small>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="whatsappAssets">
+                                                    </div>
+                                                </div>
+                                                <div class="generated-assets mt-2" id="whatsappAssetsList"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="asset-type-card">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6><i class="fas fa-ad me-2"></i>Social Media Ads</h6>
+                                                        <small class="text-muted">Facebook & Instagram creatives</small>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="socialAssets" checked>
+                                                    </div>
+                                                </div>
+                                                <div class="generated-assets mt-2" id="socialAssetsList"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Channels & Budget -->
+                        <div class="wizard-content d-none" id="step-4">
+                            <h6>Channel Selection & Budget Allocation</h6>
+                            <div class="channels-budget">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="channels-list">
+                                            <div class="channel-item mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input channel-checkbox" type="checkbox" id="googleAds" checked>
+                                                        <label class="form-check-label" for="googleAds">
+                                                            <i class="fab fa-google me-2 text-primary"></i>
+                                                            <strong>Google Ads</strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="budget-display">
+                                                        <span class="badge bg-primary">₹<span id="googleBudget">15000</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="budget-slider-container">
+                                                    <input type="range" class="form-range budget-slider" min="5000" max="50000" value="15000" data-channel="google">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>₹5K</small>
+                                                        <small>₹50K</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="channel-item mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input channel-checkbox" type="checkbox" id="metaAds" checked>
+                                                        <label class="form-check-label" for="metaAds">
+                                                            <i class="fab fa-facebook me-2 text-primary"></i>
+                                                            <strong>Meta Ads (Facebook/Instagram)</strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="budget-display">
+                                                        <span class="badge bg-primary">₹<span id="metaBudget">12000</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="budget-slider-container">
+                                                    <input type="range" class="form-range budget-slider" min="5000" max="50000" value="12000" data-channel="meta">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>₹5K</small>
+                                                        <small>₹50K</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="channel-item mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input channel-checkbox" type="checkbox" id="smsChannel">
+                                                        <label class="form-check-label" for="smsChannel">
+                                                            <i class="fas fa-sms me-2 text-success"></i>
+                                                            <strong>SMS Marketing</strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="budget-display">
+                                                        <span class="badge bg-success">₹<span id="smsBudget">3000</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="budget-slider-container">
+                                                    <input type="range" class="form-range budget-slider" min="2000" max="20000" value="3000" data-channel="sms">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>₹2K</small>
+                                                        <small>₹20K</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="channel-item mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input channel-checkbox" type="checkbox" id="whatsappChannel">
+                                                        <label class="form-check-label" for="whatsappChannel">
+                                                            <i class="fab fa-whatsapp me-2 text-success"></i>
+                                                            <strong>WhatsApp Business</strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="budget-display">
+                                                        <span class="badge bg-success">₹<span id="whatsappBudget">5000</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="budget-slider-container">
+                                                    <input type="range" class="form-range budget-slider" min="2000" max="25000" value="5000" data-channel="whatsapp">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>₹2K</small>
+                                                        <small>₹25K</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="channel-item mb-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input channel-checkbox" type="checkbox" id="emailChannel" checked>
+                                                        <label class="form-check-label" for="emailChannel">
+                                                            <i class="fas fa-envelope me-2 text-info"></i>
+                                                            <strong>Email Marketing</strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="budget-display">
+                                                        <span class="badge bg-info">₹<span id="emailBudget">5000</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="budget-slider-container">
+                                                    <input type="range" class="form-range budget-slider" min="2000" max="20000" value="5000" data-channel="email">
+                                                    <div class="d-flex justify-content-between">
+                                                        <small>₹2K</small>
+                                                        <small>₹20K</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="budget-summary card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0">Budget Summary</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="budget-breakdown" id="budgetBreakdown">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                                <hr>
+                                                <div class="total-budget">
+                                                    <strong>Total Budget: ₹<span id="totalBudget">40000</span></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="schedule-section mt-3">
+                                            <h6>Campaign Schedule</h6>
+                                            <div class="mb-2">
+                                                <label class="form-label">Start Date</label>
+                                                <input type="date" class="form-control" id="campaignStartDate">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label">End Date</label>
+                                                <input type="date" class="form-control" id="campaignEndDate">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Review & Launch -->
+                        <div class="wizard-content d-none" id="step-5">
+                            <h6>Review & Launch Campaign</h6>
+                            <div class="campaign-review">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="review-sections">
+                                            <div class="review-section mb-4">
+                                                <h6><i class="fas fa-bullseye me-2"></i>Campaign Objective</h6>
+                                                <div class="review-content" id="reviewObjective">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="review-section mb-4">
+                                                <h6><i class="fas fa-users me-2"></i>Target Segments</h6>
+                                                <div class="review-content" id="reviewSegments">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="review-section mb-4">
+                                                <h6><i class="fas fa-images me-2"></i>Generated Assets</h6>
+                                                <div class="review-content" id="reviewAssets">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="review-section mb-4">
+                                                <h6><i class="fas fa-chart-pie me-2"></i>Channel & Budget</h6>
+                                                <div class="review-content" id="reviewChannels">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="launch-options card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0">Launch Options</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="launchOption" id="launchNow" checked>
+                                                        <label class="form-check-label" for="launchNow">
+                                                            <strong>Launch Now</strong><br>
+                                                            <small class="text-muted">Start campaign immediately</small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="launchOption" id="saveAsDraft">
+                                                        <label class="form-check-label" for="saveAsDraft">
+                                                            <strong>Save as Draft</strong><br>
+                                                            <small class="text-muted">Save for later review</small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="launchOption" id="submitForApproval">
+                                                        <label class="form-check-label" for="submitForApproval">
+                                                            <strong>Submit for Approval</strong><br>
+                                                            <small class="text-muted">Send to marketing head</small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="campaign-summary mt-4">
+                                                    <div class="summary-item">
+                                                        <small class="text-muted">Estimated Reach:</small>
+                                                        <strong id="estimatedReach">45,000 - 60,000</strong>
+                                                    </div>
+                                                    <div class="summary-item">
+                                                        <small class="text-muted">Expected Leads:</small>
+                                                        <strong id="expectedLeads">180 - 240</strong>
+                                                    </div>
+                                                    <div class="summary-item">
+                                                        <small class="text-muted">Projected CPL:</small>
+                                                        <strong id="projectedCPL">₹167 - ₹222</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="prevStep">Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextStep">Next</button>
+                    <button type="button" class="btn btn-success d-none" id="createCampaign">Submit for Approval</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Units Modal -->
+    <div class="modal fade" id="compareModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compare Hospital Units</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Unit A - Kukatpally</h6>
+                            <div class="comparison-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Leads:</span>
+                                    <span class="stat-value">1,247</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">CPL:</span>
+                                    <span class="stat-value">₹425</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Conversion Rate:</span>
+                                    <span class="stat-value">24%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Unit B - Banjara Hills</h6>
+                            <div class="comparison-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Leads:</span>
+                                    <span class="stat-value">987</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">CPL:</span>
+                                    <span class="stat-value">₹380</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Conversion Rate:</span>
+                                    <span class="stat-value">28%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
