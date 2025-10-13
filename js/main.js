@@ -2800,3 +2800,387 @@ window.HospitalMarketingApp = {
     toggleUser,
     saveAssetChanges
 };
+
+// Recommendations Modal Functionality
+const recommendationsData = {
+    'seasonal-cardiac': {
+        objective: 'Increase cardiac health consultations during high-risk winter season',
+        type: 'Awareness',
+        serviceLine: 'Cardiology',
+        budget: 175000,
+        duration: 45,
+        ageMin: 45,
+        ageMax: 75,
+        gender: 'All',
+        locationRadius: 20,
+        patientType: 'newPatients',
+        channels: ['googleAds', 'metaAds', 'emailChannel'],
+        budgetAllocation: {
+            google: 70000,
+            meta: 60000,
+            email: 25000,
+            sms: 20000
+        }
+    },
+    'diabetes-awareness': {
+        objective: 'World Diabetes Day comprehensive screening and awareness campaign',
+        type: 'Conversion',
+        serviceLine: 'Endocrinology',
+        budget: 120000,
+        duration: 30,
+        ageMin: 30,
+        ageMax: 55,
+        gender: 'All',
+        locationRadius: 15,
+        patientType: 'bothPatients',
+        channels: ['googleAds', 'metaAds', 'smsChannel'],
+        budgetAllocation: {
+            google: 50000,
+            meta: 45000,
+            sms: 15000,
+            email: 10000
+        }
+    },
+    'womens-health': {
+        objective: 'Comprehensive womens health screening and preventive care campaign',
+        type: 'Engagement',
+        serviceLine: 'Gynecology',
+        budget: 105000,
+        duration: 60,
+        ageMin: 25,
+        ageMax: 65,
+        gender: 'Female',
+        locationRadius: 25,
+        patientType: 'newPatients',
+        channels: ['metaAds', 'emailChannel', 'whatsappChannel'],
+        budgetAllocation: {
+            meta: 55000,
+            email: 20000,
+            whatsapp: 15000,
+            sms: 15000
+        }
+    },
+    'telemedicine-expansion': {
+        objective: 'Promote telemedicine services for busy professionals and elderly patients',
+        type: 'Conversion',
+        serviceLine: 'Telemedicine',
+        budget: 215000,
+        duration: 90,
+        ageMin: 35,
+        ageMax: 70,
+        gender: 'All',
+        locationRadius: 50,
+        patientType: 'bothPatients',
+        channels: ['googleAds', 'metaAds', 'emailChannel', 'smsChannel'],
+        budgetAllocation: {
+            google: 85000,
+            meta: 70000,
+            email: 35000,
+            sms: 25000
+        }
+    }
+};
+
+function initializeRecommendations() {
+    // View All Recommendations Button (opens detailed modal)
+    const viewAllRecommendationsBtn = document.getElementById('viewAllRecommendationsBtn');
+    if (viewAllRecommendationsBtn) {
+        viewAllRecommendationsBtn.addEventListener('click', function() {
+            const recommendationsModal = new bootstrap.Modal(document.getElementById('recommendationsModal'));
+            recommendationsModal.show();
+        });
+    }
+
+    // Accept Insight Buttons (Modal)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.accept-insight')) {
+            const insightId = e.target.closest('.accept-insight').dataset.insight;
+            acceptInsight(insightId, e.target.closest('.recommendation-item'));
+        }
+    });
+
+    // Reject Insight Buttons (Modal)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.reject-insight')) {
+            const insightId = e.target.closest('.reject-insight').dataset.insight;
+            rejectInsight(insightId, e.target.closest('.recommendation-item'));
+        }
+    });
+
+    // Create Campaign from Insight Buttons (Modal)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.create-campaign-btn')) {
+            const insightId = e.target.closest('.create-campaign-btn').dataset.insight;
+            createCampaignFromInsight(insightId);
+        }
+    });
+
+    // Accept Insight Buttons (Preview Cards)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.accept-insight-preview')) {
+            const insightId = e.target.closest('.accept-insight-preview').dataset.insight;
+            acceptInsightPreview(insightId, e.target.closest('.recommendation-preview'));
+        }
+    });
+
+    // Reject Insight Buttons (Preview Cards)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.reject-insight-preview')) {
+            const insightId = e.target.closest('.reject-insight-preview').dataset.insight;
+            rejectInsightPreview(insightId, e.target.closest('.recommendation-preview'));
+        }
+    });
+
+    // Create Campaign from Preview Cards
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.create-campaign-preview')) {
+            const insightId = e.target.closest('.create-campaign-preview').dataset.insight;
+            createCampaignFromInsight(insightId);
+        }
+    });
+}
+
+function acceptInsight(insightId, element) {
+    element.classList.add('accepted');
+    element.classList.remove('rejected');
+    
+    // Add accepted badge
+    const headerDiv = element.querySelector('.recommendation-priority');
+    
+    // Remove existing status badges
+    const existingStatusBadge = headerDiv.querySelector('.badge.bg-secondary');
+    if (existingStatusBadge) {
+        existingStatusBadge.remove();
+    }
+    
+    // Add accepted badge
+    const acceptedBadge = document.createElement('span');
+    acceptedBadge.className = 'badge bg-success ms-2';
+    acceptedBadge.innerHTML = '<i class="fas fa-check me-1"></i>Accepted';
+    headerDiv.appendChild(acceptedBadge);
+    
+    console.log(`Insight ${insightId} accepted`);
+    
+    // Show success toast
+    showToast('Recommendation accepted! You can now create a campaign from this insight.', 'success');
+}
+
+function rejectInsight(insightId, element) {
+    element.classList.add('rejected');
+    element.classList.remove('accepted');
+    
+    // Add rejected badge
+    const headerDiv = element.querySelector('.recommendation-priority');
+    
+    // Remove existing status badges
+    const existingStatusBadge = headerDiv.querySelector('.badge.bg-secondary');
+    if (existingStatusBadge) {
+        existingStatusBadge.remove();
+    }
+    
+    // Add rejected badge
+    const rejectedBadge = document.createElement('span');
+    rejectedBadge.className = 'badge bg-secondary ms-2';
+    rejectedBadge.innerHTML = '<i class="fas fa-times me-1"></i>Rejected';
+    headerDiv.appendChild(rejectedBadge);
+    
+    console.log(`Insight ${insightId} rejected`);
+    
+    // Show info toast
+    showToast('Recommendation rejected. This insight will not be shown in future suggestions.', 'info');
+}
+
+function createCampaignFromInsight(insightId) {
+    const insightData = recommendationsData[insightId];
+    
+    if (!insightData) {
+        showToast('Error: Insight data not found', 'error');
+        return;
+    }
+    
+    // Close recommendations modal
+    const recommendationsModal = bootstrap.Modal.getInstance(document.getElementById('recommendationsModal'));
+    if (recommendationsModal) {
+        recommendationsModal.hide();
+    }
+    
+    // Wait for modal to close, then open campaign modal with pre-filled data
+    setTimeout(() => {
+        openCampaignModalWithInsight(insightData);
+    }, 300);
+}
+
+function openCampaignModalWithInsight(insightData) {
+    // Reset to step 1
+    currentStep = 1;
+    updateWizardStep();
+    
+    // Pre-fill Step 1: Goals
+    const objectiveInput = document.querySelector('#step-1 input[type="text"]');
+    if (objectiveInput) {
+        objectiveInput.value = insightData.objective;
+    }
+    
+    const campaignTypeSelect = document.querySelector('#step-1 select');
+    if (campaignTypeSelect) {
+        campaignTypeSelect.value = insightData.type;
+    }
+    
+    const serviceLineSelect = document.querySelectorAll('#step-1 select')[1];
+    if (serviceLineSelect) {
+        serviceLineSelect.value = insightData.serviceLine;
+    }
+    
+    const budgetInput = document.querySelector('#step-1 input[placeholder="50000"]');
+    if (budgetInput) {
+        budgetInput.value = insightData.budget;
+    }
+    
+    const durationInput = document.querySelector('#step-1 input[placeholder="30"]');
+    if (durationInput) {
+        durationInput.value = insightData.duration;
+    }
+    
+    // Pre-fill Step 2: Segments
+    const ageMinInput = document.getElementById('ageMin');
+    if (ageMinInput) {
+        ageMinInput.value = insightData.ageMin;
+    }
+    
+    const ageMaxInput = document.getElementById('ageMax');
+    if (ageMaxInput) {
+        ageMaxInput.value = insightData.ageMax;
+    }
+    
+    const genderSelect = document.getElementById('genderSelect');
+    if (genderSelect) {
+        genderSelect.value = insightData.gender;
+    }
+    
+    const locationRadius = document.getElementById('locationRadius');
+    if (locationRadius) {
+        locationRadius.value = insightData.locationRadius;
+        document.getElementById('radiusDisplay').textContent = insightData.locationRadius;
+    }
+    
+    // Set patient type
+    const patientTypeRadio = document.getElementById(insightData.patientType);
+    if (patientTypeRadio) {
+        patientTypeRadio.checked = true;
+    }
+    
+    // Pre-fill Step 4: Channels & Budget
+    setTimeout(() => {
+        // Reset all channel checkboxes first
+        const channelCheckboxes = document.querySelectorAll('.channel-checkbox');
+        channelCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        
+        // Enable selected channels and set budgets
+        insightData.channels.forEach(channel => {
+            const checkbox = document.getElementById(channel);
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+        
+        // Set budget allocations
+        Object.keys(insightData.budgetAllocation).forEach(channel => {
+            const budgetSlider = document.querySelector(`[data-channel="${channel}"]`);
+            const budgetDisplay = document.getElementById(`${channel}Budget`);
+            
+            if (budgetSlider && budgetDisplay) {
+                budgetSlider.value = insightData.budgetAllocation[channel];
+                budgetDisplay.textContent = insightData.budgetAllocation[channel];
+            }
+        });
+        
+        // Update total budget display
+        updateChannelBudgets();
+    }, 100);
+    
+    // Open campaign modal
+    const campaignModal = new bootstrap.Modal(document.getElementById('campaignModal'));
+    campaignModal.show();
+    
+    // Show success message
+    showToast('Campaign form pre-filled with recommended settings. You can review and modify before submitting.', 'success');
+}
+
+function acceptInsightPreview(insightId, element) {
+    element.classList.add('accepted');
+    element.classList.remove('rejected');
+    
+    console.log(`Preview insight ${insightId} accepted`);
+    
+    // Show success toast
+    showToast('Recommendation accepted! You can now create a campaign from this insight.', 'success');
+    
+    // Also update the modal version if it exists
+    const modalElement = document.querySelector(`.recommendation-item[data-insight="${insightId}"]`);
+    if (modalElement) {
+        acceptInsight(insightId, modalElement);
+    }
+}
+
+function rejectInsightPreview(insightId, element) {
+    element.classList.add('rejected');
+    element.classList.remove('accepted');
+    
+    console.log(`Preview insight ${insightId} rejected`);
+    
+    // Show info toast
+    showToast('Recommendation rejected. This insight will not be shown in future suggestions.', 'info');
+    
+    // Also update the modal version if it exists
+    const modalElement = document.querySelector(`.recommendation-item[data-insight="${insightId}"]`);
+    if (modalElement) {
+        rejectInsight(insightId, modalElement);
+    }
+}
+
+function showToast(message, type = 'info') {
+    // Create toast element
+    const toastId = 'toast-' + Date.now();
+    const toastHTML = `
+        <div id="${toastId}" class="toast align-items-center text-white bg-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+    
+    // Add toast container if it doesn't exist
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // Add toast to container
+    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+    
+    // Show toast
+    const toastElement = document.getElementById(toastId);
+    const toast = new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 5000
+    });
+    toast.show();
+    
+    // Remove toast element after it's hidden
+    toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+    });
+}
+
+// Initialize recommendations when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeRecommendations();
+});

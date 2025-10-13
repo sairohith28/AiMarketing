@@ -123,11 +123,6 @@
                 </div>
                 
                 <div class="d-flex align-items-center">
-                    <button id="newCampaignBtn" class="btn btn-success btn-sm me-2">
-                        <i class="fas fa-plus me-1"></i>
-                        New Campaign
-                    </button>
-                    
                     <button id="viewAlertsBtn" class="btn btn-outline-secondary btn-sm me-3">
                         <i class="fas fa-bell me-1"></i>
                         View Alerts
@@ -206,6 +201,108 @@
                                     <h3 class="kpi-number">68%</h3>
                                     <p class="kpi-label">Budget Used</p>
                                     <span class="kpi-change">₹3.4L / ₹5L</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="recommendations-card">
+                                <div class="recommendations-header d-flex align-items-center mb-4">
+                                    <h5 class="mb-0 me-3">
+                                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                                        AI Recommendations
+                                    </h5>
+                                    <span class="badge bg-gradient-primary">4 New Insights</span>
+                                </div>
+                                
+                                <div class="recommendations-grid">
+                                    <div class="row">
+                                        <!-- High Priority Recommendation -->
+                                        <div class="col-xl-6 col-lg-12 mb-3">
+                                            <div class="recommendation-preview high-priority" data-insight="seasonal-cardiac">
+                                                <div class="recommendation-preview-header d-flex justify-content-between align-items-start mb-2">
+                                                    <div class="priority-badges">
+                                                        <span class="badge bg-danger">High Priority</span>
+                                                        <span class="badge bg-success ms-1">+₹2.5L Revenue</span>
+                                                    </div>
+                                                    <div class="preview-actions">
+                                                        <button class="btn btn-sm btn-outline-success accept-insight-preview me-1" data-insight="seasonal-cardiac" title="Accept">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger reject-insight-preview" data-insight="seasonal-cardiac" title="Reject">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h6 class="recommendation-preview-title">Seasonal Cardiac Health Campaign</h6>
+                                                <p class="recommendation-preview-desc">Winter cardiac screening for patients 45+ with 30% higher risk during cold months.</p>
+                                                <div class="preview-metrics d-flex justify-content-between">
+                                                    <small><strong>450-600</strong> leads</small>
+                                                    <small><strong>₹320-380</strong> CPL</small>
+                                                    <small><strong>280%</strong> ROI</small>
+                                                </div>
+                                                <button class="btn btn-primary btn-sm w-100 mt-2 create-campaign-preview" data-insight="seasonal-cardiac">
+                                                    <i class="fas fa-rocket me-1"></i>
+                                                    Create Campaign
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Medium Priority Recommendation -->
+                                        <div class="col-xl-6 col-lg-12 mb-3">
+                                            <div class="recommendation-preview medium-priority" data-insight="diabetes-awareness">
+                                                <div class="recommendation-preview-header d-flex justify-content-between align-items-start mb-2">
+                                                    <div class="priority-badges">
+                                                        <span class="badge bg-warning">Medium Priority</span>
+                                                        <span class="badge bg-success ms-1">+₹1.8L Revenue</span>
+                                                    </div>
+                                                    <div class="preview-actions">
+                                                        <button class="btn btn-sm btn-outline-success accept-insight-preview me-1" data-insight="diabetes-awareness" title="Accept">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger reject-insight-preview" data-insight="diabetes-awareness" title="Reject">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h6 class="recommendation-preview-title">World Diabetes Day Campaign</h6>
+                                                <p class="recommendation-preview-desc">Comprehensive diabetes screening targeting working professionals aged 30-55.</p>
+                                                <div class="preview-metrics d-flex justify-content-between">
+                                                    <small><strong>300-420</strong> leads</small>
+                                                    <small><strong>₹280-340</strong> CPL</small>
+                                                    <small><strong>235%</strong> ROI</small>
+                                                </div>
+                                                <button class="btn btn-primary btn-sm w-100 mt-2 create-campaign-preview" data-insight="diabetes-awareness">
+                                                    <i class="fas fa-rocket me-1"></i>
+                                                    Create Campaign
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Additional Opportunities Row -->
+                                    <div class="additional-opportunities">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="more-opportunities-card">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <span class="text-muted">
+                                                                <i class="fas fa-plus-circle me-2"></i>
+                                                                2 more opportunities available: Women's Health Campaign (+₹1.2L), Telemedicine Expansion (+₹3.2L)
+                                                            </span>
+                                                        </div>
+                                                        <button id="viewAllRecommendationsBtn" class="btn btn-outline-secondary btn-sm">
+                                                            View All
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1980,6 +2077,230 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations Modal -->
+    <div class="modal fade" id="recommendationsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                        Top Recommended Actionable Insights
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">AI-powered recommendations for future campaigns to maximize revenue and ROI</p>
+                    
+                    <div class="recommendations-list">
+                        <!-- High Priority Recommendation -->
+                        <div class="recommendation-item high-priority mb-4" data-insight="seasonal-cardiac">
+                            <div class="recommendation-header d-flex justify-content-between align-items-start mb-2">
+                                <div class="recommendation-priority">
+                                    <span class="badge bg-danger">High Priority</span>
+                                    <span class="badge bg-info ms-2">Revenue Impact: +₹2.5L</span>
+                                </div>
+                                <div class="recommendation-actions">
+                                    <button class="btn btn-sm btn-outline-success me-2 accept-insight" data-insight="seasonal-cardiac" title="Accept Recommendation">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger reject-insight" data-insight="seasonal-cardiac" title="Reject Recommendation">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="recommendation-content">
+                                <h6 class="recommendation-title">Seasonal Cardiac Health Campaign (Winter)</h6>
+                                <p class="recommendation-description">
+                                    Launch a targeted cardiac health awareness campaign during winter months when heart-related issues increase by 30%. 
+                                    Target patients 45+ with preventive screening offers.
+                                </p>
+                                <div class="recommendation-metrics">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Expected Leads</small>
+                                            <div class="fw-bold text-success">450-600</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Projected CPL</small>
+                                            <div class="fw-bold text-primary">₹320-380</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Budget Range</small>
+                                            <div class="fw-bold text-info">₹1.5L-2L</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">ROI</small>
+                                            <div class="fw-bold text-success">280%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-3 create-campaign-btn" data-insight="seasonal-cardiac">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Medium Priority Recommendation -->
+                        <div class="recommendation-item medium-priority mb-4" data-insight="diabetes-awareness">
+                            <div class="recommendation-header d-flex justify-content-between align-items-start mb-2">
+                                <div class="recommendation-priority">
+                                    <span class="badge bg-warning">Medium Priority</span>
+                                    <span class="badge bg-info ms-2">Revenue Impact: +₹1.8L</span>
+                                </div>
+                                <div class="recommendation-actions">
+                                    <button class="btn btn-sm btn-outline-success me-2 accept-insight" data-insight="diabetes-awareness" title="Accept Recommendation">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger reject-insight" data-insight="diabetes-awareness" title="Reject Recommendation">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="recommendation-content">
+                                <h6 class="recommendation-title">World Diabetes Day Screening Campaign</h6>
+                                <p class="recommendation-description">
+                                    Capitalize on World Diabetes Day (Nov 14) with comprehensive diabetes screening packages. 
+                                    Target working professionals aged 30-55 with family history indicators.
+                                </p>
+                                <div class="recommendation-metrics">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Expected Leads</small>
+                                            <div class="fw-bold text-success">300-420</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Projected CPL</small>
+                                            <div class="fw-bold text-primary">₹280-340</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Budget Range</small>
+                                            <div class="fw-bold text-info">₹1L-1.4L</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">ROI</small>
+                                            <div class="fw-bold text-success">235%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-3 create-campaign-btn" data-insight="diabetes-awareness">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Low Priority Recommendation -->
+                        <div class="recommendation-item low-priority mb-4" data-insight="womens-health">
+                            <div class="recommendation-header d-flex justify-content-between align-items-start mb-2">
+                                <div class="recommendation-priority">
+                                    <span class="badge bg-success">Opportunity</span>
+                                    <span class="badge bg-info ms-2">Revenue Impact: +₹1.2L</span>
+                                </div>
+                                <div class="recommendation-actions">
+                                    <button class="btn btn-sm btn-outline-success me-2 accept-insight" data-insight="womens-health" title="Accept Recommendation">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger reject-insight" data-insight="womens-health" title="Reject Recommendation">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="recommendation-content">
+                                <h6 class="recommendation-title">Women's Health Month Campaign</h6>
+                                <p class="recommendation-description">
+                                    Launch comprehensive women's health packages targeting preventive care. 
+                                    Focus on gynecological health, breast cancer screening, and bone density tests for women 25-65.
+                                </p>
+                                <div class="recommendation-metrics">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Expected Leads</small>
+                                            <div class="fw-bold text-success">250-350</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Projected CPL</small>
+                                            <div class="fw-bold text-primary">₹350-420</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Budget Range</small>
+                                            <div class="fw-bold text-info">₹90K-1.2L</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">ROI</small>
+                                            <div class="fw-bold text-success">195%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-3 create-campaign-btn" data-insight="womens-health">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Future Opportunity Recommendation -->
+                        <div class="recommendation-item future-opportunity mb-4" data-insight="telemedicine-expansion">
+                            <div class="recommendation-header d-flex justify-content-between align-items-start mb-2">
+                                <div class="recommendation-priority">
+                                    <span class="badge bg-purple">Future Opportunity</span>
+                                    <span class="badge bg-info ms-2">Revenue Impact: +₹3.2L</span>
+                                </div>
+                                <div class="recommendation-actions">
+                                    <button class="btn btn-sm btn-outline-success me-2 accept-insight" data-insight="telemedicine-expansion" title="Accept Recommendation">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger reject-insight" data-insight="telemedicine-expansion" title="Reject Recommendation">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="recommendation-content">
+                                <h6 class="recommendation-title">Telemedicine Service Expansion Campaign</h6>
+                                <p class="recommendation-description">
+                                    Promote new telemedicine services targeting busy professionals and elderly patients. 
+                                    Focus on specialist consultations, follow-ups, and chronic disease management.
+                                </p>
+                                <div class="recommendation-metrics">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Expected Leads</small>
+                                            <div class="fw-bold text-success">600-800</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Projected CPL</small>
+                                            <div class="fw-bold text-primary">₹180-250</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">Budget Range</small>
+                                            <div class="fw-bold text-info">₹1.8L-2.5L</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <small class="text-muted">ROI</small>
+                                            <div class="fw-bold text-success">320%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-3 create-campaign-btn" data-insight="telemedicine-expansion">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="text-muted">
+                            <small><i class="fas fa-info-circle me-1"></i>Recommendations updated daily based on market trends and performance data</small>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
