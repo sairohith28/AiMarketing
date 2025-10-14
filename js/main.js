@@ -2279,7 +2279,7 @@ const leadData = [
     {
         id: 1,
         name: 'Rajesh Kumar',
-        contact: '+91 98765 43210',
+        contact: '+91 79015 49119',
         email: 'rajesh@email.com',
         service: 'Cardiology',
         source: 'Google Ads',
@@ -3183,4 +3183,316 @@ function showToast(message, type = 'info') {
 // Initialize recommendations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeRecommendations();
+    initializeRecommendationsPage();
 });
+
+// Recommendations Page Functionality
+function initializeRecommendationsPage() {
+    // Solve Issue Buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.solve-issue-btn')) {
+            const issueType = e.target.closest('.solve-issue-btn').dataset.issue;
+            solveIssue(issueType);
+        }
+    });
+
+    // Create Opportunity Buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.create-opportunity-btn')) {
+            const opportunityType = e.target.closest('.create-opportunity-btn').dataset.opportunity;
+            createOpportunityFromRecommendation(opportunityType);
+        }
+    });
+
+    // Complete Todo Buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.complete-todo-btn')) {
+            const todoType = e.target.closest('.complete-todo-btn').dataset.todo;
+            completeTodo(todoType);
+        }
+    });
+
+    // Act on Insight Buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.act-on-insight-btn')) {
+            const insightType = e.target.closest('.act-on-insight-btn').dataset.insight;
+            actOnInsight(insightType);
+        }
+    });
+
+    // Filter buttons
+    document.addEventListener('change', function(e) {
+        if (e.target.name === 'recFilter') {
+            filterRecommendations(e.target.id);
+        }
+    });
+
+    // Todo checkboxes
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'checkbox' && e.target.closest('.todo-item')) {
+            toggleTodoCompletion(e.target);
+        }
+    });
+}
+
+function solveIssue(issueType) {
+    const issueActions = {
+        'mobile-optimization': {
+            title: 'Mobile Website Optimization',
+            action: 'Redirecting to mobile optimization settings...',
+            redirect: '#settings-section'
+        },
+        'instagram-setup': {
+            title: 'Instagram Marketing Setup',
+            action: 'Opening Instagram integration wizard...',
+            redirect: '#settings-section'
+        }
+    };
+
+    const issue = issueActions[issueType];
+    if (issue) {
+        showToast(`${issue.action}`, 'info');
+        
+        // Simulate navigation or action
+        setTimeout(() => {
+            if (issue.redirect === '#settings-section') {
+                // Switch to settings section and highlight integrations
+                switchToSection('settings');
+                showToast(`${issue.title} setup initiated. Please follow the configuration steps.`, 'success');
+            }
+        }, 1500);
+    }
+}
+
+function createOpportunityFromRecommendation(opportunityType) {
+    const opportunities = {
+        'telemedicine': {
+            objective: 'Launch comprehensive telemedicine services for remote consultations',
+            type: 'Conversion',
+            serviceLine: 'Telemedicine',
+            budget: 215000,
+            duration: 90
+        },
+        'seasonal-cardiac': {
+            objective: 'Winter cardiac health screening and awareness campaign',
+            type: 'Awareness',
+            serviceLine: 'Cardiology',
+            budget: 175000,
+            duration: 45
+        },
+        'referral-program': {
+            objective: 'Patient referral program with incentives and rewards',
+            type: 'Engagement',
+            serviceLine: 'General',
+            budget: 85000,
+            duration: 180
+        }
+    };
+
+    const opportunity = opportunities[opportunityType];
+    if (opportunity) {
+        showToast('Opening campaign creation with pre-filled opportunity data...', 'info');
+        
+        setTimeout(() => {
+            // Use existing campaign creation function with opportunity data
+            openCampaignModalWithInsight(recommendationsData[opportunityType] || {
+                objective: opportunity.objective,
+                type: opportunity.type,
+                serviceLine: opportunity.serviceLine,
+                budget: opportunity.budget,
+                duration: opportunity.duration,
+                ageMin: 25,
+                ageMax: 65,
+                gender: 'All',
+                locationRadius: 25,
+                patientType: 'bothPatients',
+                channels: ['googleAds', 'metaAds', 'emailChannel'],
+                budgetAllocation: {
+                    google: Math.floor(opportunity.budget * 0.4),
+                    meta: Math.floor(opportunity.budget * 0.35),
+                    email: Math.floor(opportunity.budget * 0.15),
+                    sms: Math.floor(opportunity.budget * 0.1)
+                }
+            });
+        }, 1000);
+    }
+}
+
+function completeTodo(todoType) {
+    const todoActions = {
+        'asset-approval': {
+            title: 'Asset Approval',
+            action: 'Opening asset review interface...',
+            redirect: '#assets-section'
+        },
+        'budget-update': {
+            title: 'Budget Update',
+            action: 'Opening campaign budget settings...',
+            redirect: '#campaigns-section'
+        },
+        'social-scheduling': {
+            title: 'Social Media Scheduling',
+            action: 'Opening social media scheduler...',
+            redirect: '#assets-section'
+        }
+    };
+
+    const todo = todoActions[todoType];
+    if (todo) {
+        showToast(`${todo.action}`, 'info');
+        
+        setTimeout(() => {
+            switchToSection(todo.redirect.replace('#', '').replace('-section', ''));
+            showToast(`${todo.title} interface opened. Complete the required actions.`, 'success');
+        }, 1500);
+    }
+}
+
+function actOnInsight(insightType) {
+    const insights = {
+        'orthopedic-demand': {
+            title: 'Orthopedic Demand Campaign',
+            action: 'Creating targeted orthopedic campaign based on AI prediction...'
+        },
+        'scheduling-optimization': {
+            title: 'Ad Scheduling Optimization',
+            action: 'Optimizing ad schedules based on patient behavior patterns...'
+        }
+    };
+
+    const insight = insights[insightType];
+    if (insight) {
+        showToast(`${insight.action}`, 'info');
+        
+        setTimeout(() => {
+            if (insightType === 'orthopedic-demand') {
+                // Create orthopedic campaign
+                openCampaignModalWithInsight({
+                    objective: 'Winter orthopedic consultation campaign targeting sports-related injuries',
+                    type: 'Conversion',
+                    serviceLine: 'Orthopedics',
+                    budget: 120000,
+                    duration: 21,
+                    ageMin: 20,
+                    ageMax: 55,
+                    gender: 'All',
+                    locationRadius: 15,
+                    patientType: 'newPatients',
+                    channels: ['googleAds', 'metaAds', 'smsChannel'],
+                    budgetAllocation: {
+                        google: 50000,
+                        meta: 45000,
+                        sms: 15000,
+                        email: 10000
+                    }
+                });
+            } else {
+                showToast(`${insight.title} completed. Ad schedules optimized for Monday mornings.`, 'success');
+            }
+        }, 1500);
+    }
+}
+
+function filterRecommendations(filterId) {
+    const categories = document.querySelectorAll('.recommendation-category');
+    
+    // Show all categories first
+    categories.forEach(category => {
+        category.style.display = 'block';
+    });
+    
+    // Apply filter
+    switch(filterId) {
+        case 'critical-recs':
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h5').textContent;
+                if (!categoryTitle.includes('Critical Gaps')) {
+                    category.style.display = 'none';
+                }
+            });
+            break;
+        case 'opportunities-recs':
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h5').textContent;
+                if (!categoryTitle.includes('Growth Opportunities')) {
+                    category.style.display = 'none';
+                }
+            });
+            break;
+        case 'actions-recs':
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h5').textContent;
+                if (!categoryTitle.includes('Pending Actions')) {
+                    category.style.display = 'none';
+                }
+            });
+            break;
+        default:
+            // 'all-recs' - already showing all
+            break;
+    }
+}
+
+function toggleTodoCompletion(checkbox) {
+    const todoItem = checkbox.closest('.todo-item');
+    const todoTitle = todoItem.querySelector('.todo-title').textContent;
+    
+    if (checkbox.checked) {
+        todoItem.style.opacity = '0.6';
+        todoItem.style.textDecoration = 'line-through';
+        showToast(`Task "${todoTitle}" marked as completed.`, 'success');
+        
+        // Update stats (simulate)
+        updateTaskStats();
+    } else {
+        todoItem.style.opacity = '1';
+        todoItem.style.textDecoration = 'none';
+        showToast(`Task "${todoTitle}" marked as incomplete.`, 'info');
+    }
+}
+
+function updateTaskStats() {
+    // Simulate updating task statistics
+    const completedTodayElement = document.querySelector('.task-stats .text-success');
+    if (completedTodayElement) {
+        const currentCount = parseInt(completedTodayElement.textContent);
+        completedTodayElement.textContent = currentCount + 1;
+    }
+    
+    // Update progress bar
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+        const currentWidth = parseInt(progressBar.style.width);
+        const newWidth = Math.min(currentWidth + 5, 100);
+        progressBar.style.width = newWidth + '%';
+        
+        const progressText = progressBar.parentElement.nextElementSibling;
+        if (progressText) {
+            progressText.textContent = `${newWidth}% completed this week`;
+        }
+    }
+}
+
+function switchToSection(sectionName) {
+    // Remove active class from all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Remove active class from all nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Add active class to target section
+    const targetSection = document.getElementById(sectionName + '-section');
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+    
+    // Add active class to corresponding nav link
+    const targetNav = document.querySelector(`[data-section="${sectionName}"]`);
+    if (targetNav) {
+        targetNav.classList.add('active');
+    }
+}

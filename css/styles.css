@@ -1801,6 +1801,432 @@ body {
     }
 }
 
+/* Recommendations Page Styles */
+.recommendation-stat-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    height: 100%;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.recommendation-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-stat-card.critical {
+    border-left-color: #dc3545;
+}
+
+.recommendation-stat-card.opportunities {
+    border-left-color: #28a745;
+}
+
+.recommendation-stat-card.todos {
+    border-left-color: #ffc107;
+}
+
+.recommendation-stat-card.insights {
+    border-left-color: #17a2b8;
+}
+
+.recommendation-stat-card .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.recommendation-stat-card.critical .stat-icon {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.recommendation-stat-card.opportunities .stat-icon {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.recommendation-stat-card.todos .stat-icon {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.recommendation-stat-card.insights .stat-icon {
+    background: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.recommendation-stat-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+}
+
+.recommendation-stat-card p {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+}
+
+.recommendation-stat-card .stat-desc {
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+}
+
+.recommendation-filters {
+    margin-bottom: 20px;
+}
+
+.recommendation-category {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 25px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Staggered animation delays */
+.recommendation-stat-card:nth-child(1) { animation-delay: 0.1s; }
+.recommendation-stat-card:nth-child(2) { animation-delay: 0.2s; }
+.recommendation-stat-card:nth-child(3) { animation-delay: 0.3s; }
+.recommendation-stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.recommendation-category:nth-child(1) { animation-delay: 0.2s; }
+.recommendation-category:nth-child(2) { animation-delay: 0.4s; }
+.recommendation-category:nth-child(3) { animation-delay: 0.6s; }
+.recommendation-category:nth-child(4) { animation-delay: 0.8s; }
+
+.category-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.recommendation-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card.critical-gap {
+    border-left: 4px solid #dc3545;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+}
+
+.recommendation-card.opportunity {
+    border-left: 4px solid #28a745;
+    background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+}
+
+.rec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.rec-priority .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.rec-impact {
+    text-align: right;
+}
+
+.rec-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.rec-description {
+    color: var(--secondary-color);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.rec-metrics {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.metric-item:last-child {
+    margin-bottom: 0;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+}
+
+.metric-value {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.opportunity-stats {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.stat-row:last-child {
+    margin-bottom: 0;
+}
+
+.rec-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.rec-actions .btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+}
+
+/* Todo Items Styles */
+.todo-list {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.todo-item {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    background: #f8f9fa;
+}
+
+.todo-item:hover {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.overdue {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffeaea 100%);
+    border-left: 4px solid #dc3545;
+}
+
+.todo-item.urgent {
+    background: linear-gradient(135deg, #fffbf0 0%, #fff3cd 100%);
+    border-left: 4px solid #ffc107;
+}
+
+.todo-item.normal {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-left: 4px solid #17a2b8;
+}
+
+.todo-checkbox {
+    margin-right: 15px;
+    padding-top: 5px;
+}
+
+.todo-content {
+    flex: 1;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.todo-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.todo-desc {
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.todo-meta {
+    margin-bottom: 15px;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.todo-actions .btn {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+}
+
+/* Insight Cards */
+.insight-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.insight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.insight-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    font-size: 1.2rem;
+}
+
+.insight-meta {
+    text-align: right;
+}
+
+.insight-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.insight-desc {
+    color: var(--secondary-color);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.insight-actions .btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+}
+
+/* Task Stats */
+.task-stats .stat-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+}
+
+.task-stats .stat-item:last-child {
+    border-bottom: none;
+}
+
+.progress-section {
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Responsive adjustments for Recommendations page */
+@media (max-width: 768px) {
+    .recommendation-category {
+        padding: 15px;
+    }
+    
+    .recommendation-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .rec-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .rec-actions {
+        flex-direction: column;
+    }
+    
+    .todo-item {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .todo-checkbox {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .todo-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .todo-actions {
+        flex-direction: column;
+    }
+}
+
 /* Recommendations Modal Styles */
 .recommendations-list {
     max-height: 500px;
