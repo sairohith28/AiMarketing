@@ -366,6 +366,35 @@ body {
     color: var(--danger-color);
 }
 
+/* AI Recommendations Card Specific Styles */
+.ai-recommendations-card {
+    background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+    color: white;
+
+}
+
+.ai-recommendations-card .kpi-number {
+    color: rgb(9, 9, 9);
+}
+
+.ai-recommendations-card .kpi-label {
+    color: rgba(71, 70, 70, 0.9);
+}
+
+.ai-recommendations-card .kpi-change.positive {
+    color: #69b269;
+}
+
+.ai-recommendations-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    border-left-color: #667eea;
+}
+
+.bg-purple {
+    background: linear-gradient(135deg, #9C27B0 0%, #E91E63 100%) !important;
+}
+
 /* Chart Cards */
 .chart-card {
     background: white;

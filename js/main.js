@@ -745,6 +745,11 @@ function handleKPIClick(kpiType) {
             document.querySelector('[data-section="reports"]').classList.add('active');
             document.querySelector('[data-section="dashboard"]').classList.remove('active');
             break;
+        case 'ai-recommendations':
+            showSection('recommendations');
+            document.querySelector('[data-section="recommendations"]').classList.add('active');
+            document.querySelector('[data-section="dashboard"]').classList.remove('active');
+            break;
     }
 }
 
