@@ -1,0 +1,437 @@
+/* Campaigns Page Styles */
+
+/* Stat Cards */
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.active-campaigns::before {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.total-reach::before {
+    background: linear-gradient(90deg, #007bff, #6610f2);
+}
+
+.avg-ctr::before {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
+
+.total-budget::before {
+    background: linear-gradient(90deg, #dc3545, #e83e8c);
+}
+
+.stat-card .card-body {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.active-campaigns .stat-icon {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.total-reach .stat-icon {
+    background: linear-gradient(135deg, #007bff, #6610f2);
+}
+
+.avg-ctr .stat-icon {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+}
+
+.total-budget .stat-icon {
+    background: linear-gradient(135deg, #dc3545, #e83e8c);
+}
+
+.stat-content {
+    flex-grow: 1;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.stat-change {
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-change.positive {
+    color: #28a745;
+}
+
+.stat-change.negative {
+    color: #dc3545;
+}
+
+.stat-change.neutral {
+    color: #6c757d;
+}
+
+/* Campaigns Table Card */
+.campaigns-table-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.campaigns-table-card .card-header {
+    background: white;
+    border-bottom: 2px solid #f8f9fa;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+/* Campaigns Table */
+.campaigns-table {
+    font-size: 0.875rem;
+}
+
+.campaigns-table th {
+    background-color: #f8f9fa;
+    border-top: none;
+    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    color: #495057;
+    padding: 15px;
+    white-space: nowrap;
+}
+
+.campaigns-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.campaign-row {
+    transition: all 0.2s ease;
+}
+
+.campaign-row:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.001);
+}
+
+/* Campaign Info */
+.campaign-info .campaign-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.campaign-info .campaign-meta {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* Platform Icons */
+.platform-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.platform-icons i {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.platform-icons .fa-google {
+    background: #4285f4;
+}
+
+.platform-icons .fa-facebook {
+    background: #1877f2;
+}
+
+.platform-icons .fa-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.platform-icons .fa-linkedin {
+    background: #0077b5;
+}
+
+.platform-icons .fa-youtube {
+    background: #ff0000;
+}
+
+/* Spend Info */
+.spend-info .spend-amount {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.spend-info .spend-percentage {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons .btn {
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.action-buttons .btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Campaign Filters */
+.campaign-filters select {
+    min-width: 140px;
+    border-radius: 6px;
+}
+
+/* Create Campaign Modal */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-bottom: 2px solid #e9ecef;
+    border-radius: 12px 12px 0 0;
+}
+
+.platform-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-check-label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Loading States */
+.campaigns-table tbody tr.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.campaigns-table tbody tr.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Status Specific Styles */
+.campaign-row[data-status="active"] {
+    border-left: 3px solid #28a745;
+}
+
+.campaign-row[data-status="paused"] {
+    border-left: 3px solid #ffc107;
+}
+
+.campaign-row[data-status="completed"] {
+    border-left: 3px solid #6c757d;
+}
+
+.campaign-row[data-status="draft"] {
+    border-left: 3px solid #17a2b8;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .campaigns-table {
+        font-size: 0.8125rem;
+    }
+    
+    .campaigns-table th,
+    .campaigns-table td {
+        padding: 12px 8px;
+    }
+}
+
+@media (max-width: 992px) {
+    .stat-card .card-body {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .campaigns-table-card .card-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .campaigns-table-card .card-header .d-flex:last-child {
+        justify-content: center;
+    }
+    
+    /* Hide some columns on mobile */
+    .campaigns-table th:nth-child(3),
+    .campaigns-table td:nth-child(3),
+    .campaigns-table th:nth-child(7),
+    .campaigns-table td:nth-child(7) {
+        display: none;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 2px;
+    }
+}
+
+@media (max-width: 576px) {
+    .platform-checkboxes {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .campaigns-table th:nth-child(4),
+    .campaigns-table td:nth-child(4),
+    .campaigns-table th:nth-child(5),
+    .campaigns-table td:nth-child(5) {
+        display: none;
+    }
+    
+    .campaign-info .campaign-name {
+        font-size: 0.875rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation Classes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.campaign-row {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.campaign-row:nth-child(1) { animation-delay: 0.1s; }
+.campaign-row:nth-child(2) { animation-delay: 0.2s; }
+.campaign-row:nth-child(3) { animation-delay: 0.3s; }
+.campaign-row:nth-child(4) { animation-delay: 0.4s; }
+
+/* Print Styles */
+@media print {
+    .action-buttons,
+    .campaigns-table-card .card-header .d-flex:last-child,
+    .sidebar,
+    .top-header .d-flex:last-child {
+        display: none !important;
+    }
+    
+    .campaigns-table {
+        font-size: 0.75rem;
+    }
+    
+    .campaign-row {
+        break-inside: avoid;
+    }
+}

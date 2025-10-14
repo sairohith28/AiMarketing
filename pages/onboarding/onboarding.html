@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding - Marketing Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../../shared/shared-styles.css">
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="onboarding-styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h4><i class="fas fa-heartbeat me-2 text-primary"></i>MedFlow</h4>
+                <button class="btn btn-link sidebar-toggle d-md-none" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard/dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../recommendations/recommendations.html">
+                            <i class="fas fa-lightbulb"></i>Recommendations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../campaigns/campaigns.html">
+                            <i class="fas fa-bullhorn"></i>Campaigns
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../leads/leads.html">
+                            <i class="fas fa-users"></i>Leads
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../assets/assets.html">
+                            <i class="fas fa-images"></i>Assets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../approvals/approvals.html">
+                            <i class="fas fa-check-circle"></i>Approvals
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="onboarding.html">
+                            <i class="fas fa-rocket"></i>Onboarding
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../competitor-analysis/competitor-analysis.html">
+                            <i class="fas fa-chess"></i>Competitor Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../reports/reports.html">
+                            <i class="fas fa-chart-bar"></i>Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../settings/settings.html">
+                            <i class="fas fa-cog"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="content" class="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-link sidebar-toggle d-md-none me-2" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0">Onboarding Center</h5>
+                    </div>
+
+                    <div class="navbar-nav ms-auto flex-row">
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                <div class="user-avatar me-2">JD</div>
+                                <span class="d-none d-sm-inline">John Doe</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div class="container-fluid p-4">
+                <!-- Welcome Section -->
+                <div class="welcome-section mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2>Welcome to MedFlow Marketing!</h2>
+                            <p class="lead">Let's get you set up with everything you need to succeed. Complete your onboarding to unlock the full potential of your marketing platform.</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="progress-circle" data-progress="65">
+                                <div class="progress-text">65%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <!-- Onboarding Steps -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-list-check me-2"></i>Getting Started Checklist</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="onboardingSteps" class="onboarding-steps">
+                                    <!-- Steps will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <!-- Quick Actions -->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="window.onboardingPage.startGuidedTour()">
+                                        <i class="fas fa-play me-2"></i>Start Guided Tour
+                                    </button>
+                                    <button class="btn btn-outline-primary" onclick="window.onboardingPage.scheduleDemo()">
+                                        <i class="fas fa-calendar me-2"></i>Schedule Demo
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="window.onboardingPage.watchVideo()">
+                                        <i class="fas fa-video me-2"></i>Watch Tutorial
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Stats -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Your Progress</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="progress-stat mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="progress-label">Profile Setup</span>
+                                        <span class="progress-value">100%</span>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-stat mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="progress-label">Team Setup</span>
+                                        <span class="progress-value">75%</span>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-info" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-stat mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="progress-label">Integrations</span>
+                                        <span class="progress-value">40%</span>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-stat">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="progress-label">First Campaign</span>
+                                        <span class="progress-value">20%</span>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Sections -->
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card resource-card">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Learning Resources</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="resource-list">
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-book text-primary"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Getting Started Guide</h6>
+                                            <p>Comprehensive guide to using MedFlow Marketing</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Read</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-video text-info"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Video Tutorials</h6>
+                                            <p>Step-by-step video guides for key features</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Watch</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-comments text-success"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Community Forum</h6>
+                                            <p>Connect with other healthcare marketers</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Join</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card resource-card">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-users me-2"></i>Team & Support</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="resource-list">
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-user-plus text-primary"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Invite Team Members</h6>
+                                            <p>Add your marketing team to collaborate</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Invite</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-headset text-info"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Customer Support</h6>
+                                            <p>Get help from our expert support team</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Contact</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-calendar-check text-success"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Success Manager</h6>
+                                            <p>Schedule a call with your success manager</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Schedule</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card resource-card">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="fas fa-tools me-2"></i>Tools & Integrations</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="resource-list">
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-plug text-primary"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Connect CRM</h6>
+                                            <p>Integrate with your existing CRM system</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Setup</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-envelope text-info"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Email Marketing</h6>
+                                            <p>Configure email marketing automation</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Configure</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="resource-item">
+                                        <div class="resource-icon">
+                                            <i class="fas fa-chart-line text-success"></i>
+                                        </div>
+                                        <div class="resource-content">
+                                            <h6>Analytics Setup</h6>
+                                            <p>Connect Google Analytics and tracking</p>
+                                        </div>
+                                        <div class="resource-action">
+                                            <button class="btn btn-sm btn-outline-primary">Connect</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>Ready for Next Steps?</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6>Complete Your First Campaign</h6>
+                                <p class="mb-0">Once you've finished the initial setup, you'll be ready to create and launch your first marketing campaign. Our step-by-step wizard will guide you through the process.</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-success btn-lg" onclick="window.onboardingPage.createFirstCampaign()">
+                                    <i class="fas fa-rocket me-2"></i>Create First Campaign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guided Tour Modal -->
+    <div class="modal fade" id="guidedTourModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-map-marked-alt me-2"></i>Guided Platform Tour
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tour-content">
+                        <div class="tour-step active" data-step="1">
+                            <div class="tour-image mb-3">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-tachometer-alt fa-3x text-primary"></i>
+                                </div>
+                            </div>
+                            <h6>Dashboard Overview</h6>
+                            <p>Your dashboard provides a comprehensive view of your marketing performance, key metrics, and recent activity. Monitor your campaigns and track success in real-time.</p>
+                        </div>
+                        
+                        <div class="tour-step" data-step="2">
+                            <div class="tour-image mb-3">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-bullhorn fa-3x text-primary"></i>
+                                </div>
+                            </div>
+                            <h6>Campaign Management</h6>
+                            <p>Create, manage, and optimize your marketing campaigns. Use our templates and automation tools to streamline your marketing efforts and improve results.</p>
+                        </div>
+                        
+                        <div class="tour-step" data-step="3">
+                            <div class="tour-image mb-3">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-users fa-3x text-primary"></i>
+                                </div>
+                            </div>
+                            <h6>Lead Management</h6>
+                            <p>Track and nurture your leads through the patient journey. Score leads, manage follow-ups, and convert prospects into patients with our CRM tools.</p>
+                        </div>
+                        
+                        <div class="tour-step" data-step="4">
+                            <div class="tour-image mb-3">
+                                <div class="placeholder-image">
+                                    <i class="fas fa-chart-bar fa-3x text-primary"></i>
+                                </div>
+                            </div>
+                            <h6>Analytics & Reporting</h6>
+                            <p>Generate detailed reports and analyze your marketing performance. Export data, schedule reports, and gain insights to optimize your strategies.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tour-navigation mt-4">
+                        <div class="tour-progress">
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 25%"></div>
+                            </div>
+                            <div class="tour-counter">Step 1 of 4</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" id="tourPrevBtn" disabled>
+                        <i class="fas fa-chevron-left me-1"></i>Previous
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Skip Tour</button>
+                    <button type="button" class="btn btn-primary" id="tourNextBtn">
+                        Next<i class="fas fa-chevron-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step Detail Modal -->
+    <div class="modal fade" id="stepDetailModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stepDetailTitle">Step Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="stepDetailContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="stepActionBtn">Complete Step</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Shared Scripts -->
+    <script src="../../shared/shared-scripts.js"></script>
+    <!-- Page Scripts -->
+    <script src="onboarding-scripts.js"></script>
+</body>
+</html>

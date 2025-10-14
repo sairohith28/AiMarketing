@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitor Analysis - Marketing Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="../../shared/shared-styles.css">
+    <!-- Page Styles -->
+    <link rel="stylesheet" href="competitor-analysis-styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h4><i class="fas fa-heartbeat me-2 text-primary"></i>MedFlow</h4>
+                <button class="btn btn-link sidebar-toggle d-md-none" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../dashboard/dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../recommendations/recommendations.html">
+                            <i class="fas fa-lightbulb"></i>Recommendations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../campaigns/campaigns.html">
+                            <i class="fas fa-bullhorn"></i>Campaigns
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../leads/leads.html">
+                            <i class="fas fa-users"></i>Leads
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../assets/assets.html">
+                            <i class="fas fa-images"></i>Assets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../approvals/approvals.html">
+                            <i class="fas fa-check-circle"></i>Approvals
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../onboarding/onboarding.html">
+                            <i class="fas fa-rocket"></i>Onboarding
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="competitor-analysis.html">
+                            <i class="fas fa-chess"></i>Competitor Analysis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../reports/reports.html">
+                            <i class="fas fa-chart-bar"></i>Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../settings/settings.html">
+                            <i class="fas fa-cog"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="content" class="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-link sidebar-toggle d-md-none me-2" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0">Competitor Intelligence</h5>
+                    </div>
+
+                    <div class="navbar-nav ms-auto flex-row">
+                        <button class="btn btn-primary me-2" onclick="window.competitorPage.addCompetitor()">
+                            <i class="fas fa-plus me-1"></i>Add Competitor
+                        </button>
+                        <button class="btn btn-outline-secondary me-3" onclick="window.competitorPage.refreshData()">
+                            <i class="fas fa-sync-alt me-1"></i>Refresh
+                        </button>
+                        
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                                <div class="user-avatar me-2">JD</div>
+                                <span class="d-none d-sm-inline">John Doe</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div class="container-fluid p-4">
+                <!-- Overview Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon bg-primary">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stat-number">8</div>
+                                        <div class="stat-label">Competitors Tracked</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon bg-success">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stat-number">12</div>
+                                        <div class="stat-label">Market Opportunities</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon bg-warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stat-number">4</div>
+                                        <div class="stat-label">Threats Identified</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon bg-info">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div>
+                                        <div class="stat-number">85%</div>
+                                        <div class="stat-label">Market Share Analysis</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="analysisTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                                    <i class="fas fa-eye me-1"></i>Overview
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="competitors-tab" data-bs-toggle="tab" data-bs-target="#competitors" type="button" role="tab">
+                                    <i class="fas fa-users me-1"></i>Competitors
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="market-share-tab" data-bs-toggle="tab" data-bs-target="#market-share" type="button" role="tab">
+                                    <i class="fas fa-chart-pie me-1"></i>Market Share
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="campaigns-tab" data-bs-toggle="tab" data-bs-target="#campaigns" type="button" role="tab">
+                                    <i class="fas fa-bullhorn me-1"></i>Campaigns
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="insights-tab" data-bs-toggle="tab" data-bs-target="#insights" type="button" role="tab">
+                                    <i class="fas fa-lightbulb me-1"></i>Insights
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content" id="analysisTabContent">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <!-- Market Position Chart -->
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-crosshairs me-2"></i>Market Positioning</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="positioningChart" class="chart-container">
+                                                    <!-- Chart will be rendered here -->
+                                                    <div class="chart-placeholder">
+                                                        <div class="positioning-grid">
+                                                            <div class="grid-axis vertical">
+                                                                <span class="axis-label top">High Quality</span>
+                                                                <span class="axis-label bottom">Low Quality</span>
+                                                            </div>
+                                                            <div class="grid-axis horizontal">
+                                                                <span class="axis-label left">Low Price</span>
+                                                                <span class="axis-label right">High Price</span>
+                                                            </div>
+                                                            <div class="positioning-dots" id="positioningDots">
+                                                                <!-- Competitor positions will be plotted here -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Recent Activities -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-history me-2"></i>Recent Competitor Activity</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="recentActivity" class="activity-list">
+                                                    <!-- Activity items will be populated here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <!-- Top Competitors -->
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-trophy me-2"></i>Top Competitors</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="topCompetitors" class="competitor-ranking">
+                                                    <!-- Top competitors will be listed here -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Threat Level -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Threat Assessment</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="threat-meter">
+                                                    <div class="threat-level" data-level="medium">
+                                                        <div class="threat-indicator"></div>
+                                                        <div class="threat-label">Medium Risk</div>
+                                                    </div>
+                                                    <div class="threat-factors">
+                                                        <div class="factor">
+                                                            <i class="fas fa-dollar-sign text-warning"></i>
+                                                            <span>Price Competition</span>
+                                                        </div>
+                                                        <div class="factor">
+                                                            <i class="fas fa-rocket text-info"></i>
+                                                            <span>New Market Entrants</span>
+                                                        </div>
+                                                        <div class="factor">
+                                                            <i class="fas fa-cogs text-success"></i>
+                                                            <span>Technology Advances</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Competitors Tab -->
+                            <div class="tab-pane fade" id="competitors" role="tabpanel">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="Search competitors..." id="competitorSearch">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex gap-2">
+                                            <select class="form-select" id="competitorFilter">
+                                                <option value="">All Categories</option>
+                                                <option value="hospital">Hospitals</option>
+                                                <option value="clinic">Clinics</option>
+                                                <option value="specialty">Specialty Centers</option>
+                                                <option value="digital">Digital Health</option>
+                                            </select>
+                                            <button class="btn btn-outline-secondary" onclick="window.competitorPage.exportCompetitors()">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="competitorsList" class="competitors-grid">
+                                    <!-- Competitor cards will be populated here -->
+                                </div>
+                            </div>
+
+                            <!-- Market Share Tab -->
+                            <div class="tab-pane fade" id="market-share" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Market Share Distribution</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="marketShareChart" class="chart-container">
+                                                    <div class="chart-placeholder">
+                                                        <canvas id="marketShareCanvas"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-chart-line me-2"></i>Market Share Trends</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="marketTrendsChart" class="chart-container">
+                                                    <div class="chart-placeholder">
+                                                        <canvas id="marketTrendsCanvas"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-table me-2"></i>Detailed Market Analysis</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover" id="marketShareTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Competitor</th>
+                                                                <th>Market Share</th>
+                                                                <th>Change (YoY)</th>
+                                                                <th>Revenue Est.</th>
+                                                                <th>Patient Volume</th>
+                                                                <th>Geographic Reach</th>
+                                                                <th>Specialty Focus</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="marketShareTableBody">
+                                                            <!-- Table rows will be populated here -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Campaigns Tab -->
+                            <div class="tab-pane fade" id="campaigns" role="tabpanel">
+                                <div class="row mb-3">
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="Search competitor campaigns..." id="campaignSearch">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-select" id="campaignTypeFilter">
+                                            <option value="">All Campaign Types</option>
+                                            <option value="digital">Digital Marketing</option>
+                                            <option value="traditional">Traditional Media</option>
+                                            <option value="social">Social Media</option>
+                                            <option value="email">Email Marketing</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="competitorCampaigns" class="campaigns-timeline">
+                                    <!-- Campaign timeline will be populated here -->
+                                </div>
+                            </div>
+
+                            <!-- Insights Tab -->
+                            <div class="tab-pane fade" id="insights" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-brain me-2"></i>AI-Powered Insights</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="aiInsights" class="insights-list">
+                                                    <!-- AI insights will be populated here -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Strategic Recommendations</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="strategicRecommendations" class="recommendations-list">
+                                                    <!-- Recommendations will be populated here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-bullseye me-2"></i>Opportunities</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="opportunities" class="opportunity-list">
+                                                    <!-- Opportunities will be populated here -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Threats</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="threats" class="threat-list">
+                                                    <!-- Threats will be populated here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Competitor Modal -->
+    <div class="modal fade" id="addCompetitorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Add New Competitor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="addCompetitorForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Organization Name *</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Category *</label>
+                                    <select class="form-select" name="category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="hospital">Hospital System</option>
+                                        <option value="clinic">Clinic Network</option>
+                                        <option value="specialty">Specialty Center</option>
+                                        <option value="digital">Digital Health Platform</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Website URL</label>
+                                    <input type="url" class="form-control" name="website">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Primary Location</label>
+                                    <input type="text" class="form-control" name="location">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Estimated Revenue</label>
+                                    <select class="form-select" name="revenue">
+                                        <option value="">Select Range</option>
+                                        <option value="small">$1M - $10M</option>
+                                        <option value="medium">$10M - $100M</option>
+                                        <option value="large">$100M - $1B</option>
+                                        <option value="enterprise">$1B+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Threat Level</label>
+                                    <select class="form-select" name="threatLevel">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Specialty Areas</label>
+                            <div class="specialty-checkboxes">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="cardiology">
+                                    <label class="form-check-label">Cardiology</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="oncology">
+                                    <label class="form-check-label">Oncology</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="orthopedics">
+                                    <label class="form-check-label">Orthopedics</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="neurology">
+                                    <label class="form-check-label">Neurology</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="pediatrics">
+                                    <label class="form-check-label">Pediatrics</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="specialties" value="emergency">
+                                    <label class="form-check-label">Emergency Care</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="notes" rows="3" placeholder="Additional information about this competitor..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Competitor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Competitor Detail Modal -->
+    <div class="modal fade" id="competitorDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="competitorDetailTitle">Competitor Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="competitorDetailContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="editCompetitorBtn">Edit Competitor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Shared Scripts -->
+    <script src="../../shared/shared-scripts.js"></script>
+    <!-- Page Scripts -->
+    <script src="competitor-analysis-scripts.js"></script>
+</body>
+</html>
