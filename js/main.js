@@ -3758,6 +3758,40 @@ function loadModule(moduleName) {
         }).catch(error => {
             console.error('Error loading competitor analysis JS:', error);
         });
+    } else if (moduleName === 'recommendations') {
+        console.log('Loading recommendations module...');
+        loadedModules.add(moduleName);
+        loadCSS('pages/recommendations/recommendations.css');
+        loadScript('pages/recommendations/recommendations.js').then(() => {
+            console.log('Recommendations JS loaded, fetching HTML...');
+            fetch('pages/recommendations/recommendations.html')
+                .then(response => {
+                    console.log('Recommendations HTML fetch response:', response.status);
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('Recommendations HTML loaded, length:', html.length);
+                    const container = document.getElementById('recommendations-container');
+                    if (container) {
+                        container.innerHTML = html;
+                        console.log('HTML inserted, checking for initializeRecommendations function...');
+                        // Initialize recommendations functionality after loading
+                        if (typeof initializeRecommendations === 'function') {
+                            console.log('Calling initializeRecommendations...');
+                            initializeRecommendations();
+                        } else {
+                            console.error('initializeRecommendations function not found!');
+                        }
+                    } else {
+                        console.error('recommendations-container not found!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading recommendations HTML:', error);
+                });
+        }).catch(error => {
+            console.error('Error loading recommendations JS:', error);
+        });
     } else {
         console.log('Module not implemented yet:', moduleName);
     }

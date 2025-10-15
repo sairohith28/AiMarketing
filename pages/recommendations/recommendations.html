@@ -1,0 +1,527 @@
+<!-- Recommendations Content -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">
+                <i class="fas fa-lightbulb text-warning me-3"></i>
+                AI-Powered Recommendations
+            </h2>
+            <div class="d-flex align-items-center">
+                <span class="badge bg-info me-2">12 Active Items</span>
+                <button class="btn btn-outline-primary btn-sm" id="refreshAnalysisBtn">
+                    <i class="fas fa-sync-alt me-1"></i>
+                    Refresh Analysis
+                </button>
+            </div>
+        </div>
+        <p class="text-muted mt-2">Identify gaps, opportunities, and actionable insights to optimize your marketing strategy and maximize ROI</p>
+        <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>AI Analysis Complete:</strong> We've identified 18 actionable items that could increase your revenue by up to ₹8.7L over the next quarter.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Stats Row -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="recommendation-stat-card critical">
+            <div class="stat-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-content">
+                <h3>4</h3>
+                <p>Critical Gaps</p>
+                <span class="stat-desc">Immediate attention needed</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="recommendation-stat-card opportunities">
+            <div class="stat-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-content">
+                <h3>8</h3>
+                <p>Growth Opportunities</p>
+                <span class="stat-desc">Revenue potential: +₹5.2L</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="recommendation-stat-card todos">
+            <div class="stat-icon">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-content">
+                <h3>6</h3>
+                <p>Pending Actions</p>
+                <span class="stat-desc">Overdue: 2 items</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="recommendation-stat-card insights">
+            <div class="stat-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="stat-content">
+                <h3>12</h3>
+                <p>AI Insights</p>
+                <span class="stat-desc">Updated 2 hours ago</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter and Sort -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="recommendation-filters">
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="recFilter" id="all-recs" checked>
+                <label class="btn btn-outline-primary" for="all-recs">All (18)</label>
+                
+                <input type="radio" class="btn-check" name="recFilter" id="critical-recs">
+                <label class="btn btn-outline-danger" for="critical-recs">Critical (4)</label>
+                
+                <input type="radio" class="btn-check" name="recFilter" id="opportunities-recs">
+                <label class="btn btn-outline-success" for="opportunities-recs">Opportunities (8)</label>
+                
+                <input type="radio" class="btn-check" name="recFilter" id="actions-recs">
+                <label class="btn btn-outline-warning" for="actions-recs">Pending Actions (6)</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select" id="sortRecommendations">
+            <option>Sort by Priority</option>
+            <option>Sort by Impact</option>
+            <option>Sort by Date</option>
+            <option>Sort by Status</option>
+        </select>
+    </div>
+</div>
+
+<!-- Recommendations Grid -->
+<div class="recommendations-content">
+    
+    <!-- Critical Gaps Section -->
+    <div class="recommendation-category mb-4">
+        <div class="category-header">
+            <h5 class="text-danger mb-3">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Critical Gaps - Immediate Action Required
+            </h5>
+        </div>
+        
+        <div class="row">
+            <!-- Mobile Optimization Gap -->
+            <div class="col-lg-6 mb-3">
+                <div class="recommendation-card critical-gap">
+                    <div class="rec-header">
+                        <div class="rec-priority">
+                            <span class="badge bg-danger">Critical</span>
+                            <span class="badge bg-secondary ms-2">Mobile</span>
+                        </div>
+                        <div class="rec-impact">
+                            <small class="text-muted">Lost Revenue: ₹3.2L/month</small>
+                        </div>
+                    </div>
+                    <h6 class="rec-title">Mobile Website Optimization Missing</h6>
+                    <p class="rec-description">65% of your traffic is mobile, but conversion rate is 40% lower than desktop. Mobile experience needs urgent optimization.</p>
+                    
+                    <div class="rec-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">Mobile Traffic:</span>
+                            <span class="metric-value text-warning">65%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Mobile Conversion:</span>
+                            <span class="metric-value text-danger">1.2%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Desktop Conversion:</span>
+                            <span class="metric-value text-success">3.4%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="rec-actions">
+                        <button class="btn btn-danger btn-sm solve-issue-btn" data-issue="mobile-optimization">
+                            <i class="fas fa-tools me-1"></i>
+                            Solve Now
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-clock me-1"></i>
+                            Schedule Later
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Gap -->
+            <div class="col-lg-6 mb-3">
+                <div class="recommendation-card critical-gap">
+                    <div class="rec-header">
+                        <div class="rec-priority">
+                            <span class="badge bg-danger">Critical</span>
+                            <span class="badge bg-secondary ms-2">Social Media</span>
+                        </div>
+                        <div class="rec-impact">
+                            <small class="text-muted">Missed Opportunities: ₹2.1L/month</small>
+                        </div>
+                    </div>
+                    <h6 class="rec-title">Instagram Marketing Completely Missing</h6>
+                    <p class="rec-description">Your target demographic (25-45) is highly active on Instagram, but you have no presence. Competitors are capturing this audience.</p>
+                    
+                    <div class="rec-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">Target Demo on Instagram:</span>
+                            <span class="metric-value text-warning">78%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Competitor Engagement:</span>
+                            <span class="metric-value text-danger">4.2K/week</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Your Presence:</span>
+                            <span class="metric-value text-danger">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="rec-actions">
+                        <button class="btn btn-danger btn-sm solve-issue-btn" data-issue="instagram-setup">
+                            <i class="fas fa-rocket me-1"></i>
+                            Launch Instagram
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-info me-1"></i>
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Growth Opportunities Section -->
+    <div class="recommendation-category mb-4">
+        <div class="category-header">
+            <h5 class="text-success mb-3">
+                <i class="fas fa-chart-line me-2"></i>
+                Growth Opportunities - High Potential
+            </h5>
+        </div>
+        
+        <div class="row">
+            <!-- Telemedicine Opportunity -->
+            <div class="col-lg-4 mb-3">
+                <div class="recommendation-card opportunity">
+                    <div class="rec-header">
+                        <div class="rec-priority">
+                            <span class="badge bg-success">High ROI</span>
+                        </div>
+                        <div class="rec-impact">
+                            <small class="text-success">+₹3.2L Revenue</small>
+                        </div>
+                    </div>
+                    <h6 class="rec-title">Telemedicine Service Expansion</h6>
+                    <p class="rec-description">High demand for remote consultations. Launch telemedicine for follow-ups and routine check-ins.</p>
+                    
+                    <div class="opportunity-stats">
+                        <div class="stat-row">
+                            <span>Expected Leads:</span> <strong>800-1200</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>ROI Projection:</span> <strong class="text-success">320%</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="rec-actions">
+                        <button class="btn btn-success btn-sm create-opportunity-btn" data-opportunity="telemedicine">
+                            <i class="fas fa-plus me-1"></i>
+                            Create Campaign
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seasonal Campaign Opportunity -->
+            <div class="col-lg-4 mb-3">
+                <div class="recommendation-card opportunity">
+                    <div class="rec-header">
+                        <div class="rec-priority">
+                            <span class="badge bg-success">Seasonal</span>
+                        </div>
+                        <div class="rec-impact">
+                            <small class="text-success">+₹2.5L Revenue</small>
+                        </div>
+                    </div>
+                    <h6 class="rec-title">Winter Cardiac Health Campaign</h6>
+                    <p class="rec-description">Heart issues increase 30% in winter. Target patients 45+ with preventive screening packages.</p>
+                    
+                    <div class="opportunity-stats">
+                        <div class="stat-row">
+                            <span>Expected Leads:</span> <strong>450-600</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>ROI Projection:</span> <strong class="text-success">280%</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="rec-actions">
+                        <button class="btn btn-success btn-sm create-opportunity-btn" data-opportunity="seasonal-cardiac">
+                            <i class="fas fa-plus me-1"></i>
+                            Create Campaign
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Program Opportunity -->
+            <div class="col-lg-4 mb-3">
+                <div class="recommendation-card opportunity">
+                    <div class="rec-header">
+                        <div class="rec-priority">
+                            <span class="badge bg-success">Low Cost</span>
+                        </div>
+                        <div class="rec-impact">
+                            <small class="text-success">+₹1.8L Revenue</small>
+                        </div>
+                    </div>
+                    <h6 class="rec-title">Patient Referral Program</h6>
+                    <p class="rec-description">Satisfied patients can be your best marketers. Launch a structured referral program with incentives.</p>
+                    
+                    <div class="opportunity-stats">
+                        <div class="stat-row">
+                            <span>Expected Referrals:</span> <strong>200-300</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>ROI Projection:</span> <strong class="text-success">450%</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="rec-actions">
+                        <button class="btn btn-success btn-sm create-opportunity-btn" data-opportunity="referral-program">
+                            <i class="fas fa-plus me-1"></i>
+                            Setup Program
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Actions & To-dos Section -->
+    <div class="recommendation-category mb-4">
+        <div class="category-header">
+            <h5 class="text-warning mb-3">
+                <i class="fas fa-tasks me-2"></i>
+                Pending Actions & To-dos
+            </h5>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="todo-list">
+                    <!-- Overdue Task -->
+                    <div class="todo-item overdue">
+                        <div class="todo-checkbox">
+                            <input type="checkbox" class="form-check-input">
+                        </div>
+                        <div class="todo-content">
+                            <div class="todo-header">
+                                <h6 class="todo-title">Review and Approve Pending Campaign Assets</h6>
+                                <span class="badge bg-danger">Overdue</span>
+                            </div>
+                            <p class="todo-desc">3 email templates and 2 social media creatives are pending approval for the cardiology campaign.</p>
+                            <div class="todo-meta">
+                                <small class="text-muted">Due: 2 days ago • Assigned: Marketing Team</small>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn btn-warning btn-sm complete-todo-btn" data-todo="asset-approval">
+                                    <i class="fas fa-check me-1"></i>
+                                    Review Assets
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-clock me-1"></i>
+                                    Reschedule
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Urgent Task -->
+                    <div class="todo-item urgent">
+                        <div class="todo-checkbox">
+                            <input type="checkbox" class="form-check-input">
+                        </div>
+                        <div class="todo-content">
+                            <div class="todo-header">
+                                <h6 class="todo-title">Update Google Ads Budget Allocation</h6>
+                                <span class="badge bg-warning">Today</span>
+                            </div>
+                            <p class="todo-desc">Cardiology campaign is over-performing. Increase budget by 25% and reallocate from underperforming campaigns.</p>
+                            <div class="todo-meta">
+                                <small class="text-muted">Due: Today • Priority: High</small>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn btn-warning btn-sm complete-todo-btn" data-todo="budget-update">
+                                    <i class="fas fa-edit me-1"></i>
+                                    Update Budget
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    View Analytics
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regular Task -->
+                    <div class="todo-item normal">
+                        <div class="todo-checkbox">
+                            <input type="checkbox" class="form-check-input">
+                        </div>
+                        <div class="todo-content">
+                            <div class="todo-header">
+                                <h6 class="todo-title">Schedule Social Media Posts for Next Week</h6>
+                                <span class="badge bg-info">Tomorrow</span>
+                            </div>
+                            <p class="todo-desc">Prepare and schedule 7 social media posts across Facebook and Instagram for the upcoming week.</p>
+                            <div class="todo-meta">
+                                <small class="text-muted">Due: Tomorrow • Estimated: 2 hours</small>
+                            </div>
+                            <div class="todo-actions">
+                                <button class="btn btn-info btn-sm complete-todo-btn" data-todo="social-scheduling">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Schedule Posts
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-images me-1"></i>
+                                    Browse Assets
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h6>Task Overview</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="task-stats">
+                            <div class="stat-item d-flex justify-content-between">
+                                <span>Total Tasks:</span>
+                                <strong>12</strong>
+                            </div>
+                            <div class="stat-item d-flex justify-content-between">
+                                <span>Completed Today:</span>
+                                <strong class="text-success">4</strong>
+                            </div>
+                            <div class="stat-item d-flex justify-content-between">
+                                <span>Overdue:</span>
+                                <strong class="text-danger">2</strong>
+                            </div>
+                            <div class="stat-item d-flex justify-content-between">
+                                <span>Due Today:</span>
+                                <strong class="text-warning">3</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-section mt-3">
+                            <label class="form-label">Weekly Progress</label>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 65%"></div>
+                            </div>
+                            <small class="text-muted">65% completed this week</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h6>Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" id="addNewTaskBtn">
+                                <i class="fas fa-plus me-1"></i>
+                                Add New Task
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" id="viewCalendarBtn">
+                                <i class="fas fa-calendar me-1"></i>
+                                View Calendar
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" id="exportReportBtn">
+                                <i class="fas fa-download me-1"></i>
+                                Export Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Insights Section -->
+    <div class="recommendation-category">
+        <div class="category-header">
+            <h5 class="text-info mb-3">
+                <i class="fas fa-brain me-2"></i>
+                AI-Generated Insights & Predictions
+            </h5>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon">
+                            <i class="fas fa-chart-bar text-primary"></i>
+                        </div>
+                        <div class="insight-meta">
+                            <span class="badge bg-primary">Predictive</span>
+                            <small class="text-muted">Confidence: 87%</small>
+                        </div>
+                    </div>
+                    <h6 class="insight-title">Peak Demand Prediction</h6>
+                    <p class="insight-desc">AI predicts 40% increase in orthopedic consultations in the next 3 weeks due to winter sports season. Prepare targeted campaigns.</p>
+                    <div class="insight-actions">
+                        <button class="btn btn-primary btn-sm act-on-insight-btn" data-insight="orthopedic-demand">
+                            <i class="fas fa-rocket me-1"></i>
+                            Prepare Campaign
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-3">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon">
+                            <i class="fas fa-users text-success"></i>
+                        </div>
+                        <div class="insight-meta">
+                            <span class="badge bg-success">Behavioral</span>
+                            <small class="text-muted">Confidence: 92%</small>
+                        </div>
+                    </div>
+                    <h6 class="insight-title">Patient Behavior Pattern</h6>
+                    <p class="insight-desc">Patients aged 35-50 are 60% more likely to book appointments on Monday mornings. Optimize ad scheduling for better conversion.</p>
+                    <div class="insight-actions">
+                        <button class="btn btn-success btn-sm act-on-insight-btn" data-insight="scheduling-optimization">
+                            <i class="fas fa-clock me-1"></i>
+                            Optimize Scheduling
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
