@@ -348,32 +348,172 @@
                                     <h5>Service Line Performance Heatmap</h5>
                                 </div>
                                 <div class="service-heatmap p-3">
-                                    <div class="heatmap-grid">
-                                        <div class="service-tile high-performance" data-service="cardiology">
-                                            <div class="service-name">Cardiology</div>
-                                            <div class="service-leads">456 leads</div>
-                                            <div class="service-cpl">₹380 CPL</div>
+                                    <!-- Performance Legend -->
+                                    <div class="performance-legend mb-3">
+                                        <div class="legend-item">
+                                            <span class="legend-color excellent"></span>
+                                            <span>Excellent (90%+)</span>
                                         </div>
-                                        <div class="service-tile medium-performance" data-service="orthopedics">
-                                            <div class="service-name">Orthopedics</div>
-                                            <div class="service-leads">234 leads</div>
-                                            <div class="service-cpl">₹425 CPL</div>
+                                        <div class="legend-item">
+                                            <span class="legend-color good"></span>
+                                            <span>Good (70-89%)</span>
                                         </div>
-                                        <div class="service-tile high-performance" data-service="pediatrics">
-                                            <div class="service-name">Pediatrics</div>
-                                            <div class="service-leads">312 leads</div>
-                                            <div class="service-cpl">₹350 CPL</div>
+                                        <div class="legend-item">
+                                            <span class="legend-color average"></span>
+                                            <span>Average (50-69%)</span>
                                         </div>
-                                        <div class="service-tile low-performance" data-service="oncology">
-                                            <div class="service-name">Oncology</div>
-                                            <div class="service-leads">89 leads</div>
-                                            <div class="service-cpl">₹680 CPL</div>
+                                        <div class="legend-item">
+                                            <span class="legend-color poor"></span>
+                                            <span>Needs Attention (&lt;50%)</span>
                                         </div>
-                                        <div class="service-tile medium-performance" data-service="neurology">
-                                            <div class="service-name">Neurology</div>
-                                            <div class="service-leads">156 leads</div>
-                                            <div class="service-cpl">₹520 CPL</div>
-                                        </div>
+                                    </div>
+                                    
+                                    <!-- Circular Heatmap Container -->
+                                    <div class="circular-heatmap-container">
+                                        <svg class="circular-heatmap" viewBox="0 0 400 400" width="380" height="380">
+                                            <!-- Gradient Definitions -->
+                                            <defs>
+                                                <linearGradient id="excellentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#28a745"/>
+                                                    <stop offset="100%" style="stop-color:#20c997"/>
+                                                </linearGradient>
+                                                <linearGradient id="goodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#17a2b8"/>
+                                                    <stop offset="100%" style="stop-color:#20c997"/>
+                                                </linearGradient>
+                                                <linearGradient id="averageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#ffc107"/>
+                                                    <stop offset="100%" style="stop-color:#fd7e14"/>
+                                                </linearGradient>
+                                                <linearGradient id="poorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#dc3545"/>
+                                                    <stop offset="100%" style="stop-color:#e83e8c"/>
+                                                </linearGradient>
+                                            </defs>
+                                            
+                                            <!-- Center circle -->
+                                            <circle cx="200" cy="200" r="40" fill="#ffffff" stroke="#e9ecef" stroke-width="2"/>
+                                            
+                                            <!-- 8 evenly spaced arcs (45 degrees each) -->
+                                            
+                                            <!-- Arc 1: Cardiology (12 o'clock) - 92% Excellent -->
+                                            <path d="M 200 100 A 100 100 0 0 1 270.7 129.3 L 254.3 145.7 A 75 75 0 0 0 200 125 Z" 
+                                                  fill="url(#excellentGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment excellent-performance" 
+                                                  data-service="cardiology" 
+                                                  data-performance="92"/>
+                                            
+                                            <!-- Arc 2: Dermatology (1:30 o'clock) - 78% Good -->
+                                            <path d="M 270.7 129.3 A 100 100 0 0 1 300 200 L 275 200 A 75 75 0 0 0 254.3 145.7 Z" 
+                                                  fill="url(#goodGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment good-performance" 
+                                                  data-service="dermatology" 
+                                                  data-performance="78"/>
+                                            
+                                            <!-- Arc 3: Gynecology (3 o'clock) - 82% Good -->
+                                            <path d="M 300 200 A 100 100 0 0 1 270.7 270.7 L 254.3 254.3 A 75 75 0 0 0 275 200 Z" 
+                                                  fill="url(#goodGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment good-performance" 
+                                                  data-service="gynecology" 
+                                                  data-performance="82"/>
+                                            
+                                            <!-- Arc 4: Pediatrics (4:30 o'clock) - 85% Good -->
+                                            <path d="M 270.7 270.7 A 100 100 0 0 1 200 300 L 200 275 A 75 75 0 0 0 254.3 254.3 Z" 
+                                                  fill="url(#goodGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment good-performance" 
+                                                  data-service="pediatrics" 
+                                                  data-performance="85"/>
+                                            
+                                            <!-- Arc 5: Psychiatry (6 o'clock) - 58% Average -->
+                                            <path d="M 200 300 A 100 100 0 0 1 129.3 270.7 L 145.7 254.3 A 75 75 0 0 0 200 275 Z" 
+                                                  fill="url(#averageGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment average-performance" 
+                                                  data-service="psychiatry" 
+                                                  data-performance="58"/>
+                                            
+                                            <!-- Arc 6: Neurology (7:30 o'clock) - 62% Average -->
+                                            <path d="M 129.3 270.7 A 100 100 0 0 1 100 200 L 125 200 A 75 75 0 0 0 145.7 254.3 Z" 
+                                                  fill="url(#averageGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment average-performance" 
+                                                  data-service="neurology" 
+                                                  data-performance="62"/>
+                                            
+                                            <!-- Arc 7: Orthopedics (9 o'clock) - 68% Average -->
+                                            <path d="M 100 200 A 100 100 0 0 1 129.3 129.3 L 145.7 145.7 A 75 75 0 0 0 125 200 Z" 
+                                                  fill="url(#averageGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment average-performance" 
+                                                  data-service="orthopedics" 
+                                                  data-performance="68"/>
+                                            
+                                            <!-- Arc 8: Oncology (10:30 o'clock) - 35% Poor -->
+                                            <path d="M 129.3 129.3 A 100 100 0 0 1 200 100 L 200 125 A 75 75 0 0 0 145.7 145.7 Z" 
+                                                  fill="url(#poorGrad)" 
+                                                  stroke="#ffffff" 
+                                                  stroke-width="2" 
+                                                  class="heatmap-segment poor-performance" 
+                                                  data-service="oncology" 
+                                                  data-performance="35"/>
+                                            
+                                            <!-- Center Labels -->
+                                            <text x="200" y="195" text-anchor="middle" class="center-label-title">Service Line</text>
+                                            <text x="200" y="210" text-anchor="middle" class="center-label-subtitle">Performance</text>
+                                            
+                                            <!-- Labels positioned closer to their arcs -->
+                                            
+                                            <!-- Cardiology (12 o'clock) -->
+                                            <text x="200" y="85" text-anchor="middle" class="segment-label-name">Cardiology</text>
+                                            <text x="200" y="75" text-anchor="middle" class="segment-label-perf excellent">92%</text>
+                                            <text x="200" y="95" text-anchor="middle" class="segment-label-stats">456 leads • ₹380</text>
+                                            
+                                            <!-- Dermatology (1:30 o'clock) -->
+                                            <text x="315" y="155" text-anchor="start" class="segment-label-name">Dermatology</text>
+                                            <text x="315" y="145" text-anchor="start" class="segment-label-perf good">78%</text>
+                                            <text x="315" y="165" text-anchor="start" class="segment-label-stats">198 leads • ₹395</text>
+                                            
+                                            <!-- Gynecology (3 o'clock) -->
+                                            <text x="315" y="195" text-anchor="start" class="segment-label-name">Gynecology</text>
+                                            <text x="315" y="185" text-anchor="start" class="segment-label-perf good">82%</text>
+                                            <text x="315" y="205" text-anchor="start" class="segment-label-stats">267 leads • ₹365</text>
+                                            
+                                            <!-- Pediatrics (4:30 o'clock) -->
+                                            <text x="315" y="255" text-anchor="start" class="segment-label-name">Pediatrics</text>
+                                            <text x="315" y="245" text-anchor="start" class="segment-label-perf good">85%</text>
+                                            <text x="315" y="265" text-anchor="start" class="segment-label-stats">312 leads • ₹350</text>
+                                            
+                                            <!-- Psychiatry (6 o'clock) -->
+                                            <text x="200" y="325" text-anchor="middle" class="segment-label-name">Psychiatry</text>
+                                            <text x="200" y="335" text-anchor="middle" class="segment-label-perf average">58%</text>
+                                            <text x="200" y="315" text-anchor="middle" class="segment-label-stats">124 leads • ₹485</text>
+                                            
+                                            <!-- Neurology (7:30 o'clock) -->
+                                            <text x="85" y="255" text-anchor="end" class="segment-label-name">Neurology</text>
+                                            <text x="85" y="245" text-anchor="end" class="segment-label-perf average">62%</text>
+                                            <text x="85" y="265" text-anchor="end" class="segment-label-stats">156 leads • ₹520</text>
+                                            
+                                            <!-- Orthopedics (9 o'clock) -->
+                                            <text x="85" y="195" text-anchor="end" class="segment-label-name">Orthopedics</text>
+                                            <text x="85" y="185" text-anchor="end" class="segment-label-perf average">68%</text>
+                                            <text x="85" y="205" text-anchor="end" class="segment-label-stats">234 leads • ₹425</text>
+                                            
+                                            <!-- Oncology (10:30 o'clock) -->
+                                            <text x="85" y="155" text-anchor="end" class="segment-label-name urgent">Oncology</text>
+                                            <text x="85" y="145" text-anchor="end" class="segment-label-perf poor urgent">35%</text>
+                                            <text x="85" y="165" text-anchor="end" class="segment-label-stats urgent">89 leads • ₹680</text>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>

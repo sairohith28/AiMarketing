@@ -701,11 +701,23 @@ function setupDashboardInteractions() {
         });
     });
     
-    // Service Heatmap Clicks
-    document.querySelectorAll('.service-tile').forEach(tile => {
-        tile.addEventListener('click', function() {
+    // Circular Heatmap Segment Clicks
+    document.querySelectorAll('.heatmap-segment').forEach(segment => {
+        segment.addEventListener('click', function() {
             const service = this.getAttribute('data-service');
-            showAlert(`Viewing detailed analytics for ${service}`, 'info');
+            const performance = this.getAttribute('data-performance');
+            const serviceName = service.charAt(0).toUpperCase() + service.slice(1);
+            
+            showDepartmentDetails(serviceName, performance, service);
+        });
+        
+        // Add hover effects for better interactivity
+        segment.addEventListener('mouseenter', function() {
+            const service = this.getAttribute('data-service');
+            const performance = this.getAttribute('data-performance');
+            
+            // Optional: Show tooltip or highlight effect
+            this.style.cursor = 'pointer';
         });
     });
     
@@ -751,6 +763,115 @@ function handleKPIClick(kpiType) {
             document.querySelector('[data-section="dashboard"]').classList.remove('active');
             break;
     }
+}
+
+// Show Department Details
+function showDepartmentDetails(serviceName, performance, serviceKey) {
+    const performanceLevel = getPerformanceLevel(performance);
+    const recommendations = getDepartmentRecommendations(serviceKey, performance);
+    
+    const alertMessage = `
+        <div class="department-detail-popup">
+            <div class="dept-header">
+                <h6 class="mb-2">${serviceName} Department</h6>
+                <span class="badge ${getPerformanceBadgeClass(performance)}">${performance}% Performance</span>
+            </div>
+            <div class="dept-insights mt-3">
+                <div class="insight-item">
+                    <strong>Status:</strong> ${performanceLevel}
+                </div>
+                <div class="insight-item">
+                    <strong>Recommendation:</strong> ${recommendations}
+                </div>
+                <div class="action-buttons mt-3">
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewDetailedReport('${serviceKey}')">
+                        View Detailed Report
+                    </button>
+                    <button class="btn btn-sm btn-primary" onclick="createTargetedCampaign('${serviceKey}')">
+                        Create Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    showAlert(alertMessage, 'info', true);
+}
+
+// Get performance level text
+function getPerformanceLevel(performance) {
+    if (performance >= 90) return "Excellent Performance";
+    if (performance >= 70) return "Good Performance";
+    if (performance >= 50) return "Average Performance";
+    return "Needs Immediate Attention";
+}
+
+// Get performance badge class
+function getPerformanceBadgeClass(performance) {
+    if (performance >= 90) return "bg-success";
+    if (performance >= 70) return "bg-info";
+    if (performance >= 50) return "bg-warning";
+    return "bg-danger";
+}
+
+// Get department recommendations
+function getDepartmentRecommendations(serviceKey, performance) {
+    const recommendations = {
+        cardiology: {
+            high: "Continue current strategy, consider expanding services",
+            medium: "Optimize patient journey and follow-up processes",
+            low: "Review pricing strategy and competitor analysis needed"
+        },
+        pediatrics: {
+            high: "Expand pediatric subspecialties, seasonal campaigns",
+            medium: "Improve parent education programs and digital presence",
+            low: "Focus on community outreach and school partnerships"
+        },
+        orthopedics: {
+            high: "Consider sports medicine expansion",
+            medium: "Enhance post-surgery care programs",
+            low: "Review referral networks and add weekend clinics"
+        },
+        oncology: {
+            high: "Expand support services and patient navigation",
+            medium: "Improve multidisciplinary care coordination",
+            low: "Focus on early detection campaigns and patient education"
+        },
+        neurology: {
+            high: "Consider telemedicine expansion",
+            medium: "Improve appointment scheduling and wait times",
+            low: "Enhance stroke and headache specialty services"
+        },
+        dermatology: {
+            high: "Add cosmetic services and seasonal campaigns",
+            medium: "Improve online booking and telehealth options",
+            low: "Focus on skin cancer awareness and prevention programs"
+        },
+        psychiatry: {
+            high: "Expand therapy options and group sessions",
+            medium: "Improve mental health awareness campaigns",
+            low: "Focus on stigma reduction and community partnerships"
+        },
+        gynecology: {
+            high: "Expand women's wellness programs",
+            medium: "Improve prenatal and postnatal care services",
+            low: "Focus on reproductive health education and outreach"
+        }
+    };
+    
+    const level = performance >= 70 ? 'high' : performance >= 50 ? 'medium' : 'low';
+    return recommendations[serviceKey]?.[level] || "Conduct detailed performance analysis";
+}
+
+// View detailed report (placeholder function)
+function viewDetailedReport(serviceKey) {
+    showAlert(`Opening detailed report for ${serviceKey} department...`, 'info');
+}
+
+// Create targeted campaign (placeholder function)
+function createTargetedCampaign(serviceKey) {
+    showAlert(`Creating targeted campaign for ${serviceKey} department...`, 'success');
+    // This could open the campaign modal with pre-filled data
 }
 
 // Update Trends Chart based on timeframe
@@ -1058,24 +1179,33 @@ function updateCompetitorData(radius) {
 }
 
 // Utility Functions
-function showAlert(message, type = 'info') {
+function showAlert(message, type = 'info', isHTML = false) {
     // Create alert element
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    `;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; max-width: 400px;';
+    
+    if (isHTML) {
+        alertDiv.innerHTML = `
+            <div class="alert-content">${message}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+    } else {
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+    }
     
     document.body.appendChild(alertDiv);
     
-    // Auto-remove after 5 seconds
+    // Auto-remove after 8 seconds for HTML alerts, 5 seconds for regular
+    const timeout = isHTML ? 8000 : 5000;
     setTimeout(() => {
         if (alertDiv.parentNode) {
             alertDiv.remove();
         }
-    }, 5000);
+    }, timeout);
 }
 
 // Toast notifications
