@@ -1,0 +1,413 @@
+<!-- Dashboard Content -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0">Marketing Dashboard</h2>
+    </div>
+</div>
+
+    <!-- KPI Cards Grid - Following exact specification -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="kpi-card clickable-card" data-kpi="campaigns">
+                <div class="kpi-icon bg-primary">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-number">12</h3>
+                    <p class="kpi-label">Campaigns Live</p>
+                    <span class="kpi-change positive">+2 this week</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="kpi-card clickable-card" data-kpi="leads">
+                <div class="kpi-icon bg-success">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-number">1,247</h3>
+                    <p class="kpi-label">Total Leads</p>
+                    <span class="kpi-change positive">+15.2%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="kpi-card clickable-card" data-kpi="cpl">
+                <div class="kpi-icon bg-info">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-number">₹425</h3>
+                    <p class="kpi-label">Avg CPL</p>
+                    <span class="kpi-change negative">-8.3%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="kpi-card clickable-card ai-recommendations-card" data-kpi="ai-recommendations">
+                <div class="kpi-icon bg-purple">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-number">18</h3>
+                    <p class="kpi-label">AI Recommendations</p>
+                    <span class="kpi-change positive">+5 new this week</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Recommendations Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="recommendations-card">
+                <div class="recommendations-header d-flex align-items-center mb-4">
+                    <h5 class="mb-0 me-3">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                        AI Recommendations
+                    </h5>
+                    <span class="badge bg-gradient-primary">4 New Insights</span>
+                </div>
+                
+                <div class="recommendations-grid">
+                    <div class="row">
+                        <!-- High Priority Recommendation -->
+                        <div class="col-xl-6 col-lg-12 mb-3">
+                            <div class="recommendation-preview high-priority" data-insight="seasonal-cardiac">
+                                <div class="recommendation-preview-header d-flex justify-content-between align-items-start mb-2">
+                                    <div class="priority-badges">
+                                        <span class="badge bg-danger">High Priority</span>
+                                        <span class="badge bg-success ms-1">+₹2.5L Revenue</span>
+                                    </div>
+                                    <div class="preview-actions">
+                                        <button class="btn btn-sm btn-outline-success accept-insight-preview me-1" data-insight="seasonal-cardiac" title="Accept">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger reject-insight-preview" data-insight="seasonal-cardiac" title="Reject">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <h6 class="recommendation-preview-title">Seasonal Cardiac Health Campaign</h6>
+                                <p class="recommendation-preview-desc">Winter cardiac screening for patients 45+ with 30% higher risk during cold months.</p>
+                                <div class="preview-metrics d-flex justify-content-between">
+                                    <small><strong>450-600</strong> leads</small>
+                                    <small><strong>₹320-380</strong> CPL</small>
+                                    <small><strong>280%</strong> ROI</small>
+                                </div>
+                                <button class="btn btn-primary btn-sm w-100 mt-2 create-campaign-preview" data-insight="seasonal-cardiac">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Medium Priority Recommendation -->
+                        <div class="col-xl-6 col-lg-12 mb-3">
+                            <div class="recommendation-preview medium-priority" data-insight="diabetes-awareness">
+                                <div class="recommendation-preview-header d-flex justify-content-between align-items-start mb-2">
+                                    <div class="priority-badges">
+                                        <span class="badge bg-warning">Medium Priority</span>
+                                        <span class="badge bg-success ms-1">+₹1.8L Revenue</span>
+                                    </div>
+                                    <div class="preview-actions">
+                                        <button class="btn btn-sm btn-outline-success accept-insight-preview me-1" data-insight="diabetes-awareness" title="Accept">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger reject-insight-preview" data-insight="diabetes-awareness" title="Reject">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <h6 class="recommendation-preview-title">World Diabetes Day Campaign</h6>
+                                <p class="recommendation-preview-desc">Comprehensive diabetes screening targeting working professionals aged 30-55.</p>
+                                <div class="preview-metrics d-flex justify-content-between">
+                                    <small><strong>300-420</strong> leads</small>
+                                    <small><strong>₹280-340</strong> CPL</small>
+                                    <small><strong>235%</strong> ROI</small>
+                                </div>
+                                <button class="btn btn-primary btn-sm w-100 mt-2 create-campaign-preview" data-insight="diabetes-awareness">
+                                    <i class="fas fa-rocket me-1"></i>
+                                    Create Campaign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Opportunities Row -->
+                    <div class="additional-opportunities">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="more-opportunities-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="text-muted">
+                                                <i class="fas fa-plus-circle me-2"></i>
+                                                2 more opportunities available: Women's Health Campaign (+₹1.2L), Telemedicine Expansion (+₹3.2L)
+                                            </span>
+                                        </div>
+                                        <button id="viewAllRecommendationsBtn" class="btn btn-outline-secondary btn-sm">
+                                            View All
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trend Charts Panel with Timeframe Selector -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="chart-card">
+                <div class="chart-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Leads & CPL Trends</h5>
+                    <div class="timeframe-selector">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <input type="radio" class="btn-check" name="timeframe" id="7days" checked>
+                            <label class="btn btn-outline-primary" for="7days">7D</label>
+                            
+                            <input type="radio" class="btn-check" name="timeframe" id="30days">
+                            <label class="btn btn-outline-primary" for="30days">30D</label>
+                            
+                            <input type="radio" class="btn-check" name="timeframe" id="90days">
+                            <label class="btn btn-outline-primary" for="90days">90D</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Heatmap and Alerts Row -->
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h5>Service Line Performance Heatmap</h5>
+                </div>
+                <div class="service-heatmap p-3">
+                    <!-- Performance Legend -->
+                    <div class="performance-legend mb-3">
+                        <div class="legend-item">
+                            <span class="legend-color excellent"></span>
+                            <span>Excellent (90%+)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color good"></span>
+                            <span>Good (70-89%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color average"></span>
+                            <span>Average (50-69%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color poor"></span>
+                            <span>Needs Attention (&lt;50%)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Circular Heatmap Container -->
+                    <div class="circular-heatmap-container">
+                        <svg class="circular-heatmap" viewBox="0 0 400 400" width="380" height="380">
+                            <!-- Gradient Definitions -->
+                            <defs>
+                                <linearGradient id="excellentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#28a745"/>
+                                    <stop offset="100%" style="stop-color:#20c997"/>
+                                </linearGradient>
+                                <linearGradient id="goodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#17a2b8"/>
+                                    <stop offset="100%" style="stop-color:#20c997"/>
+                                </linearGradient>
+                                <linearGradient id="averageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ffc107"/>
+                                    <stop offset="100%" style="stop-color:#fd7e14"/>
+                                </linearGradient>
+                                <linearGradient id="poorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#dc3545"/>
+                                    <stop offset="100%" style="stop-color:#e83e8c"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Center circle -->
+                            <circle cx="200" cy="200" r="40" fill="#ffffff" stroke="#e9ecef" stroke-width="2"/>
+                            
+                            <!-- 8 evenly spaced arcs (45 degrees each) -->
+                            
+                            <!-- Arc 1: Cardiology (12 o'clock) - 92% Excellent -->
+                            <path d="M 200 100 A 100 100 0 0 1 270.7 129.3 L 254.3 145.7 A 75 75 0 0 0 200 125 Z" 
+                                  fill="url(#excellentGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment excellent-performance" 
+                                  data-service="cardiology" 
+                                  data-performance="92"/>
+                            
+                            <!-- Arc 2: Dermatology (1:30 o'clock) - 78% Good -->
+                            <path d="M 270.7 129.3 A 100 100 0 0 1 300 200 L 275 200 A 75 75 0 0 0 254.3 145.7 Z" 
+                                  fill="url(#goodGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment good-performance" 
+                                  data-service="dermatology" 
+                                  data-performance="78"/>
+                            
+                            <!-- Arc 3: Gynecology (3 o'clock) - 82% Good -->
+                            <path d="M 300 200 A 100 100 0 0 1 270.7 270.7 L 254.3 254.3 A 75 75 0 0 0 275 200 Z" 
+                                  fill="url(#goodGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment good-performance" 
+                                  data-service="gynecology" 
+                                  data-performance="82"/>
+                            
+                            <!-- Arc 4: Pediatrics (4:30 o'clock) - 85% Good -->
+                            <path d="M 270.7 270.7 A 100 100 0 0 1 200 300 L 200 275 A 75 75 0 0 0 254.3 254.3 Z" 
+                                  fill="url(#goodGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment good-performance" 
+                                  data-service="pediatrics" 
+                                  data-performance="85"/>
+                            
+                            <!-- Arc 5: Psychiatry (6 o'clock) - 58% Average -->
+                            <path d="M 200 300 A 100 100 0 0 1 129.3 270.7 L 145.7 254.3 A 75 75 0 0 0 200 275 Z" 
+                                  fill="url(#averageGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment average-performance" 
+                                  data-service="psychiatry" 
+                                  data-performance="58"/>
+                            
+                            <!-- Arc 6: Neurology (7:30 o'clock) - 62% Average -->
+                            <path d="M 129.3 270.7 A 100 100 0 0 1 100 200 L 125 200 A 75 75 0 0 0 145.7 254.3 Z" 
+                                  fill="url(#averageGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment average-performance" 
+                                  data-service="neurology" 
+                                  data-performance="62"/>
+                            
+                            <!-- Arc 7: Orthopedics (9 o'clock) - 68% Average -->
+                            <path d="M 100 200 A 100 100 0 0 1 129.3 129.3 L 145.7 145.7 A 75 75 0 0 0 125 200 Z" 
+                                  fill="url(#averageGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment average-performance" 
+                                  data-service="orthopedics" 
+                                  data-performance="68"/>
+                            
+                            <!-- Arc 8: Oncology (10:30 o'clock) - 35% Poor -->
+                            <path d="M 129.3 129.3 A 100 100 0 0 1 200 100 L 200 125 A 75 75 0 0 0 145.7 145.7 Z" 
+                                  fill="url(#poorGrad)" 
+                                  stroke="#ffffff" 
+                                  stroke-width="2" 
+                                  class="heatmap-segment poor-performance" 
+                                  data-service="oncology" 
+                                  data-performance="35"/>
+                            
+                            <!-- Center Labels -->
+                            <text x="200" y="195" text-anchor="middle" class="center-label-title">Service Line</text>
+                            <text x="200" y="210" text-anchor="middle" class="center-label-subtitle">Performance</text>
+                            
+                            <!-- Labels positioned closer to their arcs -->
+                            
+                            <!-- Cardiology (12 o'clock) -->
+                            <text x="200" y="85" text-anchor="middle" class="segment-label-name">Cardiology</text>
+                            <text x="200" y="75" text-anchor="middle" class="segment-label-perf excellent">92%</text>
+                            <text x="200" y="95" text-anchor="middle" class="segment-label-stats">456 leads • ₹380</text>
+                            
+                            <!-- Dermatology (1:30 o'clock) -->
+                            <text x="315" y="155" text-anchor="start" class="segment-label-name">Dermatology</text>
+                            <text x="315" y="145" text-anchor="start" class="segment-label-perf good">78%</text>
+                            <text x="315" y="165" text-anchor="start" class="segment-label-stats">198 leads • ₹395</text>
+                            
+                            <!-- Gynecology (3 o'clock) -->
+                            <text x="315" y="195" text-anchor="start" class="segment-label-name">Gynecology</text>
+                            <text x="315" y="185" text-anchor="start" class="segment-label-perf good">82%</text>
+                            <text x="315" y="205" text-anchor="start" class="segment-label-stats">267 leads • ₹365</text>
+                            
+                            <!-- Pediatrics (4:30 o'clock) -->
+                            <text x="315" y="255" text-anchor="start" class="segment-label-name">Pediatrics</text>
+                            <text x="315" y="245" text-anchor="start" class="segment-label-perf good">85%</text>
+                            <text x="315" y="265" text-anchor="start" class="segment-label-stats">312 leads • ₹350</text>
+                            
+                            <!-- Psychiatry (6 o'clock) -->
+                            <text x="200" y="325" text-anchor="middle" class="segment-label-name">Psychiatry</text>
+                            <text x="200" y="335" text-anchor="middle" class="segment-label-perf average">58%</text>
+                            <text x="200" y="315" text-anchor="middle" class="segment-label-stats">124 leads • ₹485</text>
+                            
+                            <!-- Neurology (7:30 o'clock) -->
+                            <text x="85" y="255" text-anchor="end" class="segment-label-name">Neurology</text>
+                            <text x="85" y="245" text-anchor="end" class="segment-label-perf average">62%</text>
+                            <text x="85" y="265" text-anchor="end" class="segment-label-stats">156 leads • ₹520</text>
+                            
+                            <!-- Orthopedics (9 o'clock) -->
+                            <text x="85" y="195" text-anchor="end" class="segment-label-name">Orthopedics</text>
+                            <text x="85" y="185" text-anchor="end" class="segment-label-perf average">68%</text>
+                            <text x="85" y="205" text-anchor="end" class="segment-label-stats">234 leads • ₹425</text>
+                            
+                            <!-- Oncology (10:30 o'clock) -->
+                            <text x="85" y="155" text-anchor="end" class="segment-label-name urgent">Oncology</text>
+                            <text x="85" y="145" text-anchor="end" class="segment-label-perf poor urgent">35%</text>
+                            <text x="85" y="165" text-anchor="end" class="segment-label-stats urgent">89 leads • ₹680</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="alerts-todos-panel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Alerts & To-Dos</h5>
+                    <span class="badge bg-danger">3</span>
+                </div>
+                
+                <div class="alert-item urgent">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-triangle text-danger"></i>
+                    </div>
+                    <div class="alert-content">
+                        <strong>Budget Alert</strong>
+                        <p class="mb-1">Oncology campaign exceeding daily budget by 25%</p>
+                        <small class="text-muted">30 minutes ago</small>
+                        <div class="alert-actions mt-2">
+                            <button class="btn btn-sm btn-outline-primary">Adjust Budget</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert-item normal">
+                    <div class="alert-icon">
+                        <i class="fas fa-info-circle text-info"></i>
+                    </div>
+                    <div class="alert-content">
+                        <strong>Performance Update</strong>
+                        <p class="mb-1">Cardiology CPL improved by 12% this week</p>
+                        <small class="text-muted">2 hours ago</small>
+                    </div>
+                </div>
+                
+                <div class="alert-item todo">
+                    <div class="alert-icon">
+                        <i class="fas fa-tasks text-warning"></i>
+                    </div>
+                    <div class="alert-content">
+                        <strong>Action Required</strong>
+                        <p class="mb-1">Review and approve 2 pending campaign assets</p>
+                        <small class="text-muted">4 hours ago</small>
+                        <div class="alert-actions mt-2">
+                            <button class="btn btn-sm btn-outline-primary">Review Assets</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

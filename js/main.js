@@ -344,7 +344,7 @@ function handleSidebarNavigation(e) {
     e.currentTarget.classList.add('active');
     
     // Show target section
-    showSection(targetSection);
+    switchToSection(targetSection);
     
     // Close sidebar on mobile
     if (window.innerWidth < 1200) {
@@ -3609,6 +3609,8 @@ function updateTaskStats() {
 }
 
 function switchToSection(sectionName) {
+    console.log('Switching to section:', sectionName);
+    
     // Remove active class from all sections
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
@@ -3623,11 +3625,140 @@ function switchToSection(sectionName) {
     const targetSection = document.getElementById(sectionName + '-section');
     if (targetSection) {
         targetSection.classList.add('active');
+        console.log('Section made active:', sectionName + '-section');
+        
+        // Load module content if not already loaded
+        loadModule(sectionName);
+    } else {
+        console.error('Target section not found:', sectionName + '-section');
     }
     
     // Add active class to corresponding nav link
     const targetNav = document.querySelector(`[data-section="${sectionName}"]`);
     if (targetNav) {
         targetNav.classList.add('active');
+    }
+}
+
+// Dynamic loading functions for modules
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+            resolve();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+function loadCSS(href) {
+    if (document.querySelector(`link[href="${href}"]`)) {
+        return;
+    }
+    
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+// Track loaded modules to prevent duplicate loading
+const loadedModules = new Set();
+
+// Load module function for dynamic content
+function loadModule(moduleName) {
+    // Check if module is already loaded
+    if (loadedModules.has(moduleName)) {
+        console.log(`Module ${moduleName} already loaded, skipping...`);
+        return;
+    }
+    
+    if (moduleName === 'dashboard') {
+        loadedModules.add(moduleName);
+        loadCSS('pages/dashboard/dashboard.css');
+        loadScript('https://cdn.jsdelivr.net/npm/chart.js').then(() => {
+            loadScript('pages/dashboard/dashboard.js').then(() => {
+                fetch('pages/dashboard/dashboard.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('dashboard-container').innerHTML = html;
+                    });
+            });
+        });
+    } else if (moduleName === 'onboarding') {
+        console.log('Loading onboarding module...');
+        loadedModules.add(moduleName);
+        loadCSS('pages/onboarding/onboarding.css');
+        loadScript('pages/onboarding/onboarding.js').then(() => {
+            console.log('Onboarding JS loaded, fetching HTML...');
+            fetch('pages/onboarding/onboarding.html')
+                .then(response => {
+                    console.log('Onboarding HTML fetch response:', response.status);
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('Onboarding HTML loaded, length:', html.length);
+                    const container = document.getElementById('onboarding-container');
+                    if (container) {
+                        container.innerHTML = html;
+                        console.log('HTML inserted, checking for initializeOnboarding function...');
+                        // Initialize onboarding functionality after loading
+                        if (typeof initializeOnboarding === 'function') {
+                            console.log('Calling initializeOnboarding...');
+                            initializeOnboarding();
+                        } else {
+                            console.error('initializeOnboarding function not found!');
+                        }
+                    } else {
+                        console.error('onboarding-container not found!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading onboarding HTML:', error);
+                });
+        }).catch(error => {
+            console.error('Error loading onboarding JS:', error);
+        });
+    } else if (moduleName === 'competitor-analysis') {
+        console.log('Loading competitor analysis module...');
+        loadedModules.add(moduleName);
+        loadCSS('pages/competitor-analysis/competitor-analysis.css');
+        loadScript('pages/competitor-analysis/competitor-analysis.js').then(() => {
+            console.log('Competitor analysis JS loaded, fetching HTML...');
+            fetch('pages/competitor-analysis/competitor-analysis.html')
+                .then(response => {
+                    console.log('Competitor analysis HTML fetch response:', response.status);
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('Competitor analysis HTML loaded, length:', html.length);
+                    const container = document.getElementById('competitor-analysis-container');
+                    if (container) {
+                        container.innerHTML = html;
+                        console.log('HTML inserted, checking for initializeCompetitorAnalysis function...');
+                        // Initialize competitor analysis functionality after loading
+                        if (typeof initializeCompetitorAnalysis === 'function') {
+                            console.log('Calling initializeCompetitorAnalysis...');
+                            initializeCompetitorAnalysis();
+                        } else {
+                            console.error('initializeCompetitorAnalysis function not found!');
+                        }
+                    } else {
+                        console.error('competitor-analysis-container not found!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading competitor analysis HTML:', error);
+                });
+        }).catch(error => {
+            console.error('Error loading competitor analysis JS:', error);
+        });
+    } else {
+        console.log('Module not implemented yet:', moduleName);
     }
 }

@@ -1,0 +1,337 @@
+/**
+ * Competitor Analysis Module - CSS
+ * Styles for competitor analysis interface and components
+ */
+
+/* Competitor Map Styles */
+.competitor-map-placeholder {
+    height: 400px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.competitor-map-placeholder:hover {
+    border-color: #0066cc;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+}
+
+.map-content {
+    text-align: center;
+    z-index: 2;
+}
+
+.map-loading {
+    display: flex;
+    align-items: center;
+    color: #0066cc;
+    font-weight: 500;
+}
+
+.map-legend {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+/* Competitor Item Styles */
+.competitor-item {
+    padding: 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.competitor-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+    border-color: #0066cc;
+    transform: translateY(-2px);
+}
+
+.competitor-item:last-child {
+    margin-bottom: 0;
+}
+
+.competitor-info strong {
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.competitor-details {
+    margin-top: 4px;
+}
+
+.competitor-metrics {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.metric-badge {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.competitor-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-xs {
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+}
+
+/* Badge Styles */
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+}
+
+/* Radius Slider Styles */
+#radiusSlider {
+    background: linear-gradient(to right, #0066cc 0%, #0066cc 40%, #dee2e6 40%, #dee2e6 100%);
+    border: none;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+}
+
+#radiusSlider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0066cc;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#radiusSlider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0066cc;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Service Filter Styles */
+#serviceFilter {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#serviceFilter:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+    outline: none;
+}
+
+/* Summary Statistics */
+.summary-stat {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.summary-stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.stat-value {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* Card Header Enhancements */
+.card-header .btn-link {
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.card-header .btn-link:hover {
+    color: #004499;
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.competitor-item.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Modal Enhancements */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #f1f3f4;
+    padding: 20px 24px;
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .competitor-map-placeholder {
+        height: 300px;
+    }
+    
+    .competitor-item {
+        padding: 12px;
+    }
+    
+    .competitor-metrics {
+        margin-top: 8px;
+    }
+    
+    .competitor-actions {
+        margin-top: 12px;
+        justify-content: center;
+    }
+    
+    .btn-xs {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .row.mb-4 .col-md-6 {
+        margin-bottom: 1rem;
+    }
+    
+    .input-group .input-group-text {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    
+    .competitor-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-xs {
+        width: 100%;
+    }
+}
+
+/* Enhanced Interactive Elements */
+.competitor-item[data-competitor]:hover {
+    cursor: pointer;
+}
+
+.competitor-item[data-competitor]:hover .competitor-info strong {
+    color: #0066cc;
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #495057;
+    font-weight: 500;
+}
+
+/* Animation for new competitors */
+.competitor-item.new-competitor {
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Button Enhancements */
+.btn-outline-primary.btn-sm:hover {
+    background-color: #0066cc;
+    border-color: #0066cc;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.btn-outline-secondary.btn-sm:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    transform: translateY(-1px);
+}
+
+/* Success States */
+.competitor-item.compared {
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+.competitor-item.compared::after {
+    content: "✓";
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #28a745;
+    font-weight: bold;
+    font-size: 14px;
+}

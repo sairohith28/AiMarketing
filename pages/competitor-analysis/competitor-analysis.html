@@ -1,0 +1,205 @@
+<!-- Competitor Analysis Content -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Competitor Analysis</h2>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text">Radius</span>
+            <input type="range" class="form-control" min="5" max="50" value="20" id="radiusSlider">
+            <span class="input-group-text"><span id="radiusValue">20</span> km</span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <select class="form-select" id="serviceFilter">
+            <option>All Services</option>
+            <option>Cardiology</option>
+            <option>Orthopedics</option>
+            <option>Pediatrics</option>
+            <option>Oncology</option>
+            <option>Neurology</option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Competitor Map</h5>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary btn-sm" id="refreshMapBtn">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Refresh
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" id="exportMapBtn">
+                        <i class="fas fa-download me-1"></i>
+                        Export
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="competitor-map-placeholder" id="competitorMap">
+                    <div class="map-content">
+                        <i class="fas fa-map fa-4x text-muted mb-3"></i>
+                        <p class="text-muted">Interactive competitor map will appear here</p>
+                        <div class="map-loading d-none">
+                            <div class="spinner-border text-primary me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span>Loading competitor data...</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Map Legend -->
+                <div class="map-legend mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-circle text-danger me-1"></i> High Competition
+                        <i class="fas fa-circle text-warning me-1 ms-3"></i> Medium Competition
+                        <i class="fas fa-circle text-success me-1 ms-3"></i> Low Competition
+                        <i class="fas fa-hospital text-primary me-1 ms-3"></i> Your Hospital
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Top Competitors</h5>
+                <button class="btn btn-link btn-sm p-0" id="viewAllCompetitors">
+                    View All <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="competitor-item" data-competitor="apollo">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="competitor-info">
+                            <strong>Apollo Hospital</strong>
+                            <div class="competitor-details">
+                                <small class="text-muted">2.5 km • Multi-specialty</small>
+                                <div class="competitor-metrics mt-1">
+                                    <span class="metric-badge">4.2★</span>
+                                    <span class="metric-badge">850+ Reviews</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="badge bg-danger">High</span>
+                    </div>
+                    <div class="competitor-actions mt-2">
+                        <button class="btn btn-outline-primary btn-xs me-1" onclick="viewCompetitorDetails('apollo')">
+                            <i class="fas fa-eye me-1"></i>Details
+                        </button>
+                        <button class="btn btn-outline-secondary btn-xs" onclick="compareCompetitor('apollo')">
+                            <i class="fas fa-balance-scale me-1"></i>Compare
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="competitor-item" data-competitor="care">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="competitor-info">
+                            <strong>Care Hospital</strong>
+                            <div class="competitor-details">
+                                <small class="text-muted">4.1 km • Cardiology Focus</small>
+                                <div class="competitor-metrics mt-1">
+                                    <span class="metric-badge">4.0★</span>
+                                    <span class="metric-badge">520+ Reviews</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="badge bg-warning">Medium</span>
+                    </div>
+                    <div class="competitor-actions mt-2">
+                        <button class="btn btn-outline-primary btn-xs me-1" onclick="viewCompetitorDetails('care')">
+                            <i class="fas fa-eye me-1"></i>Details
+                        </button>
+                        <button class="btn btn-outline-secondary btn-xs" onclick="compareCompetitor('care')">
+                            <i class="fas fa-balance-scale me-1"></i>Compare
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="competitor-item" data-competitor="continental">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="competitor-info">
+                            <strong>Continental Hospital</strong>
+                            <div class="competitor-details">
+                                <small class="text-muted">6.8 km • Specialty Care</small>
+                                <div class="competitor-metrics mt-1">
+                                    <span class="metric-badge">3.9★</span>
+                                    <span class="metric-badge">340+ Reviews</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Low</span>
+                    </div>
+                    <div class="competitor-actions mt-2">
+                        <button class="btn btn-outline-primary btn-xs me-1" onclick="viewCompetitorDetails('continental')">
+                            <i class="fas fa-eye me-1"></i>Details
+                        </button>
+                        <button class="btn btn-outline-secondary btn-xs" onclick="compareCompetitor('continental')">
+                            <i class="fas fa-balance-scale me-1"></i>Compare
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Add Competitor Button -->
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-primary btn-sm" id="addCompetitorBtn">
+                        <i class="fas fa-plus me-1"></i>Add Competitor
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Analysis Summary Card -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">Analysis Summary</h6>
+            </div>
+            <div class="card-body">
+                <div class="summary-stat">
+                    <span class="stat-label">Total Competitors:</span>
+                    <span class="stat-value">12</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Market Coverage:</span>
+                    <span class="stat-value">20 km radius</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Competition Level:</span>
+                    <span class="stat-value text-warning">Medium-High</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Last Updated:</span>
+                    <span class="stat-value">2 hours ago</span>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm w-100" id="generateReportBtn">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        Generate Full Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Competitor Details Modal -->
+<div class="modal fade" id="competitorModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Competitor Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="competitorDetailsContent">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
