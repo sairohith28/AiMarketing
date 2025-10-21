@@ -4113,3 +4113,661 @@ function connectPlatform(platform) {
 // Make function available globally for onclick handlers
 window.showOnboardingModal = showOnboardingModal;
 window.connectPlatform = connectPlatform;
+
+// ==========================================
+// COMPETITOR ANALYSIS FUNCTIONALITY
+// ==========================================
+
+// Competitor data
+const competitorsData = [
+    {
+        id: 1,
+        name: 'Apollo Hospital',
+        specialty: 'Multi-specialty',
+        distance: 2.5,
+        beds: 500,
+        digitalFootprint: {
+            score: 95,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Instagram', 'Website']
+        },
+        reviews: {
+            rating: 4.7,
+            count: 12450
+        },
+        overlap: {
+            percentage: 85,
+            services: ['Cardiology', 'Orthopedics', 'Pediatrics', 'Neurology', 'Oncology']
+        },
+        proximity: 'high'
+    },
+    {
+        id: 2,
+        name: 'Care Hospital',
+        specialty: 'Cardiology Focus',
+        distance: 4.1,
+        beds: 350,
+        digitalFootprint: {
+            score: 88,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Website']
+        },
+        reviews: {
+            rating: 4.5,
+            count: 8920
+        },
+        overlap: {
+            percentage: 72,
+            services: ['Cardiology', 'Critical Care', 'Emergency']
+        },
+        proximity: 'medium'
+    },
+    {
+        id: 3,
+        name: 'Continental Hospital',
+        specialty: 'Specialty Care',
+        distance: 6.8,
+        beds: 280,
+        digitalFootprint: {
+            score: 82,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Facebook']
+        },
+        reviews: {
+            rating: 4.3,
+            count: 5640
+        },
+        overlap: {
+            percentage: 68,
+            services: ['Neurology', 'Oncology', 'Orthopedics']
+        },
+        proximity: 'medium'
+    },
+    {
+        id: 4,
+        name: 'Yashoda Hospital',
+        specialty: 'Multi-specialty',
+        distance: 3.2,
+        beds: 450,
+        digitalFootprint: {
+            score: 90,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Instagram', 'YouTube']
+        },
+        reviews: {
+            rating: 4.6,
+            count: 10230
+        },
+        overlap: {
+            percentage: 78,
+            services: ['Cardiology', 'Pediatrics', 'Gynecology', 'Orthopedics']
+        },
+        proximity: 'high'
+    },
+    {
+        id: 5,
+        name: 'Sunshine Hospital',
+        specialty: 'General & Emergency',
+        distance: 7.5,
+        beds: 200,
+        digitalFootprint: {
+            score: 65,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Website']
+        },
+        reviews: {
+            rating: 4.1,
+            count: 3420
+        },
+        overlap: {
+            percentage: 52,
+            services: ['Emergency', 'General Surgery', 'ICU']
+        },
+        proximity: 'low'
+    },
+    {
+        id: 6,
+        name: 'Maxcure Hospital',
+        specialty: 'Multi-specialty',
+        distance: 5.3,
+        beds: 320,
+        digitalFootprint: {
+            score: 78,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Facebook', 'Website']
+        },
+        reviews: {
+            rating: 4.4,
+            count: 6780
+        },
+        overlap: {
+            percentage: 64,
+            services: ['Cardiology', 'Neurology', 'Oncology']
+        },
+        proximity: 'medium'
+    },
+    {
+        id: 7,
+        name: 'KIMS Hospital',
+        specialty: 'Tertiary Care',
+        distance: 8.9,
+        beds: 600,
+        digitalFootprint: {
+            score: 92,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Instagram', 'Twitter', 'YouTube']
+        },
+        reviews: {
+            rating: 4.8,
+            count: 15670
+        },
+        overlap: {
+            percentage: 88,
+            services: ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics', 'Pediatrics', 'Nephrology']
+        },
+        proximity: 'medium'
+    },
+    {
+        id: 8,
+        name: 'Rainbow Children Hospital',
+        specialty: 'Pediatrics Specialist',
+        distance: 4.7,
+        beds: 180,
+        digitalFootprint: {
+            score: 85,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Instagram']
+        },
+        reviews: {
+            rating: 4.7,
+            count: 8940
+        },
+        overlap: {
+            percentage: 35,
+            services: ['Pediatrics', 'Neonatology']
+        },
+        proximity: 'low'
+    },
+    {
+        id: 9,
+        name: 'Star Hospital',
+        specialty: 'Multi-specialty',
+        distance: 6.2,
+        beds: 380,
+        digitalFootprint: {
+            score: 80,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Facebook', 'Website']
+        },
+        reviews: {
+            rating: 4.2,
+            count: 5120
+        },
+        overlap: {
+            percentage: 70,
+            services: ['Cardiology', 'Orthopedics', 'Gastroenterology']
+        },
+        proximity: 'medium'
+    },
+    {
+        id: 10,
+        name: 'AIG Hospital',
+        specialty: 'Gastroenterology Focus',
+        distance: 9.5,
+        beds: 150,
+        digitalFootprint: {
+            score: 75,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Website']
+        },
+        reviews: {
+            rating: 4.5,
+            count: 4230
+        },
+        overlap: {
+            percentage: 42,
+            services: ['Gastroenterology', 'Hepatology']
+        },
+        proximity: 'low'
+    },
+    {
+        id: 11,
+        name: 'Krishna Institute of Medical Sciences',
+        specialty: 'Multi-specialty',
+        distance: 11.2,
+        beds: 550,
+        digitalFootprint: {
+            score: 88,
+            activity: 'highly-active',
+            platforms: ['Google', 'Facebook', 'Instagram', 'Website']
+        },
+        reviews: {
+            rating: 4.6,
+            count: 9870
+        },
+        overlap: {
+            percentage: 75,
+            services: ['Cardiology', 'Neurology', 'Oncology', 'Orthopedics']
+        },
+        proximity: 'low'
+    },
+    {
+        id: 12,
+        name: 'Medicover Hospital',
+        specialty: 'Multi-specialty',
+        distance: 3.8,
+        beds: 300,
+        digitalFootprint: {
+            score: 82,
+            activity: 'moderately-active',
+            platforms: ['Google', 'Facebook', 'Website']
+        },
+        reviews: {
+            rating: 4.3,
+            count: 6120
+        },
+        overlap: {
+            percentage: 66,
+            services: ['General Surgery', 'Orthopedics', 'Gynecology']
+        },
+        proximity: 'high'
+    }
+];
+
+let currentSort = { column: 'distance', order: 'asc' };
+let filteredCompetitors = [...competitorsData];
+
+// Initialize Competitor Analysis
+function initializeCompetitorAnalysis() {
+    setupCompetitorEventListeners();
+    renderCompetitorsTable();
+    updateCompetitorStats();
+    renderMapCompetitors();
+}
+
+function setupCompetitorEventListeners() {
+    // View toggle
+    const listViewBtn = document.getElementById('listViewBtn');
+    const mapViewBtn = document.getElementById('mapViewBtn');
+    
+    if (listViewBtn && mapViewBtn) {
+        listViewBtn.addEventListener('click', () => {
+            toggleCompetitorView('list');
+        });
+        
+        mapViewBtn.addEventListener('click', () => {
+            toggleCompetitorView('map');
+        });
+    }
+    
+    // Search
+    const searchInput = document.getElementById('competitorSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            filterCompetitors();
+        });
+    }
+    
+    // Radius slider
+    const radiusSlider = document.getElementById('radiusSlider');
+    const radiusValue = document.getElementById('radiusValue');
+    if (radiusSlider && radiusValue) {
+        radiusSlider.addEventListener('input', (e) => {
+            radiusValue.textContent = e.target.value;
+            filterCompetitors();
+        });
+    }
+    
+    // Service filter
+    const serviceFilter = document.getElementById('serviceFilter');
+    if (serviceFilter) {
+        serviceFilter.addEventListener('change', () => {
+            filterCompetitors();
+        });
+    }
+    
+    // Reset filters
+    const resetBtn = document.getElementById('resetFilters');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            if (radiusSlider) {
+                radiusSlider.value = 20;
+                radiusValue.textContent = '20';
+            }
+            if (serviceFilter) serviceFilter.value = 'all';
+            filterCompetitors();
+        });
+    }
+    
+    // Table header sorting
+    document.querySelectorAll('.competitors-table th.sortable').forEach(th => {
+        th.addEventListener('click', () => {
+            const sortColumn = th.getAttribute('data-sort');
+            handleSort(sortColumn);
+        });
+    });
+}
+
+function toggleCompetitorView(view) {
+    const listView = document.getElementById('competitorListView');
+    const mapView = document.getElementById('competitorMapView');
+    const listBtn = document.getElementById('listViewBtn');
+    const mapBtn = document.getElementById('mapViewBtn');
+    
+    if (view === 'list') {
+        listView.classList.add('active');
+        mapView.classList.remove('active');
+        listBtn.classList.add('active');
+        mapBtn.classList.remove('active');
+    } else {
+        listView.classList.remove('active');
+        mapView.classList.add('active');
+        listBtn.classList.remove('active');
+        mapBtn.classList.add('active');
+    }
+}
+
+function filterCompetitors() {
+    const searchTerm = document.getElementById('competitorSearch')?.value.toLowerCase() || '';
+    const maxDistance = parseFloat(document.getElementById('radiusSlider')?.value || 20);
+    const serviceFilter = document.getElementById('serviceFilter')?.value || 'all';
+    
+    filteredCompetitors = competitorsData.filter(competitor => {
+        // Search filter
+        const matchesSearch = competitor.name.toLowerCase().includes(searchTerm) ||
+                            competitor.specialty.toLowerCase().includes(searchTerm);
+        
+        // Distance filter
+        const withinDistance = competitor.distance <= maxDistance;
+        
+        // Service filter
+        const matchesService = serviceFilter === 'all' || 
+                              competitor.specialty.toLowerCase().includes(serviceFilter.toLowerCase()) ||
+                              competitor.overlap.services.some(s => s.toLowerCase().includes(serviceFilter.toLowerCase()));
+        
+        return matchesSearch && withinDistance && matchesService;
+    });
+    
+    renderCompetitorsTable();
+    updateCompetitorStats();
+    renderMapCompetitors();
+}
+
+function handleSort(column) {
+    // Update sort state
+    if (currentSort.column === column) {
+        currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+    } else {
+        currentSort.column = column;
+        currentSort.order = 'asc';
+    }
+    
+    // Update UI
+    document.querySelectorAll('.competitors-table th.sortable').forEach(th => {
+        th.classList.remove('asc', 'desc');
+    });
+    
+    const activeTh = document.querySelector(`.competitors-table th[data-sort="${column}"]`);
+    if (activeTh) {
+        activeTh.classList.add(currentSort.order);
+    }
+    
+    // Sort data
+    filteredCompetitors.sort((a, b) => {
+        let aVal, bVal;
+        
+        switch (column) {
+            case 'name':
+                aVal = a.name;
+                bVal = b.name;
+                break;
+            case 'distance':
+                aVal = a.distance;
+                bVal = b.distance;
+                break;
+            case 'beds':
+                aVal = a.beds;
+                bVal = b.beds;
+                break;
+            case 'digital':
+                aVal = a.digitalFootprint.score;
+                bVal = b.digitalFootprint.score;
+                break;
+            case 'reviews':
+                aVal = a.reviews.rating;
+                bVal = b.reviews.rating;
+                break;
+            case 'overlap':
+                aVal = a.overlap.percentage;
+                bVal = b.overlap.percentage;
+                break;
+            case 'proximity':
+                const proximityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+                aVal = proximityOrder[a.proximity];
+                bVal = proximityOrder[b.proximity];
+                break;
+            default:
+                return 0;
+        }
+        
+        if (typeof aVal === 'string') {
+            return currentSort.order === 'asc' 
+                ? aVal.localeCompare(bVal)
+                : bVal.localeCompare(aVal);
+        } else {
+            return currentSort.order === 'asc' 
+                ? aVal - bVal
+                : bVal - aVal;
+        }
+    });
+    
+    renderCompetitorsTable();
+}
+
+function renderCompetitorsTable() {
+    const tbody = document.getElementById('competitorsTableBody');
+    if (!tbody) return;
+    
+    if (filteredCompetitors.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center text-muted py-4">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <p>No competitors found matching your filters</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    tbody.innerHTML = filteredCompetitors.map(competitor => `
+        <tr>
+            <td>
+                <div class="competitor-name-cell">${competitor.name}</div>
+                <span class="competitor-specialty">${competitor.specialty}</span>
+            </td>
+            <td>
+                <span class="distance-badge ${getDistanceClass(competitor.distance)}">
+                    <i class="fas fa-map-marker-alt"></i>
+                    ${competitor.distance} km
+                </span>
+            </td>
+            <td>
+                <span class="bed-capacity">${competitor.beds}</span> beds
+            </td>
+            <td>
+                <div class="digital-footprint">
+                    <div class="digital-indicator">
+                        <i class="fas fa-chart-line" style="color: ${getDigitalColor(competitor.digitalFootprint.score)}"></i>
+                        <strong>${competitor.digitalFootprint.score}</strong>
+                    </div>
+                    <span class="activity-badge ${competitor.digitalFootprint.activity}">
+                        ${competitor.digitalFootprint.activity.replace('-', ' ')}
+                    </span>
+                </div>
+                <small class="text-muted d-block mt-1">${competitor.digitalFootprint.platforms.length} platforms</small>
+            </td>
+            <td>
+                <div class="review-rating">
+                    <div class="rating-stars">
+                        ${generateStars(competitor.reviews.rating)}
+                        <strong class="ms-1">${competitor.reviews.rating}</strong>
+                    </div>
+                    <span class="review-count">${competitor.reviews.count.toLocaleString()} reviews</span>
+                </div>
+            </td>
+            <td>
+                <div class="overlap-container">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="overlap-percentage">${competitor.overlap.percentage}%</span>
+                    </div>
+                    <div class="overlap-bar">
+                        <div class="overlap-fill ${getOverlapClass(competitor.overlap.percentage)}" 
+                             style="width: ${competitor.overlap.percentage}%"></div>
+                    </div>
+                    <small class="overlap-services">${competitor.overlap.services.slice(0, 3).join(', ')}${competitor.overlap.services.length > 3 ? '...' : ''}</small>
+                </div>
+            </td>
+            <td>
+                <span class="impact-badge ${competitor.proximity}">
+                    ${competitor.proximity} Impact
+                </span>
+            </td>
+            <td>
+                <div class="competitor-actions">
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewCompetitorDetails(${competitor.id})" title="View Details">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info" onclick="compareCompetitor(${competitor.id})" title="Compare">
+                        <i class="fas fa-balance-scale"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function renderMapCompetitors() {
+    const container = document.getElementById('mapCompetitorsList');
+    if (!container) return;
+    
+    container.innerHTML = filteredCompetitors.map(competitor => `
+        <div class="map-competitor-item" onclick="focusOnCompetitor(${competitor.id})">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <strong class="text-truncate">${competitor.name}</strong>
+                <span class="badge ${competitor.proximity === 'high' ? 'bg-danger' : competitor.proximity === 'medium' ? 'bg-warning' : 'bg-success'} ms-2">
+                    ${competitor.distance} km
+                </span>
+            </div>
+            <div class="small text-muted mb-1">${competitor.specialty}</div>
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="small">
+                    <i class="fas fa-star text-warning"></i> ${competitor.reviews.rating}
+                </span>
+                <span class="small">${competitor.beds} beds</span>
+                <span class="small">${competitor.overlap.percentage}% overlap</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateCompetitorStats() {
+    const totalElem = document.getElementById('totalCompetitors');
+    const highThreatElem = document.getElementById('highThreat');
+    const avgOverlapElem = document.getElementById('avgOverlap');
+    
+    if (totalElem) totalElem.textContent = filteredCompetitors.length;
+    
+    if (highThreatElem) {
+        const highThreat = filteredCompetitors.filter(c => c.proximity === 'high').length;
+        highThreatElem.textContent = highThreat;
+    }
+    
+    if (avgOverlapElem) {
+        const avgOverlap = filteredCompetitors.reduce((sum, c) => sum + c.overlap.percentage, 0) / filteredCompetitors.length;
+        avgOverlapElem.textContent = Math.round(avgOverlap) + '%';
+    }
+}
+
+function getDistanceClass(distance) {
+    if (distance < 4) return 'close';
+    if (distance < 8) return 'medium';
+    return 'far';
+}
+
+function getDigitalColor(score) {
+    if (score >= 85) return '#28a745';
+    if (score >= 70) return '#ffc107';
+    return '#dc3545';
+}
+
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    let stars = '';
+    
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="fas fa-star"></i>';
+    }
+    if (hasHalfStar) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+    }
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+        stars += '<i class="far fa-star"></i>';
+    }
+    
+    return stars;
+}
+
+function getOverlapClass(percentage) {
+    if (percentage >= 75) return 'high';
+    if (percentage >= 50) return 'medium';
+    return 'low';
+}
+
+function viewCompetitorDetails(id) {
+    const competitor = competitorsData.find(c => c.id === id);
+    if (!competitor) return;
+    
+    showAlert(`Viewing details for ${competitor.name}`, 'info');
+    // Here you could open a modal with detailed competitor information
+}
+
+function compareCompetitor(id) {
+    const competitor = competitorsData.find(c => c.id === id);
+    if (!competitor) return;
+    
+    showAlert(`Comparing with ${competitor.name}`, 'info');
+    // Here you could show a comparison view
+}
+
+function focusOnCompetitor(id) {
+    // Remove active class from all items
+    document.querySelectorAll('.map-competitor-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Add active class to clicked item
+    const items = document.querySelectorAll('.map-competitor-item');
+    const index = competitorsData.findIndex(c => c.id === id);
+    if (items[index]) {
+        items[index].classList.add('active');
+    }
+    
+    showAlert(`Focusing on competitor location`, 'info');
+    // Here you would center the map on the competitor's location
+}
+
+// Make functions available globally
+window.viewCompetitorDetails = viewCompetitorDetails;
+window.compareCompetitor = compareCompetitor;
+window.focusOnCompetitor = focusOnCompetitor;
+
+// Add to initialization
+const originalInit = initializeApp;
+initializeApp = function() {
+    originalInit();
+    initializeCompetitorAnalysis();
+};
