@@ -244,6 +244,7 @@ function initializeApp() {
     setupDashboardInteractions();
     updateCampaignsTable();
     updateApprovalsSection();
+    initializeOnboarding();
 }
 
 // Event Listeners Setup
@@ -3747,3 +3748,368 @@ function switchToSection(sectionName) {
         targetNav.classList.add('active');
     }
 }
+
+// ==========================================
+// ONBOARDING FUNCTIONALITY
+// ==========================================
+
+// Onboarding state management
+const onboardingState = {
+    steps: {
+        basicInfo: { completed: true, progress: 100 },
+        hospitalDetails: { completed: true, progress: 100 },
+        socialMedia: { completed: false, progress: 0 },
+        integration: { completed: false, progress: 0 }
+    },
+    get overallProgress() {
+        const steps = Object.values(this.steps);
+        const totalProgress = steps.reduce((sum, step) => sum + step.progress, 0);
+        return Math.round(totalProgress / steps.length);
+    }
+};
+
+function initializeOnboarding() {
+    updateOnboardingUI();
+    setupOnboardingEventListeners();
+}
+
+function setupOnboardingEventListeners() {
+    // Dismiss banner
+    const dismissBtn = document.getElementById('dismissOnboardingBanner');
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+            const banner = document.getElementById('onboardingProgressBanner');
+            if (banner) {
+                banner.style.display = 'none';
+                localStorage.setItem('onboardingBannerDismissed', 'true');
+            }
+        });
+    }
+    
+    // Menu item click
+    const menuItem = document.getElementById('completeOnboardingMenuItem');
+    if (menuItem) {
+        menuItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            showOnboardingModal();
+        });
+    }
+    
+    // Complete buttons on pending steps
+    document.querySelectorAll('.onboarding-step.pending').forEach(step => {
+        const completeBtn = step.querySelector('.btn');
+        if (completeBtn) {
+            completeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const stepType = step.getAttribute('data-step');
+                showOnboardingModal(stepType);
+            });
+        }
+    });
+}
+
+function updateOnboardingUI() {
+    const progress = onboardingState.overallProgress;
+    
+    // Update progress bar
+    const progressBar = document.querySelector('.onboarding-banner .progress-bar');
+    if (progressBar) {
+        progressBar.style.width = progress + '%';
+        progressBar.setAttribute('aria-valuenow', progress);
+    }
+    
+    // Update badge
+    const badge = document.querySelector('.onboarding-banner .badge');
+    if (badge) {
+        badge.textContent = progress + '% Complete';
+    }
+    
+    // Update profile ring
+    updateProfileProgressRing(progress);
+    
+    // Update profile percentage badge
+    const percentageBadge = document.querySelector('.onboarding-percentage-badge');
+    if (percentageBadge) {
+        percentageBadge.textContent = progress + '%';
+    }
+    
+    // Update menu item
+    const menuItem = document.getElementById('completeOnboardingMenuItem');
+    if (menuItem) {
+        menuItem.innerHTML = `<i class="fas fa-tasks me-2"></i>Complete Onboarding (${progress}%)`;
+    }
+    
+    // Hide banner if completed
+    if (progress === 100) {
+        const banner = document.getElementById('onboardingProgressBanner');
+        if (banner) {
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 2000);
+        }
+    }
+}
+
+function updateProfileProgressRing(percentage) {
+    const circle = document.querySelector('.progress-ring-circle');
+    if (!circle) return;
+    
+    const radius = 22;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percentage / 100) * circumference;
+    
+    circle.setAttribute('stroke-dasharray', circumference);
+    circle.setAttribute('stroke-dashoffset', offset);
+    
+    // Change color based on progress
+    if (percentage === 100) {
+        circle.setAttribute('stroke', '#28a745');
+    } else if (percentage >= 75) {
+        circle.setAttribute('stroke', '#20c997');
+    } else if (percentage >= 50) {
+        circle.setAttribute('stroke', '#ffc107');
+    } else {
+        circle.setAttribute('stroke', '#17a2b8');
+    }
+}
+
+function showOnboardingModal(stepType = null) {
+    // Create modal HTML
+    const modalHTML = `
+        <div class="modal fade" id="onboardingModal" tabindex="-1" aria-labelledby="onboardingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-primary text-white">
+                        <h5 class="modal-title" id="onboardingModalLabel">
+                            <i class="fas fa-rocket me-2"></i>
+                            ${stepType === 'social-media' ? 'Connect Social Media' : stepType === 'integration' ? 'Connect Platforms' : 'Complete Your Onboarding'}
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        ${stepType === 'social-media' ? getSocialMediaForm() : stepType === 'integration' ? getIntegrationForm() : getOnboardingOverview()}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveOnboardingBtn">
+                            <i class="fas fa-save me-1"></i>Save & Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove existing modal if any
+    const existingModal = document.getElementById('onboardingModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Add modal to body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('onboardingModal'));
+    modal.show();
+    
+    // Setup save button
+    document.getElementById('saveOnboardingBtn').addEventListener('click', () => {
+        saveOnboardingData(stepType);
+        modal.hide();
+    });
+}
+
+function getSocialMediaForm() {
+    return `
+        <div class="onboarding-form">
+            <p class="text-muted mb-4">Connect your social media accounts to enable automated posting and analytics tracking.</p>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-facebook text-primary me-2"></i>Facebook Page URL
+                    </label>
+                    <input type="url" class="form-control" placeholder="https://facebook.com/yourpage" id="facebookUrl">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-instagram text-danger me-2"></i>Instagram Handle
+                    </label>
+                    <input type="text" class="form-control" placeholder="@yourhospital" id="instagramHandle">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-twitter text-info me-2"></i>Twitter Handle
+                    </label>
+                    <input type="text" class="form-control" placeholder="@yourhospital" id="twitterHandle">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-linkedin text-primary me-2"></i>LinkedIn Page URL
+                    </label>
+                    <input type="url" class="form-control" placeholder="https://linkedin.com/company/yourpage" id="linkedinUrl">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-youtube text-danger me-2"></i>YouTube Channel URL
+                    </label>
+                    <input type="url" class="form-control" placeholder="https://youtube.com/yourchannel" id="youtubeUrl">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">
+                        <i class="fab fa-whatsapp text-success me-2"></i>WhatsApp Business Number
+                    </label>
+                    <input type="tel" class="form-control" placeholder="+91 1234567890" id="whatsappNumber">
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getIntegrationForm() {
+    return `
+        <div class="onboarding-form">
+            <p class="text-muted mb-4">Connect your marketing platforms to sync campaigns and track performance.</p>
+            
+            <div class="integration-options">
+                <div class="integration-card mb-3 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1"><i class="fab fa-google text-danger me-2"></i>Google Ads</h6>
+                            <small class="text-muted">Connect your Google Ads account</small>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="connectPlatform('google-ads')">
+                            <i class="fas fa-plug me-1"></i>Connect
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="integration-card mb-3 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1"><i class="fab fa-meta text-primary me-2"></i>Meta Business Suite</h6>
+                            <small class="text-muted">Connect Facebook & Instagram Ads</small>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="connectPlatform('meta')">
+                            <i class="fas fa-plug me-1"></i>Connect
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="integration-card mb-3 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1"><i class="fas fa-chart-line text-success me-2"></i>Google Analytics</h6>
+                            <small class="text-muted">Track website performance</small>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="connectPlatform('analytics')">
+                            <i class="fas fa-plug me-1"></i>Connect
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="integration-card mb-3 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1"><i class="fas fa-envelope text-info me-2"></i>Email Marketing</h6>
+                            <small class="text-muted">Connect Mailchimp or SendGrid</small>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="connectPlatform('email')">
+                            <i class="fas fa-plug me-1"></i>Connect
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getOnboardingOverview() {
+    return `
+        <div class="onboarding-overview">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Complete the remaining steps to unlock all features
+            </div>
+            
+            <div class="list-group">
+                <div class="list-group-item ${onboardingState.steps.basicInfo.completed ? 'bg-light' : ''}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <strong>Basic Information</strong>
+                        </div>
+                        <span class="badge bg-success">Complete</span>
+                    </div>
+                </div>
+                
+                <div class="list-group-item ${onboardingState.steps.hospitalDetails.completed ? 'bg-light' : ''}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <strong>Hospital Details</strong>
+                        </div>
+                        <span class="badge bg-success">Complete</span>
+                    </div>
+                </div>
+                
+                <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="showOnboardingModal('social-media')">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-circle text-warning me-2"></i>
+                            <strong>Social Media Handles</strong>
+                        </div>
+                        <span class="badge bg-warning">Pending</span>
+                    </div>
+                </div>
+                
+                <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="showOnboardingModal('integration')">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-circle text-muted me-2"></i>
+                            <strong>Connect Platforms</strong>
+                        </div>
+                        <span class="badge bg-secondary">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function saveOnboardingData(stepType) {
+    if (stepType === 'social-media') {
+        // Simulate saving social media data
+        onboardingState.steps.socialMedia.completed = true;
+        onboardingState.steps.socialMedia.progress = 100;
+        
+        showAlert('Social media handles saved successfully!', 'success');
+    } else if (stepType === 'integration') {
+        // Simulate saving integration data
+        onboardingState.steps.integration.completed = true;
+        onboardingState.steps.integration.progress = 100;
+        
+        showAlert('Platform integrations saved successfully!', 'success');
+    }
+    
+    updateOnboardingUI();
+}
+
+function connectPlatform(platform) {
+    showAlert(`Connecting to ${platform}... This will redirect to authentication.`, 'info');
+    
+    // Simulate connection
+    setTimeout(() => {
+        showAlert(`${platform} connected successfully!`, 'success');
+    }, 2000);
+}
+
+// Make function available globally for onclick handlers
+window.showOnboardingModal = showOnboardingModal;
+window.connectPlatform = connectPlatform;

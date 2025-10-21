@@ -282,11 +282,153 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .profile-initials {
     font-weight: 600;
     font-size: 14px;
+    z-index: 2;
+}
+
+/* Onboarding Progress Ring around Profile */
+.onboarding-progress-ring {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.progress-ring-circle {
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.onboarding-percentage-badge {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    border: 2px solid white;
+}
+
+/* Onboarding Banner */
+.onboarding-banner {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border: 2px solid #667eea30;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.onboarding-banner-content h5 {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.onboarding-banner .btn-close {
+    opacity: 0.5;
+}
+
+.onboarding-banner .btn-close:hover {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.onboarding-progress-container .progress {
+    background-color: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Onboarding Steps */
+.onboarding-steps {
+    margin-top: 15px;
+}
+
+.onboarding-step {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.onboarding-step.completed {
+    background: rgba(40, 167, 69, 0.05);
+    border-color: rgba(40, 167, 69, 0.2);
+}
+
+.onboarding-step.pending {
+    background: white;
+    border-color: #e9ecef;
+    cursor: pointer;
+}
+
+.onboarding-step.pending:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+    transform: translateY(-2px);
+}
+
+.onboarding-step i {
+    font-size: 16px;
+}
+
+.onboarding-step span {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.onboarding-step .btn {
+    padding: 4px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+/* Responsive Onboarding Steps */
+@media (max-width: 768px) {
+    .onboarding-step {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+    
+    .onboarding-step .btn {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
 }
 
 /* Content Area */
