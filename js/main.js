@@ -566,6 +566,7 @@ function initializeSidebarState() {
 function initializeCharts() {
     initializeTrendsChart();
     initializeROIChart();
+    initializeServiceBubbleChart();
 }
 
 function initializeTrendsChart() {
@@ -691,6 +692,138 @@ function initializeROIChart() {
     });
 }
 
+function initializeServiceBubbleChart() {
+    const ctx = document.getElementById('serviceBubbleChart');
+    if (!ctx) return;
+    
+    // Service line data: performance, cost per lead, number of leads
+    const serviceData = [
+        { name: 'Cardiology', performance: 92, cpl: 380, leads: 456, category: 'excellent' },
+        { name: 'Dermatology', performance: 78, cpl: 395, leads: 198, category: 'good' },
+        { name: 'Gynecology', performance: 82, cpl: 365, leads: 267, category: 'good' },
+        { name: 'Pediatrics', performance: 85, cpl: 350, leads: 312, category: 'good' },
+        { name: 'Psychiatry', performance: 58, cpl: 485, leads: 124, category: 'average' },
+        { name: 'Neurology', performance: 62, cpl: 520, leads: 156, category: 'average' },
+        { name: 'Orthopedics', performance: 68, cpl: 425, leads: 234, category: 'average' },
+        { name: 'Oncology', performance: 35, cpl: 680, leads: 89, category: 'poor' }
+    ];
+    
+    // Color mapping based on performance categories
+    const colorMap = {
+        'excellent': 'rgba(40, 167, 69, 0.7)',
+        'good': 'rgba(23, 162, 184, 0.7)',
+        'average': 'rgba(255, 193, 7, 0.7)',
+        'poor': 'rgba(220, 53, 69, 0.7)'
+    };
+    
+    const borderColorMap = {
+        'excellent': 'rgba(40, 167, 69, 1)',
+        'good': 'rgba(23, 162, 184, 1)',
+        'average': 'rgba(255, 193, 7, 1)',
+        'poor': 'rgba(220, 53, 69, 1)'
+    };
+    
+    // Create datasets for each service
+    const bubbleData = serviceData.map(service => ({
+        label: service.name,
+        data: [{
+            x: service.cpl,          // Cost per lead on x-axis
+            y: service.performance,  // Performance on y-axis
+            r: Math.sqrt(service.leads) / 1.5  // Bubble size based on leads (scaled for visibility)
+        }],
+        backgroundColor: colorMap[service.category],
+        borderColor: borderColorMap[service.category],
+        borderWidth: 2,
+        hoverBackgroundColor: colorMap[service.category],
+        hoverBorderColor: borderColorMap[service.category],
+        hoverBorderWidth: 3
+    }));
+    
+    new Chart(ctx, {
+        type: 'bubble',
+        data: {
+            datasets: bubbleData
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: {
+                            size: 11
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const service = serviceData[context.datasetIndex];
+                            return [
+                                `${service.name}`,
+                                `Performance: ${service.performance}%`,
+                                `Cost per Lead: ₹${service.cpl}`,
+                                `Total Leads: ${service.leads}`
+                            ];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Cost Per Lead (₹)',
+                        font: {
+                            size: 13,
+                            weight: 'bold'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + value;
+                        }
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Performance Score (%)',
+                        font: {
+                            size: 13,
+                            weight: 'bold'
+                        }
+                    },
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const datasetIndex = elements[0].datasetIndex;
+                    const service = serviceData[datasetIndex];
+                    showDepartmentDetails(service.name, service.performance, service.name.toLowerCase());
+                }
+            }
+        }
+    });
+}
+
 // Setup Dashboard Interactions
 function setupDashboardInteractions() {
     // KPI Card Clicks
@@ -701,25 +834,8 @@ function setupDashboardInteractions() {
         });
     });
     
-    // Circular Heatmap Segment Clicks
-    document.querySelectorAll('.heatmap-segment').forEach(segment => {
-        segment.addEventListener('click', function() {
-            const service = this.getAttribute('data-service');
-            const performance = this.getAttribute('data-performance');
-            const serviceName = service.charAt(0).toUpperCase() + service.slice(1);
-            
-            showDepartmentDetails(serviceName, performance, service);
-        });
-        
-        // Add hover effects for better interactivity
-        segment.addEventListener('mouseenter', function() {
-            const service = this.getAttribute('data-service');
-            const performance = this.getAttribute('data-performance');
-            
-            // Optional: Show tooltip or highlight effect
-            this.style.cursor = 'pointer';
-        });
-    });
+    // Note: Bubble chart clicks are handled within the chart initialization
+    // The old circular heatmap segment clicks have been replaced by bubble chart onClick event
     
     // Timeframe Selector
     document.querySelectorAll('input[name="timeframe"]').forEach(radio => {
