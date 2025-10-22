@@ -681,6 +681,313 @@ body {
     text-align: center;
 }
 
+/* Competitor Analysis */
+.competitor-view {
+    display: none;
+}
+
+.competitor-view.active {
+    display: block;
+}
+
+/* Competitors Table */
+.competitors-table {
+    font-size: 14px;
+}
+
+.competitors-table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+    white-space: nowrap;
+}
+
+.competitors-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.competitors-table th.sortable:hover {
+    background-color: #e9ecef;
+}
+
+.competitors-table th.sortable.asc .fa-sort:before {
+    content: "\f0de"; /* fa-sort-up */
+    color: var(--primary-color);
+}
+
+.competitors-table th.sortable.desc .fa-sort:before {
+    content: "\f0dd"; /* fa-sort-down */
+    color: var(--primary-color);
+}
+
+.competitors-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.competitors-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.competitors-table td {
+    padding: 15px 12px;
+    vertical-align: middle;
+}
+
+/* Competitor Name Cell */
+.competitor-name-cell {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.competitor-specialty {
+    font-size: 12px;
+    color: var(--secondary-color);
+    display: block;
+    margin-top: 3px;
+}
+
+/* Distance Badge */
+.distance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.distance-badge.close {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.distance-badge.medium {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.distance-badge.far {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+/* Bed Capacity */
+.bed-capacity {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Digital Footprint */
+.digital-footprint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.digital-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.digital-indicator i {
+    font-size: 14px;
+}
+
+.activity-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.activity-badge.highly-active {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.activity-badge.moderately-active {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #f59e0b;
+}
+
+.activity-badge.low-active {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Reviews & Rating */
+.review-rating {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 14px;
+}
+
+.review-count {
+    font-size: 12px;
+    color: var(--secondary-color);
+}
+
+/* Service Overlap */
+.overlap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.overlap-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.overlap-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.overlap-fill.high {
+    background: linear-gradient(90deg, #dc3545, #e83e8c);
+}
+
+.overlap-fill.medium {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
+
+.overlap-fill.low {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.overlap-percentage {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.overlap-services {
+    font-size: 11px;
+    color: var(--secondary-color);
+}
+
+/* Proximity Impact */
+.proximity-impact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.impact-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.impact-badge.high {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.impact-badge.medium {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.impact-badge.low {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+/* Action Buttons */
+.competitor-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.competitor-actions .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Stat Cards for Summary */
+.stat-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.stat-content h4 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.stat-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--secondary-color);
+}
+
+/* Map Competitor Item */
+.map-competitor-item {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.map-competitor-item:hover {
+    background-color: #f8f9fa;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+}
+
+.map-competitor-item.active {
+    background-color: rgba(0, 102, 204, 0.05);
+    border-color: var(--primary-color);
+}
+
 /* Competitor Items */
 .competitor-item {
     padding: 15px 0;
@@ -689,6 +996,29 @@ body {
 
 .competitor-item:last-child {
     border-bottom: none;
+}
+
+/* Responsive Table */
+@media (max-width: 1400px) {
+    .competitors-table {
+        font-size: 13px;
+    }
+    
+    .competitors-table td,
+    .competitors-table th {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 992px) {
+    .competitors-table {
+        font-size: 12px;
+    }
+    
+    .overlap-services,
+    .competitor-specialty {
+        display: none;
+    }
 }
 
 /* Assets Grid */

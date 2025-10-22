@@ -603,68 +603,186 @@
 
                 <!-- Competitor Analysis Section -->
                 <section id="competitor-analysis-section" class="content-section">
-                    <div class="row">
+                    <div class="row mb-4">
                         <div class="col-12">
-                            <h2 class="mb-4">Competitor Analysis</h2>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 class="mb-0">Competitor Analysis</h2>
+                                <div class="btn-group" role="group" aria-label="View toggle">
+                                    <button type="button" class="btn btn-outline-primary active" id="listViewBtn">
+                                        <i class="fas fa-list me-1"></i>List View
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary" id="mapViewBtn">
+                                        <i class="fas fa-map me-1"></i>Map View
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Summary Stats -->
                     <div class="row mb-4">
-                        <div class="col-md-6">
-                            <div class="input-group">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-primary">
+                                    <i class="fas fa-hospital-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="totalCompetitors">12</h4>
+                                    <p>Total Competitors</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="highThreat">3</h4>
+                                    <p>High Threat</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-warning">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="avgOverlap">68%</h4>
+                                    <p>Avg Service Overlap</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-icon bg-success">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 id="yourRank">#4</h4>
+                                    <p>Your Position</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Search competitors..." id="competitorSearch">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group input-group-sm">
                                 <span class="input-group-text">Radius</span>
                                 <input type="range" class="form-control" min="5" max="50" value="20" id="radiusSlider">
                                 <span class="input-group-text"><span id="radiusValue">20</span> km</span>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <select class="form-select">
-                                <option>All Services</option>
-                                <option>Cardiology</option>
-                                <option>Orthopedics</option>
-                                <option>Pediatrics</option>
+                        <div class="col-md-3">
+                            <select class="form-select form-select-sm" id="serviceFilter">
+                                <option value="all">All Services</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="multi-specialty">Multi-specialty</option>
                             </select>
                         </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-sm btn-outline-secondary w-100" id="resetFilters">
+                                <i class="fas fa-redo me-1"></i>Reset Filters
+                            </button>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Competitor Map</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="competitor-map-placeholder">
-                                        <i class="fas fa-map fa-4x text-muted mb-3"></i>
-                                        <p class="text-muted">Interactive competitor map will appear here</p>
-                                    </div>
+                    
+                    <!-- List View -->
+                    <div id="competitorListView" class="competitor-view active">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover competitors-table mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="sortable" data-sort="name">
+                                                    Competitor Name
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="distance">
+                                                    Distance (km)
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="beds">
+                                                    Bed Capacity
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="digital">
+                                                    Digital Footprint
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="reviews">
+                                                    Reviews & Rating
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="overlap">
+                                                    Service Overlap
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th class="sortable" data-sort="proximity">
+                                                    Proximity Impact
+                                                    <i class="fas fa-sort ms-1"></i>
+                                                </th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="competitorsTableBody">
+                                            <!-- Competitors will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Top Competitors</h5>
+                    </div>
+                    
+                    <!-- Map View -->
+                    <div id="competitorMapView" class="competitor-view">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Competitor Map</h5>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-secondary" id="zoomIn">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" id="zoomOut">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" id="centerMap">
+                                                <i class="fas fa-crosshairs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="competitor-map-placeholder" style="height: 600px;">
+                                            <i class="fas fa-map-marked-alt fa-4x text-muted mb-3"></i>
+                                            <p class="text-muted">Interactive competitor map with radius overlay</p>
+                                            <small class="text-muted">Map integration: Google Maps / OpenStreetMap</small>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="competitor-item">
-                                        <div class="d-flex justify-content-between">
-                                            <strong>Apollo Hospital</strong>
-                                            <span class="badge bg-danger">High</span>
-                                        </div>
-                                        <small class="text-muted">2.5 km • Multi-specialty</small>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Nearby Competitors</h5>
                                     </div>
-                                    <div class="competitor-item">
-                                        <div class="d-flex justify-content-between">
-                                            <strong>Care Hospital</strong>
-                                            <span class="badge bg-warning">Medium</span>
+                                    <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                                        <div id="mapCompetitorsList">
+                                            <!-- Will be populated by JavaScript -->
                                         </div>
-                                        <small class="text-muted">4.1 km • Cardiology Focus</small>
-                                    </div>
-                                    <div class="competitor-item">
-                                        <div class="d-flex justify-content-between">
-                                            <strong>Continental Hospital</strong>
-                                            <span class="badge bg-success">Low</span>
-                                        </div>
-                                        <small class="text-muted">6.8 km • Specialty Care</small>
                                     </div>
                                 </div>
                             </div>
