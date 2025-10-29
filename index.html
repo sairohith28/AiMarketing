@@ -66,6 +66,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="content-calendar" title="Content Calendar">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="nav-text">Content Calendar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link" data-section="assets" title="Assets">
                             <i class="fas fa-images"></i>
                             <span class="nav-text">Assets</span>
@@ -1384,6 +1390,163 @@
                                         <!-- Dynamic content populated by JavaScript -->
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Content Calendar Section -->
+                <section id="content-calendar-section" class="content-section">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 class="mb-0">Content Calendar</h2>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-primary" id="generateAIContentBtn">
+                                        <i class="fas fa-magic me-1"></i>
+                                        Generate AI Content
+                                    </button>
+                                    <button class="btn btn-primary" id="createPostBtn">
+                                        <i class="fas fa-plus me-1"></i>
+                                        Create Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- View Toggle and Filters -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-secondary active" id="listViewContentBtn">
+                                    <i class="fas fa-list me-1"></i>List
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" id="calendarViewBtn">
+                                    <i class="fas fa-calendar-alt me-1"></i>Calendar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <select class="form-select form-select-sm" style="width: auto;" id="platformFilter">
+                                    <option value="all">All Platforms</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                </select>
+                                <select class="form-select form-select-sm" style="width: auto;" id="statusFilter">
+                                    <option value="all">All Status</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="pending">Pending Approval</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="scheduled">Scheduled</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Calendar View -->
+                    <div id="calendarViewContainer" class="content-view">
+                        <!-- Pending Approvals Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-white border-bottom">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-clock text-warning me-2"></i>
+                                            Pending Approvals
+                                            <span class="badge bg-warning ms-2" id="pendingCount">3</span>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3" id="pendingApprovalsContainer">
+                                            <!-- Pending posts will be populated here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <button class="btn btn-sm btn-outline-secondary" id="prevMonth">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <h5 class="mb-0" id="currentMonthYear">November 2025</h5>
+                                        <button class="btn btn-sm btn-outline-secondary" id="nextMonth">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary" id="todayBtn">
+                                        Today
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="calendar-grid" id="contentCalendar">
+                                    <!-- Calendar will be rendered here by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Calendar Legend -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="calendar-legend">
+                                    <span class="legend-item">
+                                        <span class="legend-dot draft"></span> Draft
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot pending"></span> Pending Approval
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot approved"></span> Approved
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot scheduled"></span> Scheduled
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot published"></span> Published
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot ai-generated"></span> AI Generated
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- List View -->
+                    <div id="listViewContentContainer" class="content-view active">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover content-posts-table mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th width="5%">
+                                                    <input type="checkbox" class="form-check-input">
+                                                </th>
+                                                <th width="10%">Preview</th>
+                                                <th width="25%">Content</th>
+                                                <th width="12%">Platform</th>
+                                                <th width="12%">Scheduled Date</th>
+                                                <th width="10%">Status</th>
+                                                <th width="8%">Type</th>
+                                                <th width="10%">Engagement</th>
+                                                <th width="8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="contentPostsTableBody">
+                                            <!-- Content posts will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
