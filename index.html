@@ -521,30 +521,32 @@
                             <h2 class="mb-4">Hospital Onboarding</h2>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8">
+                    
+                    <!-- Main Hospital Details -->
+                    <div class="row mb-4">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Setup Your Hospital Profile</h5>
+                                    <h5><i class="fas fa-hospital me-2"></i>Main Hospital Details</h5>
                                 </div>
                                 <div class="card-body">
                                     <form id="onboardingForm">
-                                        <div class="mb-3">
-                                            <label class="form-label">Hospital Name</label>
-                                            <input type="text" class="form-control" placeholder="Enter hospital name">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Hospital Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" placeholder="Enter hospital name" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Website</label>
+                                                <input type="url" class="form-control" placeholder="https://yourhospital.com">
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Website</label>
-                                            <input type="url" class="form-control" placeholder="https://yourhospital.com">
-                                        </div>
+                                        
                                         <div class="mb-3">
                                             <label class="form-label">Logo Upload</label>
                                             <input type="file" class="form-control" accept="image/*">
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Address</label>
-                                            <textarea class="form-control" rows="3" placeholder="Enter complete address"></textarea>
-                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Primary Language</label>
@@ -564,6 +566,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        
                                         <div class="mb-3">
                                             <label class="form-label">Primary Services</label>
                                             <div class="services-selection">
@@ -583,25 +586,159 @@
                                                     <input class="form-check-input" type="checkbox" id="oncology">
                                                     <label class="form-check-label" for="oncology">Oncology</label>
                                                 </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="neurology">
+                                                    <label class="form-check-label" for="neurology">Neurology</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="emergency">
+                                                    <label class="form-check-label" for="emergency">Emergency</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Save & Continue</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                    </div>
+                    
+                    <!-- Hospital Branches Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h6>Location Map</h6>
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5><i class="fas fa-map-marker-alt me-2"></i>Hospital Branches & Locations</h5>
+                                    <button type="button" class="btn btn-sm btn-primary" id="addBranchBtn">
+                                        <i class="fas fa-plus me-1"></i>Add Branch
+                                    </button>
                                 </div>
                                 <div class="card-body">
-                                    <div class="map-placeholder">
-                                        <i class="fas fa-map-marked-alt fa-3x text-muted mb-2"></i>
-                                        <p class="text-muted">Interactive map will appear here</p>
-                                        <button class="btn btn-outline-primary btn-sm">Test Location</button>
+                                    <div id="branchesContainer">
+                                        <!-- Branch 1 (Main) -->
+                                        <div class="branch-item mb-4 p-3 border rounded" data-branch-id="1">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="mb-0">
+                                                    <span class="badge bg-primary me-2">Main Branch</span>
+                                                    Branch 1
+                                                </h6>
+                                                <button type="button" class="btn btn-sm btn-outline-danger remove-branch-btn" style="display: none;">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Branch Name <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control branch-name" placeholder="e.g., Main Campus, Downtown Branch" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Branch Type</label>
+                                                    <select class="form-select branch-type">
+                                                        <option value="main">Main Hospital</option>
+                                                        <option value="branch">Branch</option>
+                                                        <option value="clinic">Clinic</option>
+                                                        <option value="diagnostic">Diagnostic Center</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Address <span class="text-danger">*</span></label>
+                                                <textarea class="form-control branch-address" rows="2" placeholder="Enter complete address" required></textarea>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">City</label>
+                                                    <input type="text" class="form-control branch-city" placeholder="City">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">State</label>
+                                                    <input type="text" class="form-control branch-state" placeholder="State">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input type="text" class="form-control branch-postal" placeholder="Postal Code">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="geo-location-section p-3 bg-light rounded mb-3">
+                                                <h6 class="mb-3"><i class="fas fa-map-pin me-2"></i>Geo-Location Coordinates</h6>
+                                                <div class="row">
+                                                    <div class="col-md-5 mb-3">
+                                                        <label class="form-label">Latitude</label>
+                                                        <input type="text" class="form-control branch-latitude" placeholder="e.g., 17.3850">
+                                                        <small class="text-muted">Decimal format (e.g., 17.3850)</small>
+                                                    </div>
+                                                    <div class="col-md-5 mb-3">
+                                                        <label class="form-label">Longitude</label>
+                                                        <input type="text" class="form-control branch-longitude" placeholder="e.g., 78.4867">
+                                                        <small class="text-muted">Decimal format (e.g., 78.4867)</small>
+                                                    </div>
+                                                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                                                        <button type="button" class="btn btn-outline-primary w-100 get-location-btn">
+                                                            <i class="fas fa-location-arrow"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="map-preview mt-2">
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-info-circle me-1"></i>
+                                                        You can also click "Get Location" to auto-detect or search for your address on the map
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Contact Number</label>
+                                                    <input type="tel" class="form-control branch-phone" placeholder="+91 1234567890">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="email" class="form-control branch-email" placeholder="branch@hospital.com">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Bed Capacity</label>
+                                                <input type="number" class="form-control branch-beds" placeholder="e.g., 200">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Preview -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6><i class="fas fa-map me-2"></i>All Branches on Map</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="map-placeholder" style="min-height: 400px;">
+                                        <i class="fas fa-map-marked-alt fa-3x text-muted mb-2"></i>
+                                        <p class="text-muted">Interactive map showing all branch locations will appear here</p>
+                                        <p class="text-muted small">Once you add geo-coordinates, all branches will be displayed on this map</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="fas fa-save me-2"></i>Save as Draft
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="submitOnboarding">
+                                    <i class="fas fa-check me-2"></i>Save & Continue
+                                </button>
                             </div>
                         </div>
                     </div>
