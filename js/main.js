@@ -245,6 +245,7 @@ function initializeApp() {
     updateCampaignsTable();
     updateApprovalsSection();
     initializeOnboarding();
+    initializeBranchManagement();
 }
 
 // Event Listeners Setup
@@ -4113,6 +4114,249 @@ function connectPlatform(platform) {
 // Make function available globally for onclick handlers
 window.showOnboardingModal = showOnboardingModal;
 window.connectPlatform = connectPlatform;
+
+// ==========================================
+// BRANCH MANAGEMENT FUNCTIONALITY
+// ==========================================
+
+let branchCounter = 1;
+
+function initializeBranchManagement() {
+    const addBranchBtn = document.getElementById('addBranchBtn');
+    if (addBranchBtn) {
+        addBranchBtn.addEventListener('click', addNewBranch);
+    }
+    
+    // Setup event listeners for existing branches
+    setupBranchEventListeners();
+}
+
+function addNewBranch() {
+    branchCounter++;
+    const branchesContainer = document.getElementById('branchesContainer');
+    
+    const branchHTML = `
+        <div class="branch-item mb-4 p-3 border rounded" data-branch-id="${branchCounter}">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Branch ${branchCounter}</h6>
+                <button type="button" class="btn btn-sm btn-outline-danger remove-branch-btn" onclick="removeBranch(${branchCounter})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Branch Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control branch-name" placeholder="e.g., Main Campus, Downtown Branch" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Branch Type</label>
+                    <select class="form-select branch-type">
+                        <option value="main">Main Hospital</option>
+                        <option value="branch">Branch</option>
+                        <option value="clinic">Clinic</option>
+                        <option value="diagnostic">Diagnostic Center</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Address <span class="text-danger">*</span></label>
+                <textarea class="form-control branch-address" rows="2" placeholder="Enter complete address" required></textarea>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">City</label>
+                    <input type="text" class="form-control branch-city" placeholder="City">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">State</label>
+                    <input type="text" class="form-control branch-state" placeholder="State">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Postal Code</label>
+                    <input type="text" class="form-control branch-postal" placeholder="Postal Code">
+                </div>
+            </div>
+            
+            <div class="geo-location-section p-3 bg-light rounded mb-3">
+                <h6 class="mb-3"><i class="fas fa-map-pin me-2"></i>Geo-Location Coordinates</h6>
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">Latitude</label>
+                        <input type="text" class="form-control branch-latitude" placeholder="e.g., 17.3850">
+                        <small class="text-muted">Decimal format (e.g., 17.3850)</small>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label">Longitude</label>
+                        <input type="text" class="form-control branch-longitude" placeholder="e.g., 78.4867">
+                        <small class="text-muted">Decimal format (e.g., 78.4867)</small>
+                    </div>
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                        <button type="button" class="btn btn-outline-primary w-100 get-location-btn" onclick="getGeoLocation(${branchCounter})">
+                            <i class="fas fa-location-arrow"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="map-preview mt-2">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        You can also click "Get Location" to auto-detect or search for your address on the map
+                    </small>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Contact Number</label>
+                    <input type="tel" class="form-control branch-phone" placeholder="+91 1234567890">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control branch-email" placeholder="branch@hospital.com">
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Bed Capacity</label>
+                <input type="number" class="form-control branch-beds" placeholder="e.g., 200">
+            </div>
+        </div>
+    `;
+    
+    branchesContainer.insertAdjacentHTML('beforeend', branchHTML);
+    
+    // Show success message
+    showAlert(`Branch ${branchCounter} added successfully! Please fill in the details.`, 'success');
+    
+    // Scroll to the new branch
+    setTimeout(() => {
+        const newBranch = document.querySelector(`[data-branch-id="${branchCounter}"]`);
+        if (newBranch) {
+            newBranch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
+}
+
+function removeBranch(branchId) {
+    const branch = document.querySelector(`[data-branch-id="${branchId}"]`);
+    if (branch) {
+        if (confirm('Are you sure you want to remove this branch?')) {
+            branch.style.opacity = '0';
+            branch.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                branch.remove();
+                showAlert('Branch removed successfully', 'info');
+            }, 300);
+        }
+    }
+}
+
+function getGeoLocation(branchId) {
+    const branch = document.querySelector(`[data-branch-id="${branchId}"]`);
+    if (!branch) return;
+    
+    const latInput = branch.querySelector('.branch-latitude');
+    const lonInput = branch.querySelector('.branch-longitude');
+    
+    if ('geolocation' in navigator) {
+        showAlert('Getting your location...', 'info');
+        
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                latInput.value = position.coords.latitude.toFixed(6);
+                lonInput.value = position.coords.longitude.toFixed(6);
+                showAlert('Location detected successfully!', 'success');
+            },
+            (error) => {
+                let errorMessage = 'Unable to get location. ';
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        errorMessage += 'Please allow location access in your browser.';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        errorMessage += 'Location information is unavailable.';
+                        break;
+                    case error.TIMEOUT:
+                        errorMessage += 'Location request timed out.';
+                        break;
+                    default:
+                        errorMessage += 'An unknown error occurred.';
+                }
+                showAlert(errorMessage, 'warning');
+                // Provide example coordinates
+                showAlert('You can manually enter coordinates or use Google Maps to find them.', 'info');
+            }
+        );
+    } else {
+        showAlert('Geolocation is not supported by your browser. Please enter coordinates manually.', 'warning');
+    }
+}
+
+function setupBranchEventListeners() {
+    // Setup listeners for the first (main) branch's get location button
+    const firstGetLocationBtn = document.querySelector('.get-location-btn');
+    if (firstGetLocationBtn && !firstGetLocationBtn.hasAttribute('onclick')) {
+        firstGetLocationBtn.addEventListener('click', () => getGeoLocation(1));
+    }
+    
+    // Setup submit handler for onboarding form
+    const submitBtn = document.getElementById('submitOnboarding');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', handleOnboardingSubmit);
+    }
+}
+
+function handleOnboardingSubmit(e) {
+    e.preventDefault();
+    
+    // Collect all branch data
+    const branches = [];
+    document.querySelectorAll('.branch-item').forEach(branch => {
+        const branchData = {
+            id: branch.getAttribute('data-branch-id'),
+            name: branch.querySelector('.branch-name')?.value || '',
+            type: branch.querySelector('.branch-type')?.value || '',
+            address: branch.querySelector('.branch-address')?.value || '',
+            city: branch.querySelector('.branch-city')?.value || '',
+            state: branch.querySelector('.branch-state')?.value || '',
+            postalCode: branch.querySelector('.branch-postal')?.value || '',
+            latitude: branch.querySelector('.branch-latitude')?.value || '',
+            longitude: branch.querySelector('.branch-longitude')?.value || '',
+            phone: branch.querySelector('.branch-phone')?.value || '',
+            email: branch.querySelector('.branch-email')?.value || '',
+            bedCapacity: branch.querySelector('.branch-beds')?.value || ''
+        };
+        branches.push(branchData);
+    });
+    
+    // Validate at least one branch has required fields
+    const hasValidBranch = branches.some(b => b.name && b.address);
+    
+    if (!hasValidBranch) {
+        showAlert('Please fill in at least the branch name and address for one location.', 'warning');
+        return;
+    }
+    
+    // Log the data (in real app, this would be sent to server)
+    console.log('Onboarding Data:', {
+        branches: branches,
+        totalBranches: branches.length
+    });
+    
+    showAlert(`Successfully saved ${branches.length} branch(es) with location data!`, 'success');
+    
+    // Optionally show summary
+    const branchesWithGeo = branches.filter(b => b.latitude && b.longitude).length;
+    if (branchesWithGeo > 0) {
+        showAlert(`${branchesWithGeo} branch(es) have geo-location data and will appear on the map.`, 'info');
+    }
+}
+
+// Make functions globally available
+window.removeBranch = removeBranch;
+window.getGeoLocation = getGeoLocation;
 
 // ==========================================
 // COMPETITOR ANALYSIS FUNCTIONALITY

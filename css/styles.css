@@ -681,6 +681,105 @@ body {
     text-align: center;
 }
 
+/* Branch Management Styles */
+.branch-item {
+    background: #ffffff;
+    transition: all 0.3s ease;
+    position: relative;
+    opacity: 1;
+}
+
+.branch-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.branch-item .badge.bg-primary {
+    font-size: 11px;
+    padding: 4px 8px;
+}
+
+.remove-branch-btn {
+    transition: all 0.2s ease;
+}
+
+.remove-branch-btn:hover {
+    transform: scale(1.1);
+}
+
+.geo-location-section {
+    border-left: 3px solid #667eea;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+}
+
+.geo-location-section h6 {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.geo-location-section input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.get-location-btn {
+    height: 38px;
+    border-color: #667eea;
+    color: #667eea;
+    transition: all 0.3s ease;
+}
+
+.get-location-btn:hover {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.get-location-btn:active {
+    transform: translateY(0);
+}
+
+.map-preview {
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.branch-item .form-control:focus,
+.branch-item .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+#branchesContainer {
+    max-height: none;
+}
+
+/* Onboarding Form Styles */
+#onboarding-section .card-header h5 {
+    margin-bottom: 0;
+    color: #333;
+    font-weight: 600;
+}
+
+#onboarding-section .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+#onboarding-section .text-danger {
+    color: #dc3545 !important;
+}
+
+#onboarding-section small.text-muted {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 4px;
+}
+
 /* Competitor Analysis */
 .competitor-view {
     display: none;
