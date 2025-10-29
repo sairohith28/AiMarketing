@@ -722,10 +722,12 @@ body {
 }
 
 .get-location-btn {
-    height: 38px;
     border-color: #667eea;
     color: #667eea;
     transition: all 0.3s ease;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
 }
 
 .get-location-btn:hover {
@@ -738,6 +740,19 @@ body {
 
 .get-location-btn:active {
     transform: translateY(0);
+}
+
+.geo-location-section .row.g-2 {
+    margin-bottom: 0;
+}
+
+.geo-location-section .form-control-sm {
+    font-size: 0.875rem;
+}
+
+.geo-location-section .form-label.small {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
 }
 
 .map-preview {

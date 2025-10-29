@@ -664,29 +664,25 @@
                                             
                                             <div class="geo-location-section p-3 bg-light rounded mb-3">
                                                 <h6 class="mb-3"><i class="fas fa-map-pin me-2"></i>Geo-Location Coordinates</h6>
-                                                <div class="row">
-                                                    <div class="col-md-5 mb-3">
-                                                        <label class="form-label">Latitude</label>
-                                                        <input type="text" class="form-control branch-latitude" placeholder="e.g., 17.3850">
-                                                        <small class="text-muted">Decimal format (e.g., 17.3850)</small>
+                                                <div class="row g-2">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label small">Latitude</label>
+                                                        <input type="text" class="form-control form-control-sm branch-latitude" placeholder="17.3850">
                                                     </div>
-                                                    <div class="col-md-5 mb-3">
-                                                        <label class="form-label">Longitude</label>
-                                                        <input type="text" class="form-control branch-longitude" placeholder="e.g., 78.4867">
-                                                        <small class="text-muted">Decimal format (e.g., 78.4867)</small>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label small">Longitude</label>
+                                                        <input type="text" class="form-control form-control-sm branch-longitude" placeholder="78.4867">
                                                     </div>
-                                                    <div class="col-md-2 mb-3 d-flex align-items-end">
-                                                        <button type="button" class="btn btn-outline-primary w-100 get-location-btn">
-                                                            <i class="fas fa-location-arrow"></i>
+                                                    <div class="col-md-3 d-flex align-items-end">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary get-location-btn" title="Auto-detect location">
+                                                            <i class="fas fa-crosshairs me-1"></i>Detect
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div class="map-preview mt-2">
-                                                    <small class="text-muted">
-                                                        <i class="fas fa-info-circle me-1"></i>
-                                                        You can also click "Get Location" to auto-detect or search for your address on the map
-                                                    </small>
-                                                </div>
+                                                <small class="text-muted d-block mt-2">
+                                                    <i class="fas fa-info-circle me-1"></i>
+                                                    Click "Detect" to auto-fill or enter coordinates manually
+                                                </small>
                                             </div>
                                             
                                             <div class="row">
