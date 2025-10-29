@@ -1007,6 +1007,44 @@ body {
     font-weight: 500;
 }
 
+/* Gap Analysis Tabs */
+#gapAnalysisTabs .nav-link {
+    color: #495057;
+    font-weight: 500;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+#gapAnalysisTabs .nav-link:hover {
+    color: #667eea;
+    background-color: rgba(102, 126, 234, 0.05);
+    border-bottom-color: rgba(102, 126, 234, 0.3);
+}
+
+#gapAnalysisTabs .nav-link.active {
+    color: #667eea;
+    background-color: rgba(102, 126, 234, 0.1);
+    border-bottom-color: #667eea;
+    font-weight: 600;
+}
+
+#gapAnalysisTabContent .tab-pane {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Competitor Analysis */
 .competitor-view {
     display: none;
