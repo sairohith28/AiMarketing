@@ -4770,4 +4770,660 @@ const originalInit = initializeApp;
 initializeApp = function() {
     originalInit();
     initializeCompetitorAnalysis();
+    initializeContentCalendar();
 };
+
+// ==========================================
+// CONTENT CALENDAR FUNCTIONALITY
+// ==========================================
+
+// Sample content posts data
+const contentPosts = [
+    {
+        id: 1,
+        title: 'Heart Health Awareness Week',
+        content: 'Join us for Heart Health Awareness Week! Free cardiac screenings available. Book your appointment today.',
+        platforms: ['facebook', 'instagram'],
+        scheduledDate: '2025-11-05',
+        scheduledTime: '10:00',
+        status: 'pending',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    },
+    {
+        id: 2,
+        title: 'New Pediatric Wing Opening',
+        content: 'We are excited to announce the opening of our new state-of-the-art pediatric wing! Advanced care for your little ones.',
+        platforms: ['facebook', 'twitter', 'linkedin'],
+        scheduledDate: '2025-11-08',
+        scheduledTime: '14:00',
+        status: 'approved',
+        type: 'manual',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'Marketing Team'
+    },
+    {
+        id: 3,
+        title: 'Happy Diwali - Festival of Lights',
+        content: '✨ Wishing you and your family a bright and prosperous Diwali! May this festival of lights bring health, happiness, and wellness to your home. 🪔 Free health check-ups available this festive season!',
+        platforms: ['facebook', 'instagram', 'twitter'],
+        scheduledDate: '2025-11-01',
+        scheduledTime: '08:00',
+        status: 'approved',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    },
+    {
+        id: 4,
+        title: 'Diabetes Management Workshop',
+        content: 'Free diabetes management workshop this Saturday! Learn about diet, exercise, and medication management from our experts.',
+        platforms: ['facebook', 'instagram'],
+        scheduledDate: '2025-11-12',
+        scheduledTime: '09:00',
+        status: 'scheduled',
+        type: 'manual',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'Dr. Sharma'
+    },
+    {
+        id: 5,
+        title: 'World Diabetes Day',
+        content: '💙 Today on World Diabetes Day, let\'s raise awareness about diabetes prevention and management. Get your free blood sugar screening at our hospital. Early detection saves lives!',
+        platforms: ['facebook', 'instagram', 'linkedin'],
+        scheduledDate: '2025-11-14',
+        scheduledTime: '10:00',
+        status: 'pending',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    },
+    {
+        id: 6,
+        title: 'Cardiology Excellence Award',
+        content: 'Proud to announce our Cardiology department has received the Excellence in Patient Care Award 2025!',
+        platforms: ['linkedin', 'twitter'],
+        scheduledDate: '2025-11-02',
+        scheduledTime: '11:00',
+        status: 'published',
+        type: 'manual',
+        image: null,
+        engagement: { likes: 247, shares: 56, comments: 34 },
+        createdBy: 'PR Team'
+    },
+    {
+        id: 7,
+        title: 'Orthopedic Care Tips',
+        content: '5 Tips for Better Joint Health: Stay active, maintain healthy weight, proper posture, adequate calcium, and regular check-ups.',
+        platforms: ['instagram', 'facebook'],
+        scheduledDate: '2025-11-15',
+        scheduledTime: '16:00',
+        status: 'pending',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    },
+    {
+        id: 8,
+        title: 'Mental Health Awareness',
+        content: 'Your mental health matters. Our counseling services are here to support you. Book a confidential session today.',
+        platforms: ['facebook', 'twitter'],
+        scheduledDate: '2025-11-18',
+        scheduledTime: '12:00',
+        status: 'pending',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    },
+    {
+        id: 9,
+        title: 'Emergency Care Available 24/7',
+        content: 'Medical emergencies don\'t wait. Neither do we. Our emergency department is equipped and staffed 24/7 for your care.',
+        platforms: ['facebook'],
+        scheduledDate: '2025-11-20',
+        scheduledTime: '18:00',
+        status: 'draft',
+        type: 'manual',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'Marketing Team'
+    },
+    {
+        id: 10,
+        title: 'Vaccination Drive',
+        content: 'Flu season is here! Get your flu shot at our hospital. Walk-ins welcome. Protect yourself and your loved ones.',
+        platforms: ['facebook', 'instagram', 'twitter'],
+        scheduledDate: '2025-11-22',
+        scheduledTime: '10:00',
+        status: 'approved',
+        type: 'manual',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'Health Team'
+    },
+    {
+        id: 11,
+        title: 'Merry Christmas & Happy Holidays',
+        content: '🎄 Wishing you a Merry Christmas filled with joy, peace, and good health! Our emergency services remain available 24/7 throughout the holiday season. May this festive season bring wellness to you and your loved ones! 🎅',
+        platforms: ['facebook', 'instagram', 'twitter', 'linkedin'],
+        scheduledDate: '2025-12-25',
+        scheduledTime: '07:00',
+        status: 'draft',
+        type: 'ai',
+        image: null,
+        engagement: { likes: 0, shares: 0, comments: 0 },
+        createdBy: 'AI Assistant'
+    }
+];
+
+// Calendar events/festivals
+const calendarEvents = [
+    { date: '2025-11-01', name: 'Diwali', icon: '🪔' },
+    { date: '2025-11-14', name: 'World Diabetes Day', icon: '💙' },
+    { date: '2025-12-25', name: 'Christmas', icon: '🎄' },
+    { date: '2025-01-01', name: 'New Year', icon: '🎉' },
+    { date: '2025-01-26', name: 'Republic Day', icon: '🇮🇳' },
+    { date: '2025-03-08', name: 'Women\'s Day', icon: '👩' },
+    { date: '2025-03-21', name: 'World Down Syndrome Day', icon: '💛' },
+    { date: '2025-04-07', name: 'World Health Day', icon: '🏥' }
+];
+
+let currentMonth = 10; // November (0-indexed)
+let currentYear = 2025;
+let currentCalendarView = 'calendar';
+
+function initializeContentCalendar() {
+    setupContentCalendarListeners();
+    renderCalendar();
+    renderContentPostsList();
+    renderPendingApprovals();
+}
+
+function setupContentCalendarListeners() {
+    // View toggle
+    const calendarViewBtn = document.getElementById('calendarViewBtn');
+    const listViewBtn = document.getElementById('listViewContentBtn');
+    
+    if (calendarViewBtn && listViewBtn) {
+        calendarViewBtn.addEventListener('click', () => {
+            toggleContentView('calendar');
+        });
+        
+        listViewBtn.addEventListener('click', () => {
+            toggleContentView('list');
+        });
+    }
+    
+    // Month navigation
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+    const todayBtn = document.getElementById('todayBtn');
+    
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+    }
+    
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+    }
+    
+    if (todayBtn) {
+        todayBtn.addEventListener('click', () => {
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            renderCalendar();
+        });
+    }
+    
+    // Create post button
+    const createPostBtn = document.getElementById('createPostBtn');
+    if (createPostBtn) {
+        createPostBtn.addEventListener('click', () => {
+            showCreatePostModal();
+        });
+    }
+    
+    // Generate AI content
+    const generateAIBtn = document.getElementById('generateAIContentBtn');
+    if (generateAIBtn) {
+        generateAIBtn.addEventListener('click', () => {
+            showGenerateAIContentModal();
+        });
+    }
+    
+    // Filters
+    const platformFilter = document.getElementById('platformFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    
+    if (platformFilter) {
+        platformFilter.addEventListener('change', () => {
+            renderContentPostsList();
+            renderPendingApprovals();
+        });
+    }
+    
+    if (statusFilter) {
+        statusFilter.addEventListener('change', () => {
+            renderContentPostsList();
+            renderPendingApprovals();
+        });
+    }
+}
+
+function toggleContentView(view) {
+    const calendarView = document.getElementById('calendarViewContainer');
+    const listView = document.getElementById('listViewContentContainer');
+    const calendarBtn = document.getElementById('calendarViewBtn');
+    const listBtn = document.getElementById('listViewContentBtn');
+    
+    if (view === 'calendar') {
+        calendarView?.classList.add('active');
+        listView?.classList.remove('active');
+        calendarBtn?.classList.add('active');
+        listBtn?.classList.remove('active');
+        currentCalendarView = 'calendar';
+    } else {
+        calendarView?.classList.remove('active');
+        listView?.classList.add('active');
+        calendarBtn?.classList.remove('active');
+        listBtn?.classList.add('active');
+        currentCalendarView = 'list';
+    }
+}
+
+function renderCalendar() {
+    const calendarContainer = document.getElementById('contentCalendar');
+    const monthYearDisplay = document.getElementById('currentMonthYear');
+    
+    if (!calendarContainer) return;
+    
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    if (monthYearDisplay) {
+        monthYearDisplay.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    }
+    
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+    
+    let html = `
+        <div class="calendar-header">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+        </div>
+    `;
+    
+    // Previous month days
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+        const day = prevMonthLastDay - i;
+        html += `<div class="calendar-day other-month"><div class="calendar-day-number">${day}</div></div>`;
+    }
+    
+    // Current month days
+    const today = new Date();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isToday = today.getDate() === day && 
+                       today.getMonth() === currentMonth && 
+                       today.getFullYear() === currentYear;
+        
+        const postsForDay = contentPosts.filter(post => post.scheduledDate === dateStr);
+        const eventsForDay = calendarEvents.filter(event => event.date === dateStr);
+        
+        html += `
+            <div class="calendar-day ${isToday ? 'today' : ''}" onclick="handleDayClick('${dateStr}')">
+                <div class="calendar-day-number">${day}</div>
+                ${eventsForDay.length > 0 ? `
+                    <div class="calendar-event-label">
+                        ${eventsForDay[0].icon} ${eventsForDay[0].name}
+                    </div>
+                ` : ''}
+                <div class="calendar-posts">
+                    ${postsForDay.slice(0, 3).map(post => `
+                        <div class="calendar-post-item ${post.status} ${post.type === 'ai' ? 'ai-generated' : ''}" 
+                             onclick="event.stopPropagation(); viewPost(${post.id})">
+                            <span class="calendar-post-platform ${post.platforms[0]}">
+                                ${getPlatformIcon(post.platforms[0])}
+                            </span>
+                            <span class="calendar-post-text">${post.title}</span>
+                        </div>
+                    `).join('')}
+                    ${postsForDay.length > 3 ? `<div class="calendar-post-more">+${postsForDay.length - 3} more</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Next month days
+    const totalCells = startingDayOfWeek + daysInMonth;
+    const remainingCells = 42 - totalCells; // 6 rows * 7 days
+    for (let day = 1; day <= remainingCells; day++) {
+        html += `<div class="calendar-day other-month"><div class="calendar-day-number">${day}</div></div>`;
+    }
+    
+    calendarContainer.innerHTML = html;
+}
+
+function renderContentPostsList() {
+    const tbody = document.getElementById('contentPostsTableBody');
+    if (!tbody) return;
+    
+    const platformFilter = document.getElementById('platformFilter')?.value || 'all';
+    const statusFilter = document.getElementById('statusFilter')?.value || 'all';
+    
+    let filteredPosts = contentPosts;
+    
+    if (platformFilter !== 'all') {
+        filteredPosts = filteredPosts.filter(post => post.platforms.includes(platformFilter));
+    }
+    
+    if (statusFilter !== 'all') {
+        filteredPosts = filteredPosts.filter(post => post.status === statusFilter);
+    }
+    
+    if (filteredPosts.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center text-muted py-5">
+                    <i class="fas fa-calendar-times fa-3x mb-3"></i>
+                    <p>No content posts found</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    tbody.innerHTML = filteredPosts.map(post => `
+        <tr>
+            <td>
+                <input type="checkbox" class="form-check-input">
+            </td>
+            <td>
+                ${post.image ? 
+                    `<img src="${post.image}" class="post-preview-img" alt="${post.title}">` :
+                    `<div class="post-preview-placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>`
+                }
+            </td>
+            <td>
+                <div class="post-content-cell">
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-excerpt">${post.content}</div>
+                </div>
+            </td>
+            <td>
+                <div class="platform-badges">
+                    ${post.platforms.map(platform => `
+                        <span class="platform-badge ${platform}">
+                            <i class="fab fa-${platform}"></i>
+                            ${platform.charAt(0).toUpperCase() + platform.slice(1)}
+                        </span>
+                    `).join('')}
+                </div>
+            </td>
+            <td>
+                <div class="text-nowrap">
+                    <i class="far fa-calendar me-1"></i>${formatDate(post.scheduledDate)}
+                </div>
+                <div class="text-muted small mt-1">
+                    <i class="far fa-clock me-1"></i>${post.scheduledTime}
+                </div>
+            </td>
+            <td>
+                <span class="status-badge ${post.status}">${post.status}</span>
+            </td>
+            <td>
+                <span class="type-badge ${post.type}">${post.type === 'ai' ? 'AI Generated' : 'Manual'}</span>
+            </td>
+            <td>
+                ${post.status === 'published' ? `
+                    <div class="engagement-stats">
+                        <div class="engagement-item">
+                            <i class="fas fa-heart"></i>
+                            <span>${post.engagement.likes}</span>
+                        </div>
+                        <div class="engagement-item">
+                            <i class="fas fa-share"></i>
+                            <span>${post.engagement.shares}</span>
+                        </div>
+                        <div class="engagement-item">
+                            <i class="fas fa-comment"></i>
+                            <span>${post.engagement.comments}</span>
+                        </div>
+                    </div>
+                ` : `<span class="text-muted small">Not published</span>`}
+            </td>
+            <td>
+                <div class="d-flex gap-1">
+                    ${post.status === 'pending' ? `
+                        <button class="btn btn-sm btn-success" onclick="approvePost(${post.id})" title="Approve">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="rejectPost(${post.id})" title="Reject">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    ` : `
+                        <button class="btn btn-sm btn-outline-primary" onclick="editPost(${post.id})" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePost(${post.id})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `}
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function renderPendingApprovals() {
+    const container = document.getElementById('pendingApprovalsContainer');
+    const countBadge = document.getElementById('pendingCount');
+    
+    if (!container) return;
+    
+    const pendingPosts = contentPosts.filter(post => post.status === 'pending');
+    
+    if (countBadge) {
+        countBadge.textContent = pendingPosts.length;
+    }
+    
+    if (pendingPosts.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-3x mb-3"></i>
+                <p>No posts pending approval</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = pendingPosts.map(post => `
+        <div class="col-md-4">
+            <div class="pending-post-card">
+                ${post.type === 'ai' ? '<div class="ai-badge"><i class="fas fa-magic"></i> AI Generated</div>' : ''}
+                
+                ${post.image ?
+                    `<img src="${post.image}" class="pending-post-image" alt="${post.title}">` :
+                    `<div class="pending-post-image-placeholder">
+                        <i class="fas fa-image"></i>
+                    </div>`
+                }
+                
+                <div class="pending-post-content">
+                    <h6>${post.title}</h6>
+                    <p class="pending-post-text">${post.content}</p>
+                    
+                    <div class="pending-post-meta">
+                        <div class="pending-post-meta-item">
+                            <i class="far fa-calendar"></i>
+                            ${formatDate(post.scheduledDate)}
+                        </div>
+                        <div class="pending-post-meta-item">
+                            <i class="far fa-clock"></i>
+                            ${post.scheduledTime}
+                        </div>
+                        <div class="pending-post-meta-item">
+                            <i class="fas fa-user"></i>
+                            ${post.createdBy}
+                        </div>
+                    </div>
+                    
+                    <div class="platform-badges mb-3">
+                        ${post.platforms.map(platform => `
+                            <span class="platform-badge ${platform}">
+                                <i class="fab fa-${platform}"></i>
+                                ${platform.charAt(0).toUpperCase() + platform.slice(1)}
+                            </span>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="pending-post-actions">
+                        <button class="btn btn-success" onclick="approvePost(${post.id})">
+                            <i class="fas fa-check me-1"></i>Approve
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="viewPost(${post.id})">
+                            <i class="fas fa-eye me-1"></i>Review
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="rejectPost(${post.id})">
+                            <i class="fas fa-times me-1"></i>Reject
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getPlatformIcon(platform) {
+    const icons = {
+        'facebook': 'f',
+        'instagram': 'ig',
+        'twitter': 't',
+        'linkedin': 'in'
+    };
+    return icons[platform] || '?';
+}
+
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function handleDayClick(dateStr) {
+    showCreatePostModal(dateStr);
+}
+
+function viewPost(postId) {
+    const post = contentPosts.find(p => p.id === postId);
+    if (!post) return;
+    
+    // Here you would show a modal with full post details
+    showAlert(`Viewing post: ${post.title}`, 'info');
+}
+
+function approvePost(postId) {
+    const post = contentPosts.find(p => p.id === postId);
+    if (!post) return;
+    
+    post.status = 'approved';
+    
+    showAlert(`Post "${post.title}" has been approved and will be scheduled for posting!`, 'success');
+    
+    // Refresh displays
+    renderCalendar();
+    renderContentPostsList();
+    renderPendingApprovals();
+}
+
+function rejectPost(postId) {
+    const post = contentPosts.find(p => p.id === postId);
+    if (!post) return;
+    
+    if (confirm(`Are you sure you want to reject "${post.title}"?`)) {
+        post.status = 'draft';
+        showAlert(`Post "${post.title}" has been rejected and moved to drafts.`, 'warning');
+        
+        // Refresh displays
+        renderCalendar();
+        renderContentPostsList();
+        renderPendingApprovals();
+    }
+}
+
+function editPost(postId) {
+    showAlert('Edit functionality coming soon!', 'info');
+}
+
+function deletePost(postId) {
+    const post = contentPosts.find(p => p.id === postId);
+    if (!post) return;
+    
+    if (confirm(`Are you sure you want to delete "${post.title}"?`)) {
+        const index = contentPosts.findIndex(p => p.id === postId);
+        contentPosts.splice(index, 1);
+        
+        showAlert('Post deleted successfully!', 'success');
+        
+        // Refresh displays
+        renderCalendar();
+        renderContentPostsList();
+        renderPendingApprovals();
+    }
+}
+
+function showCreatePostModal(dateStr = null) {
+    const today = new Date();
+    const defaultDate = dateStr || today.toISOString().split('T')[0];
+    
+    showAlert('Create post modal would open here with date: ' + defaultDate, 'info');
+    // In a full implementation, this would show a modal with a form to create a new post
+}
+
+function showGenerateAIContentModal() {
+    showAlert('AI Content Generation: This would open a modal where you can specify the topic, target audience, and platform, and AI will generate optimized content with images!', 'info');
+    // In a full implementation, this would show a modal with AI generation options
+}
+
+// Make functions globally available
+window.handleDayClick = handleDayClick;
+window.viewPost = viewPost;
+window.approvePost = approvePost;
+window.rejectPost = rejectPost;
+window.editPost = editPost;
+window.deletePost = deletePost;
