@@ -764,6 +764,11 @@ body {
     font-weight: 600;
 }
 
+#onboarding-section .card-header p {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
 #onboarding-section .form-label {
     font-weight: 500;
     color: #495057;
@@ -778,6 +783,213 @@ body {
     font-size: 0.8rem;
     display: block;
     margin-top: 4px;
+}
+
+/* Social Media Connect Cards */
+.social-connect-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    background: #fff;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.social-connect-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+}
+
+.social-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.social-icon.facebook {
+    background: linear-gradient(135deg, #1877f2 0%, #0d5dbf 100%);
+}
+
+.social-icon.instagram {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
+}
+
+.social-icon.linkedin {
+    background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+}
+
+.social-icon.twitter {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+}
+
+.social-icon.google {
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 50%, #fbbc05 75%, #ea4335 100%);
+}
+
+.social-icon.youtube {
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+}
+
+.social-icon.facebook-ads {
+    background: linear-gradient(135deg, #1877f2 0%, #0d5dbf 100%);
+}
+
+.social-icon.google-ads {
+    background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+}
+
+.social-icon.instagram-ads {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
+}
+
+.ads-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: #fff;
+    color: #333;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.social-info {
+    flex: 1;
+}
+
+.social-info h6 {
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #333;
+}
+
+.social-info p {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.btn-connect {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 6px 16px;
+    transition: all 0.3s ease;
+}
+
+.btn-connect:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.facebook-btn {
+    background: #1877f2;
+    color: white;
+    border: none;
+}
+
+.facebook-btn:hover {
+    background: #0d5dbf;
+    color: white;
+}
+
+.instagram-btn {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
+    color: white;
+    border: none;
+}
+
+.linkedin-btn {
+    background: #0077b5;
+    color: white;
+    border: none;
+}
+
+.linkedin-btn:hover {
+    background: #005885;
+    color: white;
+}
+
+.twitter-btn {
+    background: #1da1f2;
+    color: white;
+    border: none;
+}
+
+.twitter-btn:hover {
+    background: #0d8bd9;
+    color: white;
+}
+
+.google-btn {
+    background: #4285f4;
+    color: white;
+    border: none;
+}
+
+.google-btn:hover {
+    background: #1a73e8;
+    color: white;
+}
+
+.youtube-btn {
+    background: #ff0000;
+    color: white;
+    border: none;
+}
+
+.youtube-btn:hover {
+    background: #cc0000;
+    color: white;
+}
+
+.facebook-ads-btn {
+    background: #1877f2;
+    color: white;
+    border: none;
+}
+
+.facebook-ads-btn:hover {
+    background: #0d5dbf;
+    color: white;
+}
+
+.google-ads-btn {
+    background: #4285f4;
+    color: white;
+    border: none;
+}
+
+.google-ads-btn:hover {
+    background: #1a73e8;
+    color: white;
+}
+
+.instagram-ads-btn {
+    background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%);
+    color: white;
+    border: none;
+}
+
+.connected-status {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.connected-status .badge {
+    font-weight: 500;
 }
 
 /* Competitor Analysis */

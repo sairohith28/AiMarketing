@@ -246,6 +246,7 @@ function initializeApp() {
     updateApprovalsSection();
     initializeOnboarding();
     initializeBranchManagement();
+    loadConnectedPlatforms();
 }
 
 // Event Listeners Setup
@@ -4357,6 +4358,124 @@ function handleOnboardingSubmit(e) {
 // Make functions globally available
 window.removeBranch = removeBranch;
 window.getGeoLocation = getGeoLocation;
+
+// ==========================================
+// SOCIAL MEDIA INTEGRATION FUNCTIONALITY
+// ==========================================
+
+// Store connected platforms
+const connectedPlatforms = new Set();
+
+function connectSocialMedia(platform) {
+    const platformNames = {
+        'facebook': 'Facebook',
+        'instagram': 'Instagram',
+        'linkedin': 'LinkedIn',
+        'twitter': 'Twitter/X',
+        'gmb': 'Google My Business',
+        'youtube': 'YouTube',
+        'facebook-ads': 'Facebook Ads',
+        'google-ads': 'Google Ads',
+        'instagram-ads': 'Instagram Ads'
+    };
+    
+    const platformName = platformNames[platform] || platform;
+    
+    // Show loading state
+    showAlert(`Connecting to ${platformName}...`, 'info');
+    
+    // Simulate OAuth flow (in real app, this would redirect to OAuth provider)
+    setTimeout(() => {
+        // Add to connected platforms
+        connectedPlatforms.add(platform);
+        
+        // Update UI
+        updateSocialMediaUI(platform, true);
+        
+        // Show success message
+        showAlert(`Successfully connected to ${platformName}! You can now post directly to this platform.`, 'success');
+        
+        // Store in localStorage for persistence
+        localStorage.setItem('connectedPlatforms', JSON.stringify([...connectedPlatforms]));
+    }, 1500);
+}
+
+function disconnectSocialMedia(platform) {
+    const platformNames = {
+        'facebook': 'Facebook',
+        'instagram': 'Instagram',
+        'linkedin': 'LinkedIn',
+        'twitter': 'Twitter/X',
+        'gmb': 'Google My Business',
+        'youtube': 'YouTube',
+        'facebook-ads': 'Facebook Ads',
+        'google-ads': 'Google Ads',
+        'instagram-ads': 'Instagram Ads'
+    };
+    
+    const platformName = platformNames[platform] || platform;
+    
+    if (confirm(`Are you sure you want to disconnect ${platformName}? You won't be able to post to this platform until you reconnect.`)) {
+        // Remove from connected platforms
+        connectedPlatforms.delete(platform);
+        
+        // Update UI
+        updateSocialMediaUI(platform, false);
+        
+        // Show success message
+        showAlert(`Disconnected from ${platformName}`, 'info');
+        
+        // Update localStorage
+        localStorage.setItem('connectedPlatforms', JSON.stringify([...connectedPlatforms]));
+    }
+}
+
+function updateSocialMediaUI(platform, isConnected) {
+    // Find the platform card
+    const platformCard = document.querySelector(`.${platform}-btn`)?.closest('.social-connect-card');
+    if (!platformCard) return;
+    
+    const connectBtn = platformCard.querySelector('.btn-connect');
+    const connectedStatus = platformCard.querySelector('.connected-status');
+    
+    if (isConnected) {
+        // Hide connect button, show connected status
+        if (connectBtn) connectBtn.style.display = 'none';
+        if (connectedStatus) connectedStatus.style.display = 'flex';
+        
+        // Add visual indicator to card
+        platformCard.style.borderColor = '#28a745';
+        platformCard.style.backgroundColor = '#f8fff9';
+    } else {
+        // Show connect button, hide connected status
+        if (connectBtn) connectBtn.style.display = 'inline-block';
+        if (connectedStatus) connectedStatus.style.display = 'none';
+        
+        // Remove visual indicator
+        platformCard.style.borderColor = '#e9ecef';
+        platformCard.style.backgroundColor = '#fff';
+    }
+}
+
+function loadConnectedPlatforms() {
+    // Load from localStorage on page load
+    const stored = localStorage.getItem('connectedPlatforms');
+    if (stored) {
+        try {
+            const platforms = JSON.parse(stored);
+            platforms.forEach(platform => {
+                connectedPlatforms.add(platform);
+                updateSocialMediaUI(platform, true);
+            });
+        } catch (e) {
+            console.error('Error loading connected platforms:', e);
+        }
+    }
+}
+
+// Make functions globally available
+window.connectSocialMedia = connectSocialMedia;
+window.disconnectSocialMedia = disconnectSocialMedia;
 
 // ==========================================
 // COMPETITOR ANALYSIS FUNCTIONALITY

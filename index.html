@@ -729,6 +729,235 @@
                         </div>
                     </div>
                     
+                    <!-- Social Media Integration Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-share-alt me-2"></i>Connect Social Media & Advertising Accounts</h5>
+                                    <p class="mb-0 small text-muted">Connect your accounts to enable direct posting and campaign management</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <!-- Facebook -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon facebook">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Facebook</h6>
+                                                    <p class="text-muted small mb-2">Connect your Facebook Page</p>
+                                                    <button class="btn btn-sm btn-connect facebook-btn" onclick="connectSocialMedia('facebook')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('facebook')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Instagram -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon instagram">
+                                                    <i class="fab fa-instagram"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Instagram</h6>
+                                                    <p class="text-muted small mb-2">Connect your Instagram Business Account</p>
+                                                    <button class="btn btn-sm btn-connect instagram-btn" onclick="connectSocialMedia('instagram')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('instagram')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- LinkedIn -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon linkedin">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>LinkedIn</h6>
+                                                    <p class="text-muted small mb-2">Connect your LinkedIn Company Page</p>
+                                                    <button class="btn btn-sm btn-connect linkedin-btn" onclick="connectSocialMedia('linkedin')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('linkedin')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Twitter/X -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon twitter">
+                                                    <i class="fab fa-twitter"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Twitter (X)</h6>
+                                                    <p class="text-muted small mb-2">Connect your Twitter/X Account</p>
+                                                    <button class="btn btn-sm btn-connect twitter-btn" onclick="connectSocialMedia('twitter')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('twitter')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Google My Business -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon google">
+                                                    <i class="fab fa-google"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Google My Business</h6>
+                                                    <p class="text-muted small mb-2">Connect your GMB Profile</p>
+                                                    <button class="btn btn-sm btn-connect google-btn" onclick="connectSocialMedia('gmb')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('gmb')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- YouTube -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon youtube">
+                                                    <i class="fab fa-youtube"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>YouTube</h6>
+                                                    <p class="text-muted small mb-2">Connect your YouTube Channel</p>
+                                                    <button class="btn btn-sm btn-connect youtube-btn" onclick="connectSocialMedia('youtube')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('youtube')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="my-4">
+                                    
+                                    <!-- Advertising Platforms -->
+                                    <h6 class="mb-3"><i class="fas fa-ad me-2"></i>Advertising Platforms</h6>
+                                    <div class="row g-3">
+                                        <!-- Facebook Ads -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon facebook-ads">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                    <span class="ads-badge">Ads</span>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Facebook Ads</h6>
+                                                    <p class="text-muted small mb-2">Connect Facebook Ads Manager</p>
+                                                    <button class="btn btn-sm btn-connect facebook-ads-btn" onclick="connectSocialMedia('facebook-ads')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('facebook-ads')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Google Ads -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon google-ads">
+                                                    <i class="fab fa-google"></i>
+                                                    <span class="ads-badge">Ads</span>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Google Ads</h6>
+                                                    <p class="text-muted small mb-2">Connect Google Ads Account</p>
+                                                    <button class="btn btn-sm btn-connect google-ads-btn" onclick="connectSocialMedia('google-ads')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('google-ads')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Instagram Ads -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="social-connect-card">
+                                                <div class="social-icon instagram-ads">
+                                                    <i class="fab fa-instagram"></i>
+                                                    <span class="ads-badge">Ads</span>
+                                                </div>
+                                                <div class="social-info">
+                                                    <h6>Instagram Ads</h6>
+                                                    <p class="text-muted small mb-2">Connect Instagram Ads (via Facebook)</p>
+                                                    <button class="btn btn-sm btn-connect instagram-ads-btn" onclick="connectSocialMedia('instagram-ads')">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </button>
+                                                    <div class="connected-status" style="display: none;">
+                                                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="disconnectSocialMedia('instagram-ads')">
+                                                            <i class="fas fa-unlink"></i> Disconnect
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-info mt-4" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Why connect these accounts?</strong> 
+                                        Once connected, you can publish approved content directly to these platforms, manage ad campaigns, 
+                                        track performance metrics, and respond to comments - all from this dashboard.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Action Buttons -->
                     <div class="row">
                         <div class="col-12">
