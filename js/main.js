@@ -5516,7 +5516,7 @@ function renderContentPostsList() {
     if (filteredPosts.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="9" class="text-center text-muted py-5">
+                <td colspan="8" class="text-center text-muted py-5">
                     <i class="fas fa-calendar-times fa-3x mb-3"></i>
                     <p>No content posts found</p>
                 </td>
@@ -5567,24 +5567,6 @@ function renderContentPostsList() {
             </td>
             <td>
                 <span class="type-badge ${post.type}">${post.type === 'ai' ? 'AI Generated' : 'Manual'}</span>
-            </td>
-            <td>
-                ${post.status === 'published' ? `
-                    <div class="engagement-stats">
-                        <div class="engagement-item">
-                            <i class="fas fa-heart"></i>
-                            <span>${post.engagement.likes}</span>
-                        </div>
-                        <div class="engagement-item">
-                            <i class="fas fa-share"></i>
-                            <span>${post.engagement.shares}</span>
-                        </div>
-                        <div class="engagement-item">
-                            <i class="fas fa-comment"></i>
-                            <span>${post.engagement.comments}</span>
-                        </div>
-                    </div>
-                ` : `<span class="text-muted small">Not published</span>`}
             </td>
             <td>
                 <div class="d-flex gap-1">
