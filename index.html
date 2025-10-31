@@ -105,6 +105,20 @@
             </nav>
         </aside>
 
+        <!-- Reports Submenu Panel -->
+        <div id="reportsSubmenu" class="reports-submenu-panel" aria-hidden="true">
+            <div class="submenu-header">Report Types</div>
+            <div class="submenu-body">
+                <button class="submenu-item" data-report="overview"><i class="fas fa-layer-group me-2"></i> Marketing Overview</button>
+                <button class="submenu-item" data-report="campaigns"><i class="fas fa-bullseye me-2"></i> Campaign Performance</button>
+                <button class="submenu-item" data-report="channels"><i class="fas fa-share-alt me-2"></i> Channel Analysis</button>
+                <button class="submenu-item" data-report="roi"><i class="fas fa-rupee-sign me-2"></i> ROI & Budget</button>
+                <button class="submenu-item" data-report="leads"><i class="fas fa-user-plus me-2"></i> Lead Generation</button>
+                <button class="submenu-item" data-report="engagement"><i class="fas fa-chart-line me-2"></i> Engagement Metrics</button>
+                <button class="submenu-item" data-report="conversion"><i class="fas fa-filter me-2"></i> Conversion Funnel</button>
+            </div>
+        </div>
+
         <!-- Main Content -->
         <div class="main-content flex-grow-1">
             
@@ -271,14 +285,86 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 mb-3">
-                            <div class="kpi-card clickable-card" data-kpi="cpl">
+                            <div class="kpi-card clickable-card activity-score-card" data-kpi="activity-score">
                                 <div class="kpi-icon bg-info">
-                                    <i class="fas fa-rupee-sign"></i>
+                                    <i class="fas fa-chart-line"></i>
                                 </div>
                                 <div class="kpi-content">
-                                    <h3 class="kpi-number">₹425</h3>
-                                    <p class="kpi-label">Avg CPL</p>
-                                    <span class="kpi-change negative">-8.3%</span>
+                                    <h3 class="kpi-number">
+                                        <span id="activityScoreValue">78</span>
+                                        <span class="score-suffix">/100</span>
+                                    </h3>
+                                    <p class="kpi-label">Activity Score</p>
+                                    <span class="kpi-change positive">+12 this month</span>
+                                </div>
+                                <!-- Score Breakdown Tooltip (shown on hover) -->
+                                <div class="score-breakdown-tooltip">
+                                    <div class="score-breakdown-header">
+                                        <h6>Score Breakdown</h6>
+                                        <p class="text-muted small mb-0">Activity Health Metrics</p>
+                                    </div>
+                                    <div class="score-breakdown-body">
+                                        <div class="score-metric">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="metric-name">
+                                                    <i class="fas fa-search text-success"></i> Organic SEO Performance
+                                                </span>
+                                                <span class="metric-score">18/20</span>
+                                            </div>
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="score-metric">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="metric-name">
+                                                    <i class="fas fa-trophy text-warning"></i> Google Rankings
+                                                </span>
+                                                <span class="metric-score">15/20</span>
+                                            </div>
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="score-metric">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="metric-name">
+                                                    <i class="fas fa-share-alt text-primary"></i> Social Media Engagement
+                                                </span>
+                                                <span class="metric-score">14/20</span>
+                                            </div>
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="score-metric">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="metric-name">
+                                                    <i class="fas fa-bullhorn text-info"></i> Paid Ad Performance
+                                                </span>
+                                                <span class="metric-score">16/20</span>
+                                            </div>
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 80%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="score-metric">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="metric-name">
+                                                    <i class="fas fa-envelope text-purple"></i> Email Marketing Activity
+                                                </span>
+                                                <span class="metric-score">15/20</span>
+                                            </div>
+                                            <div class="progress" style="height: 4px;">
+                                                <div class="progress-bar bg-purple" role="progressbar" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="score-breakdown-footer">
+                                        <small class="text-muted">
+                                            <i class="fas fa-info-circle"></i> Score updates in real-time based on activity
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -984,7 +1070,7 @@
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance-analysis-tab" type="button" role="tab">
-                                        <i class="fas fa-chart-bar me-2"></i>Performance Analysis
+                                        <i class="fas fa-chart-bar me-2"></i>Hospital Pulse
                                     </button>
                                 </li>
                             </ul>
@@ -2755,54 +2841,794 @@
 
                 <!-- Reports Section -->
                 <section id="reports-section" class="content-section">
-                    <div class="row">
+                    <!-- Header with Actions -->
+                    <div class="row mb-4">
                         <div class="col-12">
-                            <h2 class="mb-4">Performance Reports</h2>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                <div>
+                                    <h2 class="mb-2">Performance Reports & Analytics</h2>
+                                    <p class="text-muted mb-0">Comprehensive insights and data visualization for your marketing campaigns</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-primary">
+                                        <i class="fas fa-download me-2"></i>Export Report
+                                    </button>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="fas fa-calendar-alt me-2"></i>Schedule Report
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-plus me-2"></i>Custom Report
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="row">
+
+                    <!-- Report Filters & Controls -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-end">
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Report Type</label>
+                                            <select class="form-select" id="reportType">
+                                                <option value="overview">Marketing Overview</option>
+                                                <option value="campaigns">Campaign Performance</option>
+                                                <option value="channels">Channel Analysis</option>
+                                                <option value="roi">ROI & Budget</option>
+                                                <option value="leads">Lead Generation</option>
+                                                <option value="engagement">Engagement Metrics</option>
+                                                <option value="conversion">Conversion Funnel</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Time Period</label>
+                                            <select class="form-select" id="timePeriod">
+                                                <option value="today">Today</option>
+                                                <option value="yesterday">Yesterday</option>
+                                                <option value="7days" selected>Last 7 Days</option>
+                                                <option value="30days">Last 30 Days</option>
+                                                <option value="90days">Last 90 Days</option>
+                                                <option value="thismonth">This Month</option>
+                                                <option value="lastmonth">Last Month</option>
+                                                <option value="thisquarter">This Quarter</option>
+                                                <option value="thisyear">This Year</option>
+                                                <option value="custom">Custom Range</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Compare With</label>
+                                            <select class="form-select" id="compareWith">
+                                                <option value="none">No Comparison</option>
+                                                <option value="previous">Previous Period</option>
+                                                <option value="lastyear">Same Period Last Year</option>
+                                                <option value="custom">Custom Period</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Service Line</label>
+                                            <select class="form-select" id="serviceLineFilter">
+                                                <option value="all">All Services</option>
+                                                <option value="cardiology">Cardiology</option>
+                                                <option value="orthopedics">Orthopedics</option>
+                                                <option value="pediatrics">Pediatrics</option>
+                                                <option value="oncology">Oncology</option>
+                                                <option value="neurology">Neurology</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3" id="customDateRange" style="display: none;">
+                                        <div class="col-md-3">
+                                            <label class="form-label">From Date</label>
+                                            <input type="date" class="form-control" id="customFromDate">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">To Date</label>
+                                            <input type="date" class="form-control" id="customToDate">
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-end">
+                                            <button class="btn btn-primary w-100" id="applyCustomRange">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics Dashboard -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h5 class="mb-3">
+                                <i class="fas fa-chart-bar me-2"></i>Key Performance Indicators
+                            </h5>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon bg-gradient-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <h6>Total Impressions</h6>
+                                        <h3>2.4M</h3>
+                                    </div>
+                                </div>
+                                <div class="metric-footer">
+                                    <span class="metric-trend positive">
+                                        <i class="fas fa-arrow-up"></i> 18.5%
+                                    </span>
+                                    <span class="text-muted small">vs last period</span>
+                                </div>
+                                <div class="metric-sparkline">
+                                    <div class="mini-chart" data-values="45,52,38,65,48,72,58,63,67"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon bg-gradient-success">
+                                        <i class="fas fa-mouse-pointer"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <h6>Click-Through Rate</h6>
+                                        <h3>4.7%</h3>
+                                    </div>
+                                </div>
+                                <div class="metric-footer">
+                                    <span class="metric-trend positive">
+                                        <i class="fas fa-arrow-up"></i> 12.3%
+                                    </span>
+                                    <span class="text-muted small">vs last period</span>
+                                </div>
+                                <div class="metric-sparkline">
+                                    <div class="mini-chart" data-values="4.1,4.3,4.2,4.5,4.4,4.6,4.8,4.7,4.9"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon bg-gradient-warning">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <h6>Conversion Rate</h6>
+                                        <h3>18.9%</h3>
+                                    </div>
+                                </div>
+                                <div class="metric-footer">
+                                    <span class="metric-trend negative">
+                                        <i class="fas fa-arrow-down"></i> 3.2%
+                                    </span>
+                                    <span class="text-muted small">vs last period</span>
+                                </div>
+                                <div class="metric-sparkline">
+                                    <div class="mini-chart" data-values="19.5,19.2,18.8,19.1,18.5,18.7,19.0,18.9,18.6"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon bg-gradient-info">
+                                        <i class="fas fa-rupee-sign"></i>
+                                    </div>
+                                    <div class="metric-info">
+                                        <h6>Total Spend</h6>
+                                        <h3>₹5.2L</h3>
+                                    </div>
+                                </div>
+                                <div class="metric-footer">
+                                    <span class="metric-trend positive">
+                                        <i class="fas fa-arrow-up"></i> 8.1%
+                                    </span>
+                                    <span class="text-muted small">vs last period</span>
+                                </div>
+                                <div class="metric-sparkline">
+                                    <div class="mini-chart" data-values="4.2,4.5,4.8,5.0,4.9,5.1,5.3,5.2,5.4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campaign Performance Overview -->
+                    <div class="row mb-4">
                         <div class="col-lg-8">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <h5>Campaign ROI Analysis</h5>
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-chart-line me-2"></i>Campaign Performance Trends
+                                    </h5>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <input type="radio" class="btn-check" name="chartView" id="viewRevenue" checked>
+                                        <label class="btn btn-outline-primary" for="viewRevenue">Revenue</label>
+                                        
+                                        <input type="radio" class="btn-check" name="chartView" id="viewLeads">
+                                        <label class="btn btn-outline-primary" for="viewLeads">Leads</label>
+                                        
+                                        <input type="radio" class="btn-check" name="chartView" id="viewROI">
+                                        <label class="btn btn-outline-primary" for="viewROI">ROI</label>
+                                    </div>
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="roiChart"></canvas>
+                                    <div style="height: 350px;">
+                                        <canvas id="performanceTrendsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-bullseye me-2"></i>Goal Completion
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="goal-item mb-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-semibold">Lead Generation</span>
+                                            <span class="badge bg-success">128%</span>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                        </div>
+                                        <small class="text-muted">1,920 / 1,500 target</small>
+                                    </div>
+                                    <div class="goal-item mb-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-semibold">Appointment Bookings</span>
+                                            <span class="badge bg-warning">87%</span>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-warning progress-bar-striped" style="width: 87%"></div>
+                                        </div>
+                                        <small class="text-muted">435 / 500 target</small>
+                                    </div>
+                                    <div class="goal-item mb-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-semibold">Revenue Target</span>
+                                            <span class="badge bg-info">92%</span>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-info progress-bar-striped" style="width: 92%"></div>
+                                        </div>
+                                        <small class="text-muted">₹23.5L / ₹25.5L target</small>
+                                    </div>
+                                    <div class="goal-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-semibold">Cost Per Lead</span>
+                                            <span class="badge bg-success">112%</span>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                        </div>
+                                        <small class="text-muted">₹380 / ₹425 target</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Channel Performance Comparison -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-share-alt me-2"></i>Channel Performance
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px;">
+                                        <canvas id="channelComparisonChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-hospital me-2"></i>Service Line ROI
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div style="height: 300px;">
+                                        <canvas id="serviceLineROIChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Campaign Table -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-table me-2"></i>Detailed Campaign Breakdown
+                                    </h5>
+                                    <div class="d-flex gap-2">
+                                        <div class="input-group input-group-sm" style="width: 250px;">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            <input type="text" class="form-control" placeholder="Search campaigns...">
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-filter"></i> Filter
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0 reports-table">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Campaign Name</th>
+                                                    <th>Status</th>
+                                                    <th>Impressions</th>
+                                                    <th>Clicks</th>
+                                                    <th>CTR</th>
+                                                    <th>Leads</th>
+                                                    <th>Spend</th>
+                                                    <th>CPL</th>
+                                                    <th>ROI</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-semibold">Cardiology Awareness Q4</div>
+                                                        <small class="text-muted">Google Ads, Meta</small>
+                                                    </td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>486,500</td>
+                                                    <td>22,870</td>
+                                                    <td><span class="text-success fw-semibold">4.7%</span></td>
+                                                    <td>456</td>
+                                                    <td>₹1,73,280</td>
+                                                    <td><span class="text-success">₹380</span></td>
+                                                    <td><span class="badge bg-success-soft">285%</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-chart-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-semibold">Pediatric Teleconsult</div>
+                                                        <small class="text-muted">Facebook, WhatsApp</small>
+                                                    </td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>198,240</td>
+                                                    <td>9,120</td>
+                                                    <td><span class="text-warning fw-semibold">4.6%</span></td>
+                                                    <td>189</td>
+                                                    <td>₹63,693</td>
+                                                    <td><span class="text-warning">₹337</span></td>
+                                                    <td><span class="badge bg-success-soft">245%</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-chart-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-semibold">Orthopedic Surgery Campaign</div>
+                                                        <small class="text-muted">Google Ads</small>
+                                                    </td>
+                                                    <td><span class="badge bg-info">Scheduled</span></td>
+                                                    <td>312,450</td>
+                                                    <td>14,270</td>
+                                                    <td><span class="text-success fw-semibold">4.6%</span></td>
+                                                    <td>298</td>
+                                                    <td>₹1,34,100</td>
+                                                    <td><span class="text-success">₹450</span></td>
+                                                    <td><span class="badge bg-success-soft">312%</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-chart-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-semibold">Oncology Awareness</div>
+                                                        <small class="text-muted">Meta, Email</small>
+                                                    </td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>567,890</td>
+                                                    <td>25,650</td>
+                                                    <td><span class="text-success fw-semibold">4.5%</span></td>
+                                                    <td>412</td>
+                                                    <td>₹2,82,440</td>
+                                                    <td><span class="text-warning">₹685</span></td>
+                                                    <td><span class="badge bg-warning-soft">178%</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-chart-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-semibold">Neurology Checkup Drive</div>
+                                                        <small class="text-muted">Google Ads, SMS</small>
+                                                    </td>
+                                                    <td><span class="badge bg-warning">Paused</span></td>
+                                                    <td>234,120</td>
+                                                    <td>10,235</td>
+                                                    <td><span class="text-warning fw-semibold">4.4%</span></td>
+                                                    <td>156</td>
+                                                    <td>₹81,120</td>
+                                                    <td><span class="text-danger">₹520</span></td>
+                                                    <td><span class="badge bg-warning-soft">198%</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-chart-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-muted small">Showing 5 of 12 campaigns</span>
+                                        <nav>
+                                            <ul class="pagination pagination-sm mb-0">
+                                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Analytics & Insights -->
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-clock me-2"></i>Best Performing Time
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="time-analysis">
+                                        <div class="time-slot mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>Morning (6AM - 12PM)</span>
+                                                <span class="fw-semibold">35%</span>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-success" style="width: 35%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="time-slot mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>Afternoon (12PM - 5PM)</span>
+                                                <span class="fw-semibold">45%</span>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-primary" style="width: 45%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="time-slot mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>Evening (5PM - 10PM)</span>
+                                                <span class="fw-semibold">15%</span>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-warning" style="width: 15%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="time-slot">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>Night (10PM - 6AM)</span>
+                                                <span class="fw-semibold">5%</span>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-danger" style="width: 5%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-info mt-3 mb-0">
+                                        <small>
+                                            <i class="fas fa-lightbulb me-1"></i>
+                                            <strong>Insight:</strong> Schedule campaigns during 12PM-5PM for 45% better engagement.
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Generate Report</h5>
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-users-cog me-2"></i>Audience Demographics
+                                    </h5>
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="mb-3">
-                                            <label class="form-label">Report Type</label>
-                                            <select class="form-select">
-                                                <option>Campaign Performance</option>
-                                                <option>Lead Analysis</option>
-                                                <option>ROI Summary</option>
-                                                <option>Channel Comparison</option>
-                                            </select>
+                                    <div style="height: 200px;">
+                                        <canvas id="demographicsChart"></canvas>
+                                    </div>
+                                    <div class="demo-stats mt-3">
+                                        <div class="row text-center">
+                                            <div class="col-6 mb-2">
+                                                <div class="p-2 border rounded">
+                                                    <i class="fas fa-male text-primary me-1"></i>
+                                                    <strong>52%</strong>
+                                                    <div class="small text-muted">Male</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="p-2 border rounded">
+                                                    <i class="fas fa-female text-danger me-1"></i>
+                                                    <strong>48%</strong>
+                                                    <div class="small text-muted">Female</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="p-2 border rounded">
+                                                    <i class="fas fa-birthday-cake text-info me-1"></i>
+                                                    <strong>35-54 years</strong>
+                                                    <div class="small text-muted">Primary Age Group</div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Date Range</label>
-                                            <select class="form-select">
-                                                <option>Last 7 days</option>
-                                                <option>Last 30 days</option>
-                                                <option>Last 90 days</option>
-                                                <option>Custom Range</option>
-                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Top Locations
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="location-list">
+                                        <div class="location-item mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="location-flag me-2">🇮🇳</div>
+                                                    <span>Hyderabad</span>
+                                                </div>
+                                                <span class="fw-semibold">42%</span>
+                                            </div>
+                                            <div class="progress" style="height: 6px;">
+                                                <div class="progress-bar bg-primary" style="width: 42%"></div>
+                                            </div>
+                                            <small class="text-muted">852 leads</small>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100">Generate Report</button>
-                                    </form>
+                                        <div class="location-item mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="location-flag me-2">🇮🇳</div>
+                                                    <span>Secunderabad</span>
+                                                </div>
+                                                <span class="fw-semibold">28%</span>
+                                            </div>
+                                            <div class="progress" style="height: 6px;">
+                                                <div class="progress-bar bg-success" style="width: 28%"></div>
+                                            </div>
+                                            <small class="text-muted">568 leads</small>
+                                        </div>
+                                        <div class="location-item mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="location-flag me-2">🇮🇳</div>
+                                                    <span>Kukatpally</span>
+                                                </div>
+                                                <span class="fw-semibold">18%</span>
+                                            </div>
+                                            <div class="progress" style="height: 6px;">
+                                                <div class="progress-bar bg-warning" style="width: 18%"></div>
+                                            </div>
+                                            <small class="text-muted">365 leads</small>
+                                        </div>
+                                        <div class="location-item">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="location-flag me-2">🇮🇳</div>
+                                                    <span>Others</span>
+                                                </div>
+                                                <span class="fw-semibold">12%</span>
+                                            </div>
+                                            <div class="progress" style="height: 6px;">
+                                                <div class="progress-bar bg-info" style="width: 12%"></div>
+                                            </div>
+                                            <small class="text-muted">243 leads</small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Conversion Funnel -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-filter me-2"></i>Conversion Funnel Analysis
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="conversion-funnel">
+                                        <div class="funnel-stage" style="--stage-width: 100%;">
+                                            <div class="funnel-bar bg-primary-gradient">
+                                                <div class="funnel-content">
+                                                    <div class="funnel-label">Impressions</div>
+                                                    <div class="funnel-value">2,456,780</div>
+                                                    <div class="funnel-percent">100%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="funnel-stage" style="--stage-width: 85%;">
+                                            <div class="funnel-bar bg-info-gradient">
+                                                <div class="funnel-content">
+                                                    <div class="funnel-label">Ad Clicks</div>
+                                                    <div class="funnel-value">115,420</div>
+                                                    <div class="funnel-percent">4.7% <small class="text-muted">(CTR)</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="funnel-stage" style="--stage-width: 65%;">
+                                            <div class="funnel-bar bg-success-gradient">
+                                                <div class="funnel-content">
+                                                    <div class="funnel-label">Landing Page Views</div>
+                                                    <div class="funnel-value">89,245</div>
+                                                    <div class="funnel-percent">77.3% <small class="text-muted">(from clicks)</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="funnel-stage" style="--stage-width: 45%;">
+                                            <div class="funnel-bar bg-warning-gradient">
+                                                <div class="funnel-content">
+                                                    <div class="funnel-label">Form Submissions</div>
+                                                    <div class="funnel-value">18,920</div>
+                                                    <div class="funnel-percent">21.2% <small class="text-muted">(conversion)</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="funnel-stage" style="--stage-width: 25%;">
+                                            <div class="funnel-bar bg-danger-gradient">
+                                                <div class="funnel-content">
+                                                    <div class="funnel-label">Qualified Leads</div>
+                                                    <div class="funnel-value">7,128</div>
+                                                    <div class="funnel-percent">37.7% <small class="text-muted">(qualification rate)</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-3 text-center">
+                                            <div class="funnel-insight-card">
+                                                <i class="fas fa-lightbulb text-warning fa-2x mb-2"></i>
+                                                <h6>Drop-off Rate</h6>
+                                                <p class="mb-0"><strong class="text-danger">22.7%</strong> from clicks to views</p>
+                                                <small class="text-muted">Optimize landing pages</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <div class="funnel-insight-card">
+                                                <i class="fas fa-chart-line text-success fa-2x mb-2"></i>
+                                                <h6>Best Stage</h6>
+                                                <p class="mb-0"><strong class="text-success">77.3%</strong> click retention</p>
+                                                <small class="text-muted">Strong ad relevance</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <div class="funnel-insight-card">
+                                                <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
+                                                <h6>Action Needed</h6>
+                                                <p class="mb-0"><strong class="text-warning">21.2%</strong> form conversion</p>
+                                                <small class="text-muted">Simplify lead forms</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <div class="funnel-insight-card">
+                                                <i class="fas fa-star text-info fa-2x mb-2"></i>
+                                                <h6>Lead Quality</h6>
+                                                <p class="mb-0"><strong class="text-info">37.7%</strong> qualified</p>
+                                                <small class="text-muted">Above industry avg</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Insights -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-gradient-primary text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-brain me-2"></i>AI-Powered Insights & Recommendations
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="insight-card bg-success-soft border-start border-success border-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="insight-icon bg-success text-white">
+                                                        <i class="fas fa-thumbs-up"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 class="text-success">Strong Performance</h6>
+                                                        <p class="mb-2">Your Cardiology campaign is performing 35% better than industry average for CTR.</p>
+                                                        <button class="btn btn-sm btn-success">Scale Budget</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="insight-card bg-warning-soft border-start border-warning border-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="insight-icon bg-warning text-white">
+                                                        <i class="fas fa-exclamation-circle"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 class="text-warning">Optimization Opportunity</h6>
+                                                        <p class="mb-2">Pediatric campaign has 12% higher bounce rate. Consider A/B testing new landing pages.</p>
+                                                        <button class="btn btn-sm btn-warning">Create A/B Test</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="insight-card bg-info-soft border-start border-info border-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="insight-icon bg-info text-white">
+                                                        <i class="fas fa-clock"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 class="text-info">Timing Insight</h6>
+                                                        <p class="mb-2">Engagement peaks at 2PM-4PM on weekdays. Schedule ads during this window for better results.</p>
+                                                        <button class="btn btn-sm btn-info">Adjust Schedule</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="insight-card bg-danger-soft border-start border-danger border-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="insight-icon bg-danger text-white">
+                                                        <i class="fas fa-rupee-sign"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 class="text-danger">Budget Alert</h6>
+                                                        <p class="mb-2">Oncology campaign is 85% through budget but only 60% through scheduled duration.</p>
+                                                        <button class="btn btn-sm btn-danger">Review Budget</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
                 <!-- Settings Section -->
