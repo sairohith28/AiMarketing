@@ -256,6 +256,30 @@ function setupEventListeners() {
         link.addEventListener('click', handleSidebarNavigation);
     });
 
+    // Reports submenu item handlers
+    const reportsSubmenu = document.getElementById('reportsSubmenu');
+    if (reportsSubmenu) {
+        reportsSubmenu.querySelectorAll('.submenu-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Close submenu and navigate to reports section
+                closeReportsSubmenu();
+                showSection('reports');
+                // Mark Reports as active in sidebar
+                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                const reportsLink = document.querySelector('.sidebar-nav .nav-link[data-section="reports"]');
+                if (reportsLink) reportsLink.classList.add('active');
+                const select = document.getElementById('reportType');
+                const type = btn.dataset.report; // values match <select> options
+                if (select && type) {
+                    select.value = type;
+                    select.dispatchEvent(new Event('change'));
+                }
+                // Ensure header/title is visible at top of page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    }
+
     // Sidebar Collapse
     const sidebarCollapseBtn = document.getElementById('sidebarCollapseBtn');
     if (sidebarCollapseBtn) {
@@ -339,6 +363,12 @@ function handleSidebarNavigation(e) {
     e.preventDefault();
     
     const targetSection = e.currentTarget.getAttribute('data-section');
+
+    // Special handling: open Reports submenu instead of navigating
+    if (targetSection === 'reports') {
+        toggleReportsSubmenu(e.currentTarget);
+        return;
+    }
     
     // Update active state
     document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
@@ -353,6 +383,66 @@ function handleSidebarNavigation(e) {
     if (window.innerWidth < 1200) {
         document.getElementById('sidebar').classList.remove('show');
     }
+}
+
+// -------------------------------
+// Reports Submenu Logic
+// -------------------------------
+let reportsSubmenuOpen = false;
+let reportsSubmenuOutsideHandler = null;
+
+function toggleReportsSubmenu(triggerEl) {
+    const panel = document.getElementById('reportsSubmenu');
+    if (!panel) return;
+    if (panel.classList.contains('show')) {
+        closeReportsSubmenu();
+    } else {
+        openReportsSubmenu(triggerEl);
+    }
+}
+
+function openReportsSubmenu(triggerEl) {
+    const panel = document.getElementById('reportsSubmenu');
+    const sidebar = document.getElementById('sidebar');
+    if (!panel || !sidebar || !triggerEl) return;
+
+    const rect = triggerEl.getBoundingClientRect();
+    const top = rect.top + window.scrollY - 10; // slight offset like screenshot
+    const left = sidebar.offsetWidth + 10;
+    panel.style.top = `${top}px`;
+    panel.style.left = `${left}px`;
+    panel.classList.add('show');
+    panel.setAttribute('aria-hidden', 'false');
+    reportsSubmenuOpen = true;
+
+    // Highlight Reports link as active while submenu is open
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => link.classList.remove('active'));
+    triggerEl.classList.add('active');
+
+    // Outside click closes
+    reportsSubmenuOutsideHandler = (evt) => {
+        if (!panel.contains(evt.target) && !triggerEl.contains(evt.target)) {
+            closeReportsSubmenu();
+        }
+    };
+    setTimeout(() => document.addEventListener('click', reportsSubmenuOutsideHandler), 0);
+    window.addEventListener('resize', closeReportsSubmenu);
+    window.addEventListener('scroll', closeReportsSubmenu, true);
+}
+
+function closeReportsSubmenu() {
+    const panel = document.getElementById('reportsSubmenu');
+    if (!panel) return;
+    panel.classList.remove('show');
+    panel.setAttribute('aria-hidden', 'true');
+    reportsSubmenuOpen = false;
+    // Do not force-remove 'active' here, it will be set by navigation if user clicks elsewhere
+    if (reportsSubmenuOutsideHandler) {
+        document.removeEventListener('click', reportsSubmenuOutsideHandler);
+        reportsSubmenuOutsideHandler = null;
+    }
+    window.removeEventListener('resize', closeReportsSubmenu);
+    window.removeEventListener('scroll', closeReportsSubmenu, true);
 }
 
 // Show Section
@@ -1051,9 +1141,18 @@ function updateChartsData() {
 
 // Update KPIs
 function updateKPIs() {
-    document.querySelectorAll('.kpi-number').forEach((element, index) => {
+    document.querySelectorAll('.kpi-number').forEach((element) => {
+        // Skip the activity score element (it updates separately)
+        if (element.id === 'activityScoreValue') {
+            return;
+        }
+        
         const currentText = element.textContent;
         let baseValue, newValue;
+        
+        // Determine the KPI type by the parent card's data attribute
+        const kpiCard = element.closest('.kpi-card');
+        const kpiType = kpiCard ? kpiCard.getAttribute('data-kpi') : null;
         
         if (currentText.includes('₹')) {
             baseValue = parseInt(currentText.replace(/[₹,]/g, ''));
@@ -1066,17 +1165,23 @@ function updateKPIs() {
             newValue = Math.max(10, Math.min(100, baseValue + variation));
             element.textContent = `${newValue}%`;
         } else {
-            const baseValues = [12, 1247, 425, 68];
-            baseValue = baseValues[index] || parseInt(currentText.replace(/,/g, ''));
-            const variations = [2, 100, 50, 10];
-            const variation = Math.floor(Math.random() * variations[index]) - Math.floor(variations[index]/2);
-            newValue = Math.max(0, baseValue + variation);
+            // Handle numeric values
+            baseValue = parseInt(currentText.replace(/,/g, ''));
             
-            if (index === 1) { // Total leads
-                animateNumber(element, baseValue, newValue);
+            // Set variation based on KPI type
+            let variation;
+            if (kpiType === 'campaigns') {
+                variation = Math.floor(Math.random() * 4) - 2; // Small variation for campaigns
+            } else if (kpiType === 'leads') {
+                variation = Math.floor(Math.random() * 200) - 100; // Larger variation for leads
+            } else if (kpiType === 'ai-recommendations') {
+                variation = Math.floor(Math.random() * 20) - 10; // Medium variation for recommendations
             } else {
-                element.textContent = newValue.toLocaleString();
+                variation = Math.floor(Math.random() * 50) - 25; // Default variation
             }
+            
+            newValue = Math.max(0, baseValue + variation);
+            element.textContent = newValue.toLocaleString();
         }
     });
 }
@@ -5768,3 +5873,592 @@ window.approvePost = approvePost;
 window.rejectPost = rejectPost;
 window.editPost = editPost;
 window.deletePost = deletePost;
+
+// ============================================
+// ADVANCED REPORTS PAGE FUNCTIONALITY
+// ============================================
+
+// Reports Charts
+let performanceTrendsChart, channelComparisonChart, serviceLineROIChart, demographicsChart;
+
+// Initialize Reports Charts
+function initializeReportsCharts() {
+    initializePerformanceTrendsChart();
+    initializeChannelComparisonChart();
+    initializeServiceLineROIChart();
+    initializeDemographicsChart();
+}
+
+function initializePerformanceTrendsChart() {
+    const ctx = document.getElementById('performanceTrendsChart');
+    if (!ctx) return;
+    
+    performanceTrendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+            datasets: [
+                {
+                    label: 'Revenue (₹Lakhs)',
+                    data: [3.2, 3.8, 4.2, 3.9, 4.5, 4.8, 5.2],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: 'Target',
+                    data: [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5],
+                    borderColor: '#dc3545',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    titleFont: {
+                        size: 14
+                    },
+                    bodyFont: {
+                        size: 13
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + value + 'L';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+}
+
+function initializeChannelComparisonChart() {
+    const ctx = document.getElementById('channelComparisonChart');
+    if (!ctx) return;
+    
+    channelComparisonChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Google Ads', 'Meta Ads', 'Email', 'SMS', 'WhatsApp'],
+            datasets: [
+                {
+                    label: 'Leads Generated',
+                    data: [456, 389, 234, 156, 189],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(23, 162, 184, 0.8)',
+                        'rgba(220, 53, 69, 0.8)'
+                    ],
+                    borderColor: [
+                        '#667eea',
+                        '#28a745',
+                        '#ffc107',
+                        '#17a2b8',
+                        '#dc3545'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeServiceLineROIChart() {
+    const ctx = document.getElementById('serviceLineROIChart');
+    if (!ctx) return;
+    
+    serviceLineROIChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Cardiology', 'Orthopedics', 'Pediatrics', 'Oncology', 'Neurology', 'Others'],
+            datasets: [{
+                data: [285, 312, 245, 178, 198, 156],
+                backgroundColor: [
+                    'rgba(102, 126, 234, 0.8)',
+                    'rgba(40, 167, 69, 0.8)',
+                    'rgba(255, 193, 7, 0.8)',
+                    'rgba(220, 53, 69, 0.8)',
+                    'rgba(23, 162, 184, 0.8)',
+                    'rgba(108, 117, 125, 0.8)'
+                ],
+                borderColor: '#fff',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '% ROI';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeDemographicsChart() {
+    const ctx = document.getElementById('demographicsChart');
+    if (!ctx) return;
+    
+    demographicsChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
+            datasets: [{
+                data: [12, 28, 32, 18, 8, 2],
+                backgroundColor: [
+                    'rgba(102, 126, 234, 0.8)',
+                    'rgba(40, 167, 69, 0.8)',
+                    'rgba(255, 193, 7, 0.8)',
+                    'rgba(220, 53, 69, 0.8)',
+                    'rgba(23, 162, 184, 0.8)',
+                    'rgba(108, 117, 125, 0.8)'
+                ],
+                borderColor: '#fff',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 10,
+                        font: {
+                            size: 11
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 10,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ' years: ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Report Type Change Handler
+function handleReportTypeChange() {
+    const reportType = document.getElementById('reportType')?.value;
+    if (!reportType) return;
+    
+    // Update charts based on selected report type
+    updateReportsData(reportType);
+}
+
+// Update Reports Data
+function updateReportsData(reportType) {
+    switch(reportType) {
+        case 'campaigns':
+            updatePerformanceTrendsChart('campaigns');
+            break;
+        case 'channels':
+            updatePerformanceTrendsChart('channels');
+            break;
+        case 'roi':
+            updatePerformanceTrendsChart('roi');
+            break;
+        case 'leads':
+            updatePerformanceTrendsChart('leads');
+            break;
+        default:
+            updatePerformanceTrendsChart('overview');
+    }
+}
+
+function updatePerformanceTrendsChart(type) {
+    if (!performanceTrendsChart) return;
+    
+    const dataMap = {
+        'overview': [3.2, 3.8, 4.2, 3.9, 4.5, 4.8, 5.2],
+        'campaigns': [245, 289, 312, 298, 334, 389, 425],
+        'channels': [4.1, 4.3, 4.5, 4.4, 4.6, 4.7, 4.9],
+        'roi': [245, 267, 289, 278, 312, 334, 356],
+        'leads': [1245, 1389, 1534, 1456, 1678, 1823, 1920]
+    };
+    
+    performanceTrendsChart.data.datasets[0].data = dataMap[type] || dataMap['overview'];
+    performanceTrendsChart.update('active');
+}
+
+// Time Period Change Handler
+function handleTimePeriodChange() {
+    const timePeriod = document.getElementById('timePeriod')?.value;
+    const customDateRange = document.getElementById('customDateRange');
+    
+    if (timePeriod === 'custom' && customDateRange) {
+        customDateRange.style.display = 'flex';
+    } else if (customDateRange) {
+        customDateRange.style.display = 'none';
+    }
+    
+    // Update charts with new time period data
+    updateChartsForTimePeriod(timePeriod);
+}
+
+function updateChartsForTimePeriod(period) {
+    // Mock: Update all charts with data for the selected time period
+    console.log('Updating charts for period:', period);
+}
+
+// Initialize Reports Page
+function initializeReportsPage() {
+    // Initialize charts
+    initializeReportsCharts();
+    
+    // Setup event listeners
+    const reportType = document.getElementById('reportType');
+    if (reportType) {
+        reportType.addEventListener('change', handleReportTypeChange);
+    }
+    
+    const timePeriod = document.getElementById('timePeriod');
+    if (timePeriod) {
+        timePeriod.addEventListener('change', handleTimePeriodChange);
+    }
+    
+    const applyCustomRange = document.getElementById('applyCustomRange');
+    if (applyCustomRange) {
+        applyCustomRange.addEventListener('click', function() {
+            const fromDate = document.getElementById('customFromDate')?.value;
+            const toDate = document.getElementById('customToDate')?.value;
+            
+            if (fromDate && toDate) {
+                showToast(`Reports updated for ${fromDate} to ${toDate}`, 'success');
+                updateChartsForCustomRange(fromDate, toDate);
+            } else {
+                showToast('Please select both dates', 'error');
+            }
+        });
+    }
+    
+    // Chart view toggles
+    document.querySelectorAll('input[name="chartView"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const view = this.id.replace('view', '').toLowerCase();
+            updatePerformanceTrendsChart(view);
+        });
+    });
+}
+
+function updateChartsForCustomRange(fromDate, toDate) {
+    // Mock: Update charts with custom date range data
+    console.log('Updating charts for custom range:', fromDate, 'to', toDate);
+}
+
+// Call initialization when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure all elements are ready
+    setTimeout(initializeReportsPage, 500);
+    
+    // Initialize Activity Score
+    initializeActivityScore();
+});
+
+// ============================
+// Activity Score System
+// ============================
+
+/**
+ * Activity Score Parameters (based on HubSpot Marketing Grader, Moz, SEMrush)
+ * Each parameter is scored out of 20 points, total = 100
+ */
+const activityParameters = {
+    organicSEO: {
+        name: 'Organic SEO Performance',
+        maxScore: 20,
+        weight: 0.20,
+        icon: 'fa-search',
+        color: 'success',
+        calculate: function() {
+            // Factors: Keyword rankings, organic traffic growth, backlink quality
+            const keywordRankings = getRandomScore(0, 10); // Keywords in top 10
+            const trafficGrowth = getRandomScore(0, 5); // Monthly traffic growth
+            const backlinkQuality = getRandomScore(0, 5); // Domain authority of backlinks
+            return Math.round(keywordRankings + trafficGrowth + backlinkQuality);
+        }
+    },
+    googleRankings: {
+        name: 'Google Rankings',
+        maxScore: 20,
+        weight: 0.20,
+        icon: 'fa-trophy',
+        color: 'warning',
+        calculate: function() {
+            // Factors: Local pack presence, featured snippets, SERP position
+            const localPackPresence = getRandomScore(0, 8); // Google My Business optimization
+            const featuredSnippets = getRandomScore(0, 6); // Featured snippet appearances
+            const serpPosition = getRandomScore(0, 6); // Average position for target keywords
+            return Math.round(localPackPresence + featuredSnippets + serpPosition);
+        }
+    },
+    socialEngagement: {
+        name: 'Social Media Engagement',
+        maxScore: 20,
+        weight: 0.20,
+        icon: 'fa-share-alt',
+        color: 'primary',
+        calculate: function() {
+            // Factors: Post frequency, engagement rate, follower growth
+            const postFrequency = getRandomScore(0, 7); // Posts per week
+            const engagementRate = getRandomScore(0, 7); // Likes, comments, shares
+            const followerGrowth = getRandomScore(0, 6); // Monthly follower increase
+            return Math.round(postFrequency + engagementRate + followerGrowth);
+        }
+    },
+    paidAdPerformance: {
+        name: 'Paid Ad Performance',
+        maxScore: 20,
+        weight: 0.20,
+        icon: 'fa-bullhorn',
+        color: 'info',
+        calculate: function() {
+            // Factors: CTR, conversion rate, ROAS, quality score
+            const ctr = getRandomScore(0, 5); // Click-through rate
+            const conversionRate = getRandomScore(0, 5); // Ad conversion rate
+            const roas = getRandomScore(0, 5); // Return on ad spend
+            const qualityScore = getRandomScore(0, 5); // Google Ads quality score
+            return Math.round(ctr + conversionRate + roas + qualityScore);
+        }
+    },
+    emailMarketing: {
+        name: 'Email Marketing Activity',
+        maxScore: 20,
+        weight: 0.20,
+        icon: 'fa-envelope',
+        color: 'purple',
+        calculate: function() {
+            // Factors: Send frequency, open rate, click rate, list growth
+            const sendFrequency = getRandomScore(0, 5); // Campaigns per month
+            const openRate = getRandomScore(0, 5); // Email open rate
+            const clickRate = getRandomScore(0, 5); // Click-through rate
+            const listGrowth = getRandomScore(0, 5); // Subscriber growth
+            return Math.round(sendFrequency + openRate + clickRate + listGrowth);
+        }
+    }
+};
+
+function getRandomScore(min, max) {
+    // Add some randomness but keep it realistic
+    return min + Math.random() * (max - min);
+}
+
+function calculateActivityScore() {
+    const scores = {};
+    let totalScore = 0;
+    
+    for (const [key, param] of Object.entries(activityParameters)) {
+        const score = param.calculate();
+        scores[key] = {
+            score: score,
+            maxScore: param.maxScore,
+            percentage: Math.round((score / param.maxScore) * 100),
+            name: param.name,
+            icon: param.icon,
+            color: param.color
+        };
+        totalScore += score;
+    }
+    
+    return {
+        totalScore: Math.round(totalScore),
+        breakdown: scores
+    };
+}
+
+function updateActivityScoreDisplay(scoreData) {
+    // Animate the main score number
+    const scoreElement = document.getElementById('activityScoreValue');
+    if (scoreElement) {
+        animateNumber(scoreElement, 0, scoreData.totalScore, 1500);
+    }
+    
+    // Update the breakdown tooltip
+    updateScoreBreakdown(scoreData.breakdown);
+}
+
+function animateNumber(element, start, end, duration) {
+    let startTime = null;
+    
+    function animation(currentTime) {
+        if (!startTime) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.floor(start + (end - start) * easeOutQuart);
+        
+        element.textContent = currentValue;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animation);
+        }
+    }
+    
+    requestAnimationFrame(animation);
+}
+
+function updateScoreBreakdown(breakdown) {
+    const tooltipBody = document.querySelector('.score-breakdown-body');
+    if (!tooltipBody) return;
+    
+    let html = '';
+    const order = ['organicSEO', 'googleRankings', 'socialEngagement', 'paidAdPerformance', 'emailMarketing'];
+    
+    order.forEach(key => {
+        const data = breakdown[key];
+        if (!data) return;
+        
+        html += `
+            <div class="score-metric">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="metric-name">
+                        <i class="fas ${data.icon} text-${data.color}"></i> ${data.name}
+                    </span>
+                    <span class="metric-score">${data.score}/${data.maxScore}</span>
+                </div>
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-${data.color}" role="progressbar" style="width: ${data.percentage}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    tooltipBody.innerHTML = html;
+}
+
+function initializeActivityScore() {
+    // Calculate initial score
+    const scoreData = calculateActivityScore();
+    updateActivityScoreDisplay(scoreData);
+    
+    // Update score periodically (every 30 seconds to simulate real-time activity)
+    setInterval(() => {
+        const newScoreData = calculateActivityScore();
+        updateActivityScoreDisplay(newScoreData);
+    }, 30000); // 30 seconds
+    
+    // Add click handler for the activity score card
+    const activityCard = document.querySelector('.activity-score-card');
+    if (activityCard) {
+        activityCard.addEventListener('click', function() {
+            showActivityScoreDetails();
+        });
+    }
+}
+
+function showActivityScoreDetails() {
+    // Show detailed analytics modal or navigate to detailed view
+    showToast('Activity Score: Comprehensive health metrics for your digital marketing channels', 'info');
+    console.log('Activity Score Details clicked - Navigate to detailed analytics');
+}
+
+// Helper function to calculate score trend
+function calculateScoreTrend() {
+    // Compare with previous period
+    const currentScore = calculateActivityScore().totalScore;
+    const previousScore = Math.round(currentScore - 12 + Math.random() * 24); // Mock previous score
+    const trend = currentScore - previousScore;
+    
+    return {
+        current: currentScore,
+        previous: previousScore,
+        change: trend,
+        changeText: trend >= 0 ? `+${trend} this month` : `${trend} this month`
+    };
+}
